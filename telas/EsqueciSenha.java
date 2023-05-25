@@ -5,6 +5,9 @@ import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -39,6 +42,8 @@ public class EsqueciSenha extends JPanel {
 		panel.add(lblEmailInputEsq);
 		
 		textField = new JTextField();
+		textField.setFont(new Font("Poppins", Font.PLAIN, 12)); //Definição da Fonte
+		textField.setCaretColor(new Color(255, 255, 255)); // Cor do cursor de texto para branco
 		textField.setForeground(Color.WHITE);
 		textField.setColumns(10);
 		textField.setBackground(new Color(36, 44, 136));
@@ -46,6 +51,7 @@ public class EsqueciSenha extends JPanel {
 		panel.add(textField);
 		
 		JButton btnEnviar = new JButton("Enviar");
+		btnEnviar.setFocusPainted(false);
 		btnEnviar.setForeground(Color.WHITE);
 		btnEnviar.setBorderPainted(false);
 		btnEnviar.setBackground(new Color(64, 74, 204));
@@ -59,12 +65,25 @@ public class EsqueciSenha extends JPanel {
 		panel.add(lblSemConta);
 		
 		JButton btnRegistrar = new JButton("Faça Login.");
+		btnRegistrar.setFocusPainted(false);
 		btnRegistrar.setHorizontalAlignment(SwingConstants.LEFT);
+		btnRegistrar.setFont(new Font("Poppins", Font.PLAIN, 11));
 		btnRegistrar.setForeground(new Color(130, 209, 236));
 		btnRegistrar.setContentAreaFilled(false);
 		btnRegistrar.setBorderPainted(false);
 		btnRegistrar.setBounds(300, 437, 110, 23);
 		panel.add(btnRegistrar);
+		
+		// Interação do botão "Faça Login" para voltar à "tela de Login"
+		btnRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login a = new Login();
+				removeAll();
+				add(a);
+				revalidate();
+				repaint();
+
+			}});
 
 	}
 
