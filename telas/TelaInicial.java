@@ -29,6 +29,8 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.JComboBox;
+import java.awt.Insets;
 
 public class TelaInicial extends JPanel {
 	private JTextField textField;
@@ -37,13 +39,14 @@ public class TelaInicial extends JPanel {
 	 * Create the panel.
 	 */
 	public TelaInicial() {
+		setBackground(new Color(250, 250, 250));
 		setLayout(null);
 		setBounds(0, 0, 1280, 720);
 	    
 	    JPanel panel_4 = new JPanel();
 	    panel_4.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 	    panel_4.setBackground(new Color(36,44,134));
-	    panel_4.setBounds(344, 23, 460, 278);
+	    panel_4.setBounds(320, 15, 460, 278);
 	    add(panel_4);
 	    panel_4.setLayout(null);
 	    
@@ -58,10 +61,8 @@ public class TelaInicial extends JPanel {
 	    panel_4.add(lblNewLabel_1);
 	    
 	    textField = new JTextField();
-		textField.setFont(new Font("Poppins", Font.PLAIN, 12));
-		textField.setCaretColor(new Color(255, 255, 255));
-		textField.setForeground(new Color(255, 255, 255));
 	    textField.setBorder(new LineBorder(new Color(255, 255, 255)));
+	    textField.setForeground(new Color(255, 255, 255));
 	    textField.setOpaque(false);
 	    textField.setBackground(Color.WHITE);
 	    textField.setBounds(8, 34, 328, 33);
@@ -436,12 +437,12 @@ public class TelaInicial extends JPanel {
 	  //-------------------------------------------			
 	    JPanel painel_banner = new JPanel();
 	    painel_banner.setLayout(null);
-	    painel_banner.setBounds(960, 24, 276, 275);
+	    painel_banner.setBounds(920, 15, 276, 275);
 	    painel_banner.setBackground(new Color(36,44,134, 128)); // alpha
 		add(painel_banner);
 		
 		JLabel badge_id_1 = new JLabel("");
-		badge_id_1.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\src\\badge_id3.png"));
+		badge_id_1.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id1.png"));
 		badge_id_1.setBounds(10, 40, 28, 28);
 		painel_banner.add(badge_id_1);
 		
@@ -452,33 +453,83 @@ public class TelaInicial extends JPanel {
 		lbl_simulados_resolvidos_1_1.setBounds(8, 0, 80, 36);
 		painel_banner.add(lbl_simulados_resolvidos_1_1);
 		
-		JLabel lblNewLabel_5 = new JLabel("Conclua um Simulado                 ( 0/1 )");
+		JLabel lblNewLabel_5 = new JLabel("Conclua um Simulado   ");
 		lblNewLabel_5.setBackground(new Color(64, 74, 204));
 		lblNewLabel_5.setForeground(new Color(192, 192, 192));
-		lblNewLabel_5.setBounds(47, 40, 221, 27);
+		lblNewLabel_5.setBounds(47, 40, 150, 27);
 		painel_banner.add(lblNewLabel_5);
 		
+		JLabel badge_id_1_1 = new JLabel("");
+		badge_id_1_1.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id1.png"));
+		badge_id_1_1.setBounds(10, 80, 28, 28);
+		painel_banner.add(badge_id_1_1);
+		
+		JLabel lblNewLabel_5_1 = new JLabel("Exemplo de meta 2");
+		lblNewLabel_5_1.setForeground(Color.LIGHT_GRAY);
+		lblNewLabel_5_1.setBackground(new Color(64, 74, 204));
+		lblNewLabel_5_1.setBounds(47, 80, 150, 27);
+		painel_banner.add(lblNewLabel_5_1);
+		
+		JLabel badge_id_1_1_1 = new JLabel("");
+		badge_id_1_1_1.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id1.png"));
+		badge_id_1_1_1.setBounds(10, 120, 28, 28);
+		painel_banner.add(badge_id_1_1_1);
+		
+		JLabel lblNewLabel_5_1_1 = new JLabel("Exemplo de meta 3");
+		lblNewLabel_5_1_1.setForeground(Color.LIGHT_GRAY);
+		lblNewLabel_5_1_1.setBackground(new Color(64, 74, 204));
+		lblNewLabel_5_1_1.setBounds(47, 120, 150, 27);
+		painel_banner.add(lblNewLabel_5_1_1);
+		
+		JLabel badge_id_1_1_1_1 = new JLabel("");
+		badge_id_1_1_1_1.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id1.png"));
+		badge_id_1_1_1_1.setBounds(10, 160, 28, 28);
+		painel_banner.add(badge_id_1_1_1_1);
+		
+		JLabel lblNewLabel_5_1_1_1 = new JLabel("Exemplo de meta 4");
+		lblNewLabel_5_1_1_1.setForeground(Color.LIGHT_GRAY);
+		lblNewLabel_5_1_1_1.setBackground(new Color(64, 74, 204));
+		lblNewLabel_5_1_1_1.setBounds(47, 160, 150, 27);
+		painel_banner.add(lblNewLabel_5_1_1_1);
+		
+		JLabel badge_id_1_1_1_1_1 = new JLabel("");
+		badge_id_1_1_1_1_1.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id1.png"));
+		badge_id_1_1_1_1_1.setBounds(10, 200, 28, 28);
+		painel_banner.add(badge_id_1_1_1_1_1);
+		
+		JLabel lblNewLabel_5_1_1_1_1 = new JLabel("Exemplo de meta 5");
+		lblNewLabel_5_1_1_1_1.setForeground(Color.LIGHT_GRAY);
+		lblNewLabel_5_1_1_1_1.setBackground(new Color(64, 74, 204));
+		lblNewLabel_5_1_1_1_1.setBounds(47, 200, 150, 27);
+		painel_banner.add(lblNewLabel_5_1_1_1_1);
+		
+		JLabel badge_id_1_1_1_1_1_1 = new JLabel("");
+		badge_id_1_1_1_1_1_1.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id1.png"));
+		badge_id_1_1_1_1_1_1.setBounds(10, 240, 28, 28);
+		painel_banner.add(badge_id_1_1_1_1_1_1);
+		
+		JLabel lblNewLabel_5_1_1_1_1_1 = new JLabel("Exemplo de meta 6");
+		lblNewLabel_5_1_1_1_1_1.setForeground(Color.LIGHT_GRAY);
+		lblNewLabel_5_1_1_1_1_1.setBackground(new Color(64, 74, 204));
+		lblNewLabel_5_1_1_1_1_1.setBounds(47, 240, 150, 27);
+		painel_banner.add(lblNewLabel_5_1_1_1_1_1);
+		
 		JPanel Sidebar = new JPanel();
-		Sidebar.setBackground(new Color(36, 44, 134));
-		Sidebar.setBounds(0, 0, 320, 720);
+		Sidebar.setBackground(new Color(240, 240, 240));
+		Sidebar.setBounds(0, 0, 260, 720);
 		add(Sidebar);
 		Sidebar.setLayout(null);
 		
-		JPanel panel_3 = new JPanel();
-		panel_3.setBackground(new Color(98, 106, 204));
-		panel_3.setBounds(0, 114, 320, 10);
-		Sidebar.add(panel_3);
-		
 		JPanel Perfil = new JPanel();
 		Perfil.setBorder(null);
-		Perfil.setBackground(new Color(64, 74, 204));
-		Perfil.setBounds(0, 0, 320, 115);
+		Perfil.setBackground(new Color(36, 44, 134));
+		Perfil.setBounds(0, 0, 260, 100);
 		Sidebar.add(Perfil);
 		Perfil.setLayout(null);
 		
 		JLabel badge_id = new JLabel("");
-		badge_id.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\src\\badge_id1.png"));
-		badge_id.setBounds(71, 68, 28, 28);
+		badge_id.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id1.png"));
+		badge_id.setBounds(71, 55, 28, 28);
 		Perfil.add(badge_id);
 		
 		JLabel icon_user = new JLabel("");
@@ -487,24 +538,24 @@ public class TelaInicial extends JPanel {
 		icon_user.setIconTextGap(0);
 		icon_user.setBorder(null);
 		icon_user.setHorizontalAlignment(SwingConstants.CENTER);
-		icon_user.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\src\\icon_id2.png"));
-		icon_user.setBounds(24, 26, 68, 68);
+		icon_user.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\icons\\icon_id2.png"));
+		icon_user.setBounds(24, 15, 68, 68);
 		Perfil.add(icon_user);
 		
 		JLabel nome_id = new JLabel("Henrique Silveira");
 		nome_id.setForeground(new Color(255, 255, 255));
 		nome_id.setFont(new Font("Poppins", Font.PLAIN, 12));
-		nome_id.setBounds(100, 28, 150, 25);
+		nome_id.setBounds(100, 20, 150, 25);
 		Perfil.add(nome_id);
 		
-		JLabel badge_subtitle_id = new JLabel("Quem cedo madruga");
+		JLabel badge_subtitle_id = new JLabel("Primeiro Simulado");
 		badge_subtitle_id.setForeground(new Color(188, 188, 188));
 		badge_subtitle_id.setFont(new Font("Poppins", Font.PLAIN, 12));
-		badge_subtitle_id.setBounds(100, 43, 166, 25);
+		badge_subtitle_id.setBounds(100, 35, 166, 25);
 		Perfil.add(badge_subtitle_id);
 		
 		JPanel panel_3_2 = new JPanel();
-		panel_3_2.setBackground(new Color(98, 106, 204));
+		panel_3_2.setBackground(new Color(36, 44, 134));
 		panel_3_2.setBounds(0, 0, 320, 10);
 		Perfil.add(panel_3_2);
 		
@@ -515,64 +566,64 @@ public class TelaInicial extends JPanel {
 		btnMenu_0.setOpaque(false);
 		btnMenu_0.setContentAreaFilled(false);
 		btnMenu_0.setBorderPainted(false);
-		btnMenu_0.setForeground(Color.WHITE);
+		btnMenu_0.setForeground(Color.BLACK);
 		btnMenu_0.setFont(new Font("Poppins", Font.PLAIN, 16));
-		btnMenu_0.setBounds(10, 160, 110, 19);
+		btnMenu_0.setBounds(10, 140, 110, 19);
 		Sidebar.add(btnMenu_0);
 		
 		JButton btnMenu_1 = new JButton("Meu desempenho");
 		btnMenu_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMenu_1.setHorizontalAlignment(SwingConstants.LEFT);
 		btnMenu_1.setOpaque(false);
-		btnMenu_1.setForeground(Color.WHITE);
+		btnMenu_1.setForeground(Color.BLACK);
 		btnMenu_1.setFont(new Font("Poppins", Font.PLAIN, 16));
 		btnMenu_1.setFocusPainted(false);
 		btnMenu_1.setContentAreaFilled(false);
 		btnMenu_1.setBorderPainted(false);
-		btnMenu_1.setBounds(10, 185, 184, 19);
+		btnMenu_1.setBounds(10, 165, 184, 19);
 		Sidebar.add(btnMenu_1);
 		
 		JButton btnMenu_2 = new JButton("Questões Resolvidas");
 		btnMenu_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMenu_2.setHorizontalAlignment(SwingConstants.LEFT);
 		btnMenu_2.setOpaque(false);
-		btnMenu_2.setForeground(Color.WHITE);
+		btnMenu_2.setForeground(Color.BLACK);
 		btnMenu_2.setFont(new Font("Poppins", Font.PLAIN, 16));
 		btnMenu_2.setFocusPainted(false);
 		btnMenu_2.setContentAreaFilled(false);
 		btnMenu_2.setBorderPainted(false);
-		btnMenu_2.setBounds(10, 210, 210, 19);
+		btnMenu_2.setBounds(10, 190, 210, 19);
 		Sidebar.add(btnMenu_2);
 		
 		JButton btnMenu_3 = new JButton("Simulados Resolvidos");
 		btnMenu_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMenu_3.setOpaque(false);
 		btnMenu_3.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenu_3.setForeground(Color.WHITE);
+		btnMenu_3.setForeground(Color.BLACK);
 		btnMenu_3.setFont(new Font("Poppins", Font.PLAIN, 16));
 		btnMenu_3.setFocusPainted(false);
 		btnMenu_3.setContentAreaFilled(false);
 		btnMenu_3.setBorderPainted(false);
-		btnMenu_3.setBounds(10, 235, 210, 19);
+		btnMenu_3.setBounds(10, 215, 210, 19);
 		Sidebar.add(btnMenu_3);
 		
 		JButton btnMenu_4 = new JButton("Configurações");
 		btnMenu_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMenu_4.setHorizontalAlignment(SwingConstants.LEFT);
 		btnMenu_4.setOpaque(false);
-		btnMenu_4.setForeground(Color.WHITE);
+		btnMenu_4.setForeground(Color.BLACK);
 		btnMenu_4.setFont(new Font("Poppins", Font.PLAIN, 16));
 		btnMenu_4.setFocusPainted(false);
 		btnMenu_4.setContentAreaFilled(false);
 		btnMenu_4.setBorderPainted(false);
-		btnMenu_4.setBounds(10, 260, 173, 19);
+		btnMenu_4.setBounds(10, 240, 173, 19);
 		Sidebar.add(btnMenu_4);
 		
 		JButton btnMenu_5 = new JButton("Sair");
 		btnMenu_5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMenu_5.setOpaque(false);
 		btnMenu_5.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenu_5.setForeground(Color.WHITE);
+		btnMenu_5.setForeground(Color.BLACK);
 		btnMenu_5.setFont(new Font("Poppins", Font.PLAIN, 16));
 		btnMenu_5.setFocusPainted(false);
 		btnMenu_5.setContentAreaFilled(false);
@@ -580,37 +631,24 @@ public class TelaInicial extends JPanel {
 		btnMenu_5.setBounds(10, 690, 132, 19);
 		Sidebar.add(btnMenu_5);
 		
-		// Interação do botão "Sair" para voltar à "Tela Inicial"
-		btnMenu_5.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Login a = new Login();
-				removeAll();
-				add(a);
-				revalidate();
-				repaint();
-
-			}});
-
-		
 		JButton btnMenu_0_1 = new JButton("Menu Principal");
-		btnMenu_0_1.setOpaque(false);
+		btnMenu_0_1.setMargin(new Insets(2, 22, 2, 14));
+		btnMenu_0_1.setBackground(new Color(98, 106, 204));
 		btnMenu_0_1.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenu_0_1.setForeground(new Color(98, 106, 204));
+		btnMenu_0_1.setForeground(Color.WHITE);
 		btnMenu_0_1.setFont(new Font("Poppins", Font.PLAIN, 16));
 		btnMenu_0_1.setFocusPainted(false);
-		btnMenu_0_1.setContentAreaFilled(false);
 		btnMenu_0_1.setBorderPainted(false);
-		btnMenu_0_1.setBounds(10, 135, 182, 19);
+		btnMenu_0_1.setBounds(0, 115, 260, 19);
 		Sidebar.add(btnMenu_0_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(36, 44, 134));
-		panel_1.setBounds(360, 361, 276, 320);
+		panel_1.setBounds(320, 361, 276, 320);
 		add(panel_1);
 		panel_1.setLayout(null);
 		
 		JButton btnIniciarResolvidos = new JButton("INICIAR");
-		btnIniciarResolvidos.setFocusPainted(false);
 		btnIniciarResolvidos.setBorderPainted(false);
 		btnIniciarResolvidos.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnIniciarResolvidos.setFont(new Font("Poppins", Font.PLAIN, 16));
@@ -627,13 +665,13 @@ public class TelaInicial extends JPanel {
 		lbl_simulados_resolvidos.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		lbl_simulados_resolvidos.setHorizontalAlignment(SwingConstants.CENTER);
 		lbl_simulados_resolvidos.setFont(new Font("Poppins", Font.PLAIN, 16));
-		lbl_simulados_resolvidos.setForeground(Color.WHITE);
-		lbl_simulados_resolvidos.setBounds(6, 176, 260, 36);
+		lbl_simulados_resolvidos.setForeground(new Color(255, 255, 255));
+		lbl_simulados_resolvidos.setBounds(10, 165, 260, 36);
 		panel_1.add(lbl_simulados_resolvidos);
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\src\\simulados.png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\tela_inicial\\gabaritos.png"));
 		lblNewLabel.setBounds(0, 0, 277, 125);
 		panel_1.add(lblNewLabel);
 		
@@ -645,11 +683,10 @@ public class TelaInicial extends JPanel {
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setLayout(null);
 		panel_1_1.setBackground(new Color(36, 44, 134));
-		panel_1_1.setBounds(660, 361, 276, 320);
+		panel_1_1.setBounds(620, 361, 276, 320);
 		add(panel_1_1);
 		
 		JButton btnIniciarSimulados = new JButton("INICIAR");
-		btnIniciarSimulados.setFocusPainted(false);
 		btnIniciarSimulados.setForeground(Color.WHITE);
 		btnIniciarSimulados.setFont(new Font("Poppins", Font.PLAIN, 16));
 		btnIniciarSimulados.setBorderPainted(false);
@@ -660,14 +697,14 @@ public class TelaInicial extends JPanel {
 		JLabel lbl_simulados = new JLabel("SIMULADOS");
 		lbl_simulados.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		lbl_simulados.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_simulados.setForeground(Color.WHITE);
+		lbl_simulados.setForeground(new Color(255, 255, 255));
 		lbl_simulados.setFont(new Font("Poppins", Font.PLAIN, 16));
-		lbl_simulados.setBounds(8, 175, 260, 36);
+		lbl_simulados.setBounds(10, 165, 260, 36);
 		panel_1_1.add(lbl_simulados);
 		
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\src\\simulado.png"));
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\tela_inicial\\simulados.png"));
 		lblNewLabel_3.setBounds(0, 0, 276, 126);
 		panel_1_1.add(lblNewLabel_3);
 		
@@ -679,11 +716,10 @@ public class TelaInicial extends JPanel {
 		JPanel panel_1_1_1 = new JPanel();
 		panel_1_1_1.setLayout(null);
 		panel_1_1_1.setBackground(new Color(36, 44, 134));
-		panel_1_1_1.setBounds(960, 361, 276, 320);
+		panel_1_1_1.setBounds(920, 361, 276, 320);
 		add(panel_1_1_1);
 		
 		JButton btnIniciarExercicios = new JButton("INICIAR");
-		btnIniciarExercicios.setFocusPainted(false);
 		btnIniciarExercicios.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnIniciarExercicios.setForeground(Color.WHITE);
 		btnIniciarExercicios.setFont(new Font("Poppins", Font.PLAIN, 16));
@@ -693,14 +729,15 @@ public class TelaInicial extends JPanel {
 		panel_1_1_1.add(btnIniciarExercicios);
 		
 		JLabel lbl_exercicios = new JLabel("EXERCÍCIOS");
+		lbl_exercicios.setBackground(new Color(36, 44, 134));
 		lbl_exercicios.setHorizontalAlignment(SwingConstants.CENTER);
-		lbl_exercicios.setForeground(Color.WHITE);
+		lbl_exercicios.setForeground(new Color(255, 255, 255));
 		lbl_exercicios.setFont(new Font("Poppins", Font.PLAIN, 16));
-		lbl_exercicios.setBounds(8, 177, 260, 36);
+		lbl_exercicios.setBounds(10, 165, 260, 36);
 		panel_1_1_1.add(lbl_exercicios);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\src\\exercicios.png"));
+		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\tela_inicial\\exercicios.png"));
 		lblNewLabel_4.setBounds(0, 0, 277, 125);
 		panel_1_1_1.add(lblNewLabel_4);
 		
@@ -709,25 +746,17 @@ public class TelaInicial extends JPanel {
 		panel_3_3_2.setBounds(0, 125, 277, 10);
 		panel_1_1_1.add(panel_3_3_2);
 		
-		JPanel panel_3_1 = new JPanel();
-		panel_3_1.setBackground(new Color(188, 188, 188));
-		panel_3_1.setBounds(320, 0, 960, 10);
-		add(panel_3_1);
-		
-		JPanel panel_3_1_1 = new JPanel();
-		panel_3_1_1.setBackground(new Color(188, 188, 188));
-		panel_3_1_1.setBounds(320, 320, 960, 10);
-		add(panel_3_1_1);
-		
-		JPanel panel_3_1_1_1 = new JPanel();
-		panel_3_1_1_1.setBackground(new Color(188, 188, 188));
-		panel_3_1_1_1.setBounds(320, 710, 960, 10);
-		add(panel_3_1_1_1);
-		
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\src\\banner.png"));
-		lblNewLabel_2.setBounds(320, 10, 961, 320);
+		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblNewLabel_2.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\tela_inicial\\slider_banner.png"));
+		lblNewLabel_2.setBounds(260, 0, 1020, 319);
 		add(lblNewLabel_2);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(98, 106, 204));
+		panel.setBounds(260, 317, 1020, 10);
+		add(panel);
 
 	}
 }
