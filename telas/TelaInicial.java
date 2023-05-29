@@ -514,6 +514,8 @@ public class TelaInicial extends JPanel {
 		lblNewLabel_5_1_1_1_1_1.setBounds(47, 240, 150, 27);
 		painel_banner.add(lblNewLabel_5_1_1_1_1_1);
 		
+		
+		// SIDEBAR - INICIO
 		JPanel Sidebar = new JPanel();
 		Sidebar.setBackground(new Color(240, 240, 240));
 		Sidebar.setBounds(0, 0, 260, 720);
@@ -559,88 +561,113 @@ public class TelaInicial extends JPanel {
 		panel_3_2.setBounds(0, 0, 320, 10);
 		Perfil.add(panel_3_2);
 		
-		JButton btnMenu_0 = new JButton("Meu Perfil");
-		btnMenu_0.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnMenu_0.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenu_0.setFocusPainted(false);
-		btnMenu_0.setOpaque(false);
-		btnMenu_0.setContentAreaFilled(false);
-		btnMenu_0.setBorderPainted(false);
-		btnMenu_0.setForeground(Color.BLACK);
-		btnMenu_0.setFont(new Font("Poppins", Font.PLAIN, 16));
-		btnMenu_0.setBounds(10, 140, 110, 19);
-		Sidebar.add(btnMenu_0);
+		JButton btnPerfil = new JButton("Meu Perfil");
+		btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnPerfil.setHorizontalAlignment(SwingConstants.LEFT);
+		btnPerfil.setFocusPainted(false);
+		btnPerfil.setOpaque(false);
+		btnPerfil.setContentAreaFilled(false);
+		btnPerfil.setBorderPainted(false);
+		btnPerfil.setForeground(Color.BLACK);
+		btnPerfil.setFont(new Font("Poppins", Font.PLAIN, 16));
+		btnPerfil.setBounds(10, 140, 110, 19);
+		Sidebar.add(btnPerfil);
 		
-		JButton btnMenu_1 = new JButton("Meu desempenho");
-		btnMenu_1.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnMenu_1.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenu_1.setOpaque(false);
-		btnMenu_1.setForeground(Color.BLACK);
-		btnMenu_1.setFont(new Font("Poppins", Font.PLAIN, 16));
-		btnMenu_1.setFocusPainted(false);
-		btnMenu_1.setContentAreaFilled(false);
-		btnMenu_1.setBorderPainted(false);
-		btnMenu_1.setBounds(10, 165, 184, 19);
-		Sidebar.add(btnMenu_1);
+		JButton btnMD = new JButton("Meu desempenho");
+		btnMD.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnMD.setHorizontalAlignment(SwingConstants.LEFT);
+		btnMD.setOpaque(false);
+		btnMD.setForeground(Color.BLACK);
+		btnMD.setFont(new Font("Poppins", Font.PLAIN, 16));
+		btnMD.setFocusPainted(false);
+		btnMD.setContentAreaFilled(false);
+		btnMD.setBorderPainted(false);
+		btnMD.setBounds(10, 165, 184, 19);
+		Sidebar.add(btnMD);
 		
-		JButton btnMenu_2 = new JButton("Questões Resolvidas");
-		btnMenu_2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnMenu_2.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenu_2.setOpaque(false);
-		btnMenu_2.setForeground(Color.BLACK);
-		btnMenu_2.setFont(new Font("Poppins", Font.PLAIN, 16));
-		btnMenu_2.setFocusPainted(false);
-		btnMenu_2.setContentAreaFilled(false);
-		btnMenu_2.setBorderPainted(false);
-		btnMenu_2.setBounds(10, 190, 210, 19);
-		Sidebar.add(btnMenu_2);
+		JButton btnQR = new JButton("Questões Resolvidas");
+		btnQR.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnQR.setHorizontalAlignment(SwingConstants.LEFT);
+		btnQR.setOpaque(false);
+		btnQR.setForeground(Color.BLACK);
+		btnQR.setFont(new Font("Poppins", Font.PLAIN, 16));
+		btnQR.setFocusPainted(false);
+		btnQR.setContentAreaFilled(false);
+		btnQR.setBorderPainted(false);
+		btnQR.setBounds(10, 190, 210, 19);
+		Sidebar.add(btnQR);
 		
-		JButton btnMenu_3 = new JButton("Simulados Resolvidos");
-		btnMenu_3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnMenu_3.setOpaque(false);
-		btnMenu_3.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenu_3.setForeground(Color.BLACK);
-		btnMenu_3.setFont(new Font("Poppins", Font.PLAIN, 16));
-		btnMenu_3.setFocusPainted(false);
-		btnMenu_3.setContentAreaFilled(false);
-		btnMenu_3.setBorderPainted(false);
-		btnMenu_3.setBounds(10, 215, 210, 19);
-		Sidebar.add(btnMenu_3);
+		JButton btnSR = new JButton("Simulados Resolvidos");
+		btnSR.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSR.setOpaque(false);
+		btnSR.setHorizontalAlignment(SwingConstants.LEFT);
+		btnSR.setForeground(Color.BLACK);
+		btnSR.setFont(new Font("Poppins", Font.PLAIN, 16));
+		btnSR.setFocusPainted(false);
+		btnSR.setContentAreaFilled(false);
+		btnSR.setBorderPainted(false);
+		btnSR.setBounds(10, 215, 210, 19);
+		Sidebar.add(btnSR);
 		
-		JButton btnMenu_4 = new JButton("Configurações");
-		btnMenu_4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnMenu_4.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenu_4.setOpaque(false);
-		btnMenu_4.setForeground(Color.BLACK);
-		btnMenu_4.setFont(new Font("Poppins", Font.PLAIN, 16));
-		btnMenu_4.setFocusPainted(false);
-		btnMenu_4.setContentAreaFilled(false);
-		btnMenu_4.setBorderPainted(false);
-		btnMenu_4.setBounds(10, 240, 173, 19);
-		Sidebar.add(btnMenu_4);
+		JButton btnConfig = new JButton("Configurações");
+		btnConfig.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnConfig.setHorizontalAlignment(SwingConstants.LEFT);
+		btnConfig.setOpaque(false);
+		btnConfig.setForeground(Color.BLACK);
+		btnConfig.setFont(new Font("Poppins", Font.PLAIN, 16));
+		btnConfig.setFocusPainted(false);
+		btnConfig.setContentAreaFilled(false);
+		btnConfig.setBorderPainted(false);
+		btnConfig.setBounds(10, 240, 173, 19);
+		Sidebar.add(btnConfig);
 		
-		JButton btnMenu_5 = new JButton("Sair");
-		btnMenu_5.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		btnMenu_5.setOpaque(false);
-		btnMenu_5.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenu_5.setForeground(Color.BLACK);
-		btnMenu_5.setFont(new Font("Poppins", Font.PLAIN, 16));
-		btnMenu_5.setFocusPainted(false);
-		btnMenu_5.setContentAreaFilled(false);
-		btnMenu_5.setBorderPainted(false);
-		btnMenu_5.setBounds(10, 690, 132, 19);
-		Sidebar.add(btnMenu_5);
+		JButton btnSair = new JButton("Sair");
+		btnSair.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSair.setOpaque(false);
+		btnSair.setHorizontalAlignment(SwingConstants.LEFT);
+		btnSair.setForeground(Color.BLACK);
+		btnSair.setFont(new Font("Poppins", Font.PLAIN, 16));
+		btnSair.setFocusPainted(false);
+		btnSair.setContentAreaFilled(false);
+		btnSair.setBorderPainted(false);
+		btnSair.setBounds(10, 690, 132, 19);
+		Sidebar.add(btnSair);
 		
-		JButton btnMenu_0_1 = new JButton("Menu Principal");
-		btnMenu_0_1.setMargin(new Insets(2, 22, 2, 14));
-		btnMenu_0_1.setBackground(new Color(98, 106, 204));
-		btnMenu_0_1.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMenu_0_1.setForeground(Color.WHITE);
-		btnMenu_0_1.setFont(new Font("Poppins", Font.PLAIN, 16));
-		btnMenu_0_1.setFocusPainted(false);
-		btnMenu_0_1.setBorderPainted(false);
-		btnMenu_0_1.setBounds(0, 115, 260, 19);
-		Sidebar.add(btnMenu_0_1);
+		btnSair.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login a = new Login();
+				removeAll();
+				add(a);
+				revalidate();
+				repaint();
+			}
+		});
+		
+		JButton btnMenu = new JButton("Menu Principal");
+		btnMenu.setMargin(new Insets(2, 22, 2, 14));
+		btnMenu.setBackground(new Color(98, 106, 204));
+		btnMenu.setHorizontalAlignment(SwingConstants.LEFT);
+		btnMenu.setForeground(Color.WHITE);
+		btnMenu.setFont(new Font("Poppins", Font.PLAIN, 16));
+		btnMenu.setFocusPainted(false);
+		btnMenu.setBorderPainted(false);
+		btnMenu.setBounds(0, 115, 260, 19);
+		Sidebar.add(btnMenu);
+		
+		btnMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaInicial a = new TelaInicial();
+				removeAll();
+				add(a);
+				revalidate();
+				repaint();
+			}
+		});
+		
+
+		
+		
+		// SIDEBAR - FIM
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(36, 44, 134));
@@ -693,6 +720,16 @@ public class TelaInicial extends JPanel {
 		btnIniciarSimulados.setBackground(new Color(64, 74, 204));
 		btnIniciarSimulados.setBounds(84, 250, 116, 36);
 		panel_1_1.add(btnIniciarSimulados);
+		
+		btnIniciarSimulados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EscolhaSimulado a = new EscolhaSimulado();
+				removeAll();
+				add(a);
+				revalidate();
+				repaint();
+			}
+		});
 		
 		JLabel lbl_simulados = new JLabel("SIMULADOS");
 		lbl_simulados.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
