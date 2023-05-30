@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -33,63 +34,52 @@ import java.awt.Insets;
 public class Login extends JPanel {
 	private JTextField login_emailField;
 	private JPasswordField login_passwordField;
-	static final String DB_URL = "*";
-	static final String USER = "*";
-	static final String PASSWORD = "*";
-	static PreparedStatement pstmt=null;
 
-
-	/*
-	 * Trocar * por valores reais do DB.
-	 */
-
-	/*
-	 * Cria conexão com o banco de dados.
-	 */
-
-	public static String DB() {
-		String usuario = null;
-		String senha = null;
+	public static String[] DB(String usuario) {
+		String[] infouser = new String [2]; //Armazena os dados de login se um usuário em Array.
 
 		try {
-			Connection conn = DriverManager.getConnection(DB_URL,USER,PASSWORD); //Cria conexão
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 
-			/*
-			 * Envia comandos para o DB.
-			 */
-			String sql = "select usuario,senha from estudamais;"; //SQL do que eu quero buscar
-			pstmt = conn.prepareStatement(sql); //Roda a SQL de cima no DB.
-
-			ResultSet rs = pstmt.executeQuery(); //Retornar os resultados da SQL
+			//Envia comandos para o DB.
+			String query = "select usuario,senha from estudamais where usuario =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			ResultSet rs = conn1.executeQuery(query,usuario); //Retornar os resultados da SQL
 
 			/*
 			 *Comando para guardar os dados dentro de uma variável;/
 			 */
 			if(rs.next()) {
-				usuario = rs.getString("usuario");}
-			//				senha = rs.getString("senha"); alterar depois
+				infouser[0] = rs.getString("usuario"); //Busca o vetor 0 das infos, equivalente ao Usuário
+				infouser[1] = rs.getString("senha");} //Busca o vetor 1 das infos, equivalente à Senha
 
 			rs.close();
-			pstmt.close();
-			conn.close();
+			conn1.closeConnection();
 		}
 		catch (SQLException e){e.printStackTrace();}
-		return usuario;
+		return infouser;
 	}
 
-	/**
+	/*
 	 * Create the panel.
 	 */
 	public Login() {
 		setLayout(null);
 		setBounds(0,0,1280,720);
 		// Criação do Panel
+				
+		
 		JPanel panel = new JPanel();
 		panel.setForeground(Color.WHITE);
 		panel.setBackground(new Color(36, 44, 136));
 		panel.setBounds(654, 0, 550, 720);
 		add(panel);
 		panel.setLayout(null);
+		
+		//Label da tela de fundo
+		JLabel lblFundo = new JLabel("");
+		lblFundo.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\OneDrive - SENAC-SC\\Programas\\ProjetoSenac-main\\EstudaMais1-main\\img\\img_telas\\bg_login.png"));
+		lblFundo.setBounds(0, 0, 1235, 720);
+		add(lblFundo);
 
 		// Título tela de Login - Faça seu Login
 		JLabel lblTituloConta = new JLabel("Faça seu Login");
@@ -197,7 +187,7 @@ public class Login extends JPanel {
 		btnRegistrar.setBorderPainted(false);
 		btnRegistrar.setBounds(290, 471, 110, 23);
 		panel.add(btnRegistrar);
-
+		
 		// Interação do botão "Registrar" com a tela "Registrar" - quando o usuário não possui um registro
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

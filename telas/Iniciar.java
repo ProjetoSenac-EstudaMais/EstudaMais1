@@ -67,7 +67,7 @@ public class Iniciar extends JFrame {
 		getContentPane().add(btnLogin);
 		
 		JLabel lblFundoIniciar = new JLabel("");
-		lblFundoIniciar.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\OneDrive - SENAC-SC\\Programas\\ProjetoSenac-main\\img\\Iniciar.png"));
+		lblFundoIniciar.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\OneDrive - SENAC-SC\\Programas\\ProjetoSenac-main\\EstudaMais1-main\\img\\img_telas\\bg_login.png"));
 		lblFundoIniciar.setBounds(0, 0, 1280, 700);
 		contentPane.add(lblFundoIniciar);
 
