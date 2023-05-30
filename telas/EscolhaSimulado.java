@@ -1,4 +1,4 @@
-package Telas;
+package telas;
 
 import java.awt.Choice;
 import java.awt.Color;
@@ -12,28 +12,57 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class EscolhaSimulado extends JPanel {
 	
-	//VARIAVEIS PARA O TIPO DE SIMULADO (PARA SER USADO COM OS BOTOES)
-	 int simuladoEscolha;
-	 
-	//VARIAVEL PARA O ANO DO SIMULADO COMPLETO
-	String anoSC;
-	
-	//VARIAVEL PARA O TEMPO DO SIMULADO PERSONALIZADO
-	String anoSP;
-	
-	//VARIAVEL PARA O TEMPO DO SIMULADO PERSONALIZADO
-	String tempoSP;
-	
+	// Faz um metódo para puxar a proxima linha de acordo com o id
+		public String[] nextRow(String email) {
+			String[] linha = new String[2];
 
+			// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
+			// configurar o JDBC no computador para funcionar
+			ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root");
 
+			// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
+			// definir ele fora do comando
+			String query = "select nome, titulo from usuario where email=? ";
+
+			// Este comando retorna os valores solicitados, e primeiro vem o comando e
+			// depois o valor do '?'
+			ResultSet rs = con.executeQuery(query, email );
+
+			// Este comando armazena os valores recebidos em uma variavel
+			try {
+				if (rs.next()) {
+
+					// Armazenando em uma array posso livremente puxalos posteriormente no código e
+					// atualizalos conforme o id avança
+					linha[0] = rs.getString("nome");
+					linha[1] = rs.getString("titulo");
+					
+
+				}
+
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			// sempre fechar a conexão após o uso necessário
+			con.closeConnection();
+			return linha;
+		}
+	
 	/**
 	 * Create the panel.
 	 */
 	public EscolhaSimulado() {
+		
+		Simulado simu = new Simulado();
+		
 		
 			setLayout(null);
 			setBounds(100,100,1280,720);
@@ -45,86 +74,79 @@ public class EscolhaSimulado extends JPanel {
 			panel.setLayout(null);
 			
 			JPanel panel_1 = new JPanel();
-			panel_1.setBackground(new Color(36, 44, 136));
+			panel_1.setBackground(new Color(240, 240, 240));
 			panel_1.setBounds(0, 0, 260, 720);
 			panel.add(panel_1);
 			panel_1.setLayout(null);
 			
 			JPanel panel_3 = new JPanel();
-			panel_3.setBackground(new Color(64, 74, 204));
+			panel_3.setBackground(new Color(34, 44, 134));
 			panel_3.setBounds(0, 0, 260, 100);
 			panel_1.add(panel_3);
 			panel_3.setLayout(null);
 			
-			JPanel panel_4 = new JPanel();
-			panel_4.setBackground(new Color(98, 106, 204));
-			panel_4.setBounds(0, 0, 260, 10);
-			panel_3.add(panel_4);
-			panel_4.setLayout(null);
-			
-			JPanel panel_4_1 = new JPanel();
-			panel_4_1.setLayout(null);
-			panel_4_1.setBackground(new Color(98, 106, 204));
-			panel_4_1.setBounds(0, 90, 260, 10);
-			panel_3.add(panel_4_1);
-			
 			JLabel lblHenriqueSilveira = new JLabel("Henrique Silveira");
 			lblHenriqueSilveira.setForeground(new Color(255, 255, 255));
-			lblHenriqueSilveira.setFont(new Font("Poppins", Font.PLAIN, 13));
+			lblHenriqueSilveira.setFont(new Font("Dialog", Font.PLAIN, 12));
 			lblHenriqueSilveira.setBackground(Color.WHITE);
-			lblHenriqueSilveira.setBounds(101, 20, 115, 20);
+			lblHenriqueSilveira.setBounds(100, 20, 115, 20);
 			panel_3.add(lblHenriqueSilveira);
 			
 			JLabel lblQuemCedoMadruga = new JLabel("Quem cedo madruga");
 			lblQuemCedoMadruga.setForeground(new Color(188, 188, 188));
 			lblQuemCedoMadruga.setFont(new Font("Poppins", Font.PLAIN, 12));
 			lblQuemCedoMadruga.setBackground(Color.WHITE);
-			lblQuemCedoMadruga.setBounds(101, 42, 149, 20);
+			lblQuemCedoMadruga.setBounds(100, 35, 149, 20);
 			panel_3.add(lblQuemCedoMadruga);
 			
+			JLabel lblNewLabel_3 = new JLabel("");
+			lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel_3.setRequestFocusEnabled(false);
+			lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\icon_id2.png"));
+			lblNewLabel_3.setBounds(24, 15, 68, 68);
+			panel_3.add(lblNewLabel_3);
+			
+			//ACAO DE VOLTAR PARA A TELA INICIAL NO BOTAO VOLTAR
 			JButton btnVoltar = new JButton("Voltar");
+			btnVoltar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					TelaInicial a = new TelaInicial();
+					removeAll();
+					add(a);
+					revalidate();
+					repaint();
+				}
+			});
 			btnVoltar.setBorder(null);
-			btnVoltar.setForeground(Color.WHITE);
-			btnVoltar.setFont(new Font("Poppins", Font.PLAIN, 13));
+			btnVoltar.setForeground(new Color(0, 0, 0));
+			btnVoltar.setFont(new Font("Dialog", Font.PLAIN, 15));
 			btnVoltar.setContentAreaFilled(false);
 			btnVoltar.setBackground(new Color(36, 44, 136));
-			btnVoltar.setBounds(43, 620, 40, 24);
+			btnVoltar.setBounds(10, 690, 59, 24);
 			panel_1.add(btnVoltar);
 			
 			JPanel panel_2 = new JPanel();
 			panel_2.setBackground(new Color(64, 74, 204));
-			panel_2.setBounds(260, 0, 1010, 720);
+			panel_2.setBounds(260, 0, 1020, 720);
 			panel.add(panel_2);
 			panel_2.setLayout(null);
 			
 			JPanel panel_3_1 = new JPanel();
 			panel_3_1.setBackground(new Color(36, 44, 136));
-			panel_3_1.setBounds(0, 0, 1010, 100);
+			panel_3_1.setBounds(0, 0, 1020, 100);
 			panel_2.add(panel_3_1);
 			panel_3_1.setLayout(null);
-			
-			JPanel panel_4_1_1 = new JPanel();
-			panel_4_1_1.setLayout(null);
-			panel_4_1_1.setBackground(new Color(98, 106, 204));
-			panel_4_1_1.setBounds(0, 0, 1010, 10);
-			panel_3_1.add(panel_4_1_1);
-			
-			JPanel panel_4_1_1_1 = new JPanel();
-			panel_4_1_1_1.setLayout(null);
-			panel_4_1_1_1.setBackground(new Color(98, 106, 204));
-			panel_4_1_1_1.setBounds(0, 90, 1010, 10);
-			panel_3_1.add(panel_4_1_1_1);
 			
 			JLabel lblSimulados = new JLabel("Simulados");
 			lblSimulados.setForeground(new Color(255, 255, 255));
 			lblSimulados.setFont(new Font("Poppins", Font.PLAIN, 35));
-			lblSimulados.setBounds(368, 20, 194, 53);
+			lblSimulados.setBounds(415, 23, 169, 53);
 			panel_3_1.add(lblSimulados);
 			
 			//PAINEL DE FUNDO DO SIMULADO COMPLETO
 			JPanel panel_5 = new JPanel();
 			panel_5.setBackground(new Color(255, 255, 255));
-			panel_5.setBounds(97, 127, 383, 522);
+			panel_5.setBounds(94, 153, 383, 522);
 			panel_2.add(panel_5);
 			panel_5.setLayout(null);
 			
@@ -132,11 +154,7 @@ public class EscolhaSimulado extends JPanel {
 			
 			//BOTAO DE INICAR O SIMULADO COMPLETO
 			JButton btnIniciarSC = new JButton("INICIAR");
-			btnIniciarSC.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					simuladoEscolha = 1;
-				}
-			});
+			
 			btnIniciarSC.setBorderPainted(false);
 			btnIniciarSC.setBorder(new LineBorder(new Color(64, 74, 204), 1, true));
 			btnIniciarSC.setForeground(new Color(255, 255, 255));
@@ -156,8 +174,8 @@ public class EscolhaSimulado extends JPanel {
 			
 			//LABEL PARA INSERIR ICONE DO RELOGIO NO SIMULADO COMPLETO
 			JLabel lblNewLabel = new JLabel("");
-			lblNewLabel.setIcon(new ImageIcon("C:\\Users\\bruna\\OneDrive\\Desktop\\SENAC PROG\\PROJETO SI 1\\clock.png"));
-			lblNewLabel.setBounds(70, 102, 50, 50);
+			lblNewLabel.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\clock.png"));
+			lblNewLabel.setBounds(74, 185, 50, 50);
 			panel_5.add(lblNewLabel);
 			
 			//LABEL TEMPO
@@ -165,13 +183,13 @@ public class EscolhaSimulado extends JPanel {
 			lblTempoPadr.setForeground(Color.BLACK);
 			lblTempoPadr.setFont(new Font("Poppins", Font.PLAIN, 23));
 			lblTempoPadr.setBackground(Color.WHITE);
-			lblTempoPadr.setBounds(131, 102, 175, 40);
+			lblTempoPadr.setBounds(135, 185, 175, 40);
 			panel_5.add(lblTempoPadr);
 			
 			//LABEL PARA INSERIR ICONE DO PAPEL NO SIMULADO COMPLETO
 			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\bruna\\OneDrive\\Desktop\\SENAC PROG\\PROJETO SI 1\\paper.png"));
-			lblNewLabel_1.setBounds(70, 159, 50, 50);
+			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\paper.png"));
+			lblNewLabel_1.setBounds(74, 242, 50, 50);
 			panel_5.add(lblNewLabel_1);
 			
 			//LABEL QUESTOES NO SIMULADO COMPLETO
@@ -179,13 +197,13 @@ public class EscolhaSimulado extends JPanel {
 			lblQuestoes.setForeground(Color.BLACK);
 			lblQuestoes.setFont(new Font("Poppins", Font.PLAIN, 23));
 			lblQuestoes.setBackground(Color.WHITE);
-			lblQuestoes.setBounds(131, 156, 158, 40);
+			lblQuestoes.setBounds(135, 239, 158, 40);
 			panel_5.add(lblQuestoes);
 			
 			//LABEL PARA INSERIR ICONE DO CALENDARIO NO SIMULADO COMPLETO
 			JLabel lblNewLabel_1_1 = new JLabel("");
-			lblNewLabel_1_1.setIcon(new ImageIcon("C:\\Users\\bruna\\OneDrive\\Desktop\\SENAC PROG\\PROJETO SI 1\\calendar.png"));
-			lblNewLabel_1_1.setBounds(70, 219, 50, 50);
+			lblNewLabel_1_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\calendar.png"));
+			lblNewLabel_1_1.setBounds(74, 302, 50, 50);
 			panel_5.add(lblNewLabel_1_1);
 			
 			//LABEL ESCOLHA ANO NO SIMULADO COMPLETO
@@ -193,36 +211,43 @@ public class EscolhaSimulado extends JPanel {
 			lblEscolhaOAno.setForeground(Color.BLACK);
 			lblEscolhaOAno.setFont(new Font("Poppins", Font.PLAIN, 23));
 			lblEscolhaOAno.setBackground(Color.WHITE);
-			lblEscolhaOAno.setBounds(131, 219, 158, 40);
+			lblEscolhaOAno.setBounds(135, 302, 158, 40);
 			panel_5.add(lblEscolhaOAno);
 			
 			//"BOTAO CHOICE" DE ESCOLHA DO ANO NO SIMULADO COMPLETO
 			Choice choice = new Choice();
 			choice.setBackground(Color.LIGHT_GRAY);
 			choice.setForeground(new Color(255, 255, 255));
-			choice.setBounds(141, 264, 150, 18);
+			choice.setBounds(145, 347, 150, 18);
 			panel_5.add(choice);
 			choice.add("---");
 			choice.add("2021");
 			choice.add("2022");
 			choice.add("2023");
 			
+			//BOTAO INICIAR PARA PEGAR DADOS DO SC
+			btnIniciarSC.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					simu.tipoSimu = 1; //TIPO SC
+					simu.anoSC = choice.getSelectedItem(); //TIPO ANO
+					removeAll();
+					add(simu);
+					revalidate();
+					repaint();
+				}
+			});			
 		
 				
 			//PAINEL DE FUNDO DO SIMULADO PERSONALIZADO
 			JPanel panel_5_1 = new JPanel();
 			panel_5_1.setBackground(new Color(255, 255, 255));
 			panel_5_1.setLayout(null);
-			panel_5_1.setBounds(529, 127, 383, 522);
+			panel_5_1.setBounds(526, 153, 383, 522);
 			panel_2.add(panel_5_1);
 			
 			//BOTAO DE INICAR O SIMULADO PERSONALIZADO
 			JButton btnIniciarSP = new JButton("INICIAR");
-			btnIniciarSP.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					simuladoEscolha = 2;
-				}
-			});
+			
 			btnIniciarSP.setForeground(Color.WHITE);
 			btnIniciarSP.setFont(new Font("Poppins", Font.PLAIN, 20));
 			btnIniciarSP.setBorderPainted(false);
@@ -241,8 +266,8 @@ public class EscolhaSimulado extends JPanel {
 			
 			//LABEL PARA O ICONE DE RELOGIO NO SIMULADO PERSONALIZADO
 			JLabel lblNewLabel_2 = new JLabel("");
-			lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\bruna\\OneDrive\\Desktop\\SENAC PROG\\PROJETO SI 1\\clock.png"));
-			lblNewLabel_2.setBounds(61, 106, 50, 50);
+			lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\clock.png"));
+			lblNewLabel_2.setBounds(60, 182, 50, 50);
 			panel_5_1.add(lblNewLabel_2);
 			
 			//LABEL TEMPO NO SIMULADO PERSONALIZADO
@@ -250,26 +275,24 @@ public class EscolhaSimulado extends JPanel {
 			lblTempo.setForeground(Color.BLACK);
 			lblTempo.setFont(new Font("Poppins", Font.PLAIN, 23));
 			lblTempo.setBackground(Color.WHITE);
-			lblTempo.setBounds(120, 102, 82, 40);
+			lblTempo.setBounds(119, 178, 82, 40);
 			panel_5_1.add(lblTempo);
 			
 			//"BOTAO CHOICE" DE ESCOLHA DO TEMPO NO SIMULADO PERSONALIZADO
 			Choice choice_1 = new Choice();
 			choice_1.setForeground(Color.WHITE);
 			choice_1.setBackground(Color.LIGHT_GRAY);
-			choice_1.setBounds(208, 115, 126, 18);
+			choice_1.setBounds(207, 191, 126, 18);
 			panel_5_1.add(choice_1);
 			choice_1.add("---");
 			choice_1.add("Curto");
 			choice_1.add("Médio");
-			choice_1.add("Longo");
-			
-			
-			
+				
+						
 			//LABEL PARA O ICONE DE PAPEL NO SIMULADO PERSONALIZADO
 			JLabel lblNewLabel_1_2 = new JLabel("");
-			lblNewLabel_1_2.setIcon(new ImageIcon("C:\\Users\\bruna\\OneDrive\\Desktop\\SENAC PROG\\PROJETO SI 1\\paper.png"));
-			lblNewLabel_1_2.setBounds(61, 172, 50, 50);
+			lblNewLabel_1_2.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\paper.png"));
+			lblNewLabel_1_2.setBounds(60, 248, 50, 50);
 			panel_5_1.add(lblNewLabel_1_2);
 			
 			//LABEL NUMERO DE QUESTOES NO SIMULADO PERSONALIZADO
@@ -277,13 +300,13 @@ public class EscolhaSimulado extends JPanel {
 			lblQuestoes_1.setForeground(Color.BLACK);
 			lblQuestoes_1.setFont(new Font("Poppins", Font.PLAIN, 23));
 			lblQuestoes_1.setBackground(Color.WHITE);
-			lblQuestoes_1.setBounds(120, 156, 111, 40);
+			lblQuestoes_1.setBounds(119, 232, 111, 40);
 			panel_5_1.add(lblQuestoes_1);
 			
 			//LABEL PARA O ICONE DE CALENDARIO NO SIMULADO PERSONALIZADO
 			JLabel lblNewLabel_1_1_1 = new JLabel("");
-			lblNewLabel_1_1_1.setIcon(new ImageIcon("C:\\Users\\bruna\\OneDrive\\Desktop\\SENAC PROG\\PROJETO SI 1\\calendar.png"));
-			lblNewLabel_1_1_1.setBounds(61, 231, 50, 50);
+			lblNewLabel_1_1_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\calendar.png"));
+			lblNewLabel_1_1_1.setBounds(60, 307, 50, 50);
 			panel_5_1.add(lblNewLabel_1_1_1);
 			
 			//LABEL ESCOLHA DE ANO NO SIMULADO PERSONALIZADO
@@ -291,32 +314,35 @@ public class EscolhaSimulado extends JPanel {
 			lblEscolhaOAno_1.setForeground(Color.BLACK);
 			lblEscolhaOAno_1.setFont(new Font("Poppins", Font.PLAIN, 23));
 			lblEscolhaOAno_1.setBackground(Color.WHITE);
-			lblEscolhaOAno_1.setBounds(120, 219, 158, 30);
+			lblEscolhaOAno_1.setBounds(119, 295, 158, 30);
 			panel_5_1.add(lblEscolhaOAno_1);
 			
 			//"BOTAO CHOICE" DE ESCOLHA DO ANO NO SIMULADO PERSONALIZADO
 			Choice choice_2 = new Choice();
 			choice_2.setForeground(Color.WHITE);
 			choice_2.setBackground(Color.LIGHT_GRAY);
-			choice_2.setBounds(127, 264, 150, 18);
+			choice_2.setBounds(126, 340, 150, 18);
 			panel_5_1.add(choice_2);
 			choice_2.add("---");
 			choice_2.add("2021");
 			choice_2.add("2022");
 			choice_2.add("2023");
 			
-				
-			
-			JPanel panel_4_1_1_1_1 = new JPanel();
-			panel_4_1_1_1_1.setLayout(null);
-			panel_4_1_1_1_1.setBackground(new Color(188, 188, 188));
-			panel_4_1_1_1_1.setBounds(0, 675, 1010, 10);
-			panel_2.add(panel_4_1_1_1_1);
+			btnIniciarSP.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					simu.tipoSimu = 2; // TIPO SP
+					simu.anoSP = choice_2.getSelectedItem(); // TIPO ANO
+					simu.tempoSimu = choice_1.getSelectedItem(); // TIPO TEMPO
+					removeAll();
+					add(simu);
+					revalidate();
+					repaint();
+					}
+			});
 			setBounds(0, 0, 1280, 720);
 	
 	
 
 		
 	}
-
 }
