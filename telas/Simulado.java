@@ -25,18 +25,20 @@ public class Simulado extends JPanel {
 	private JTextField textField;
 	public ButtonGroup bg;
 	private static int linhaAtual = 1;
-	public int acertos = 0;
-	public int erros = 0;
 	public String anoSP;
 	public String anoSC;
 	public String tempoSimu;
 	private static int anoS;
+	public long inicio;
+	public long fim;
+	public  long tempoTotal;
 	public int tipoSimu;
 	public int tempoInicialSegundos = 300 * 60; // Tempo em segundos
+	private int i =0;
 
 	// Faz um metódo para puxar a proxima linha de acordo com o id
 	public String[] nextRow(int id, int ano) {
-		String[] linha = new String[7];
+		String[] linha = new String[8];
 
 		// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
 		// configurar o JDBC no computador para funcionar
@@ -44,7 +46,7 @@ public class Simulado extends JPanel {
 
 		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
 		// definir ele fora do comando
-		String query = "select id,question,answerA,answerB,answerC,answerD,rightanswer from questions where id=? and ano=?";
+		String query = "select id,question,answerA,answerB,answerC,answerD,answerE,rightanswer from questions where id=? and ano=?";
 
 		// Este comando retorna os valores solicitados, e primeiro vem o comando e
 		// depois o valor do '?'
@@ -61,8 +63,9 @@ public class Simulado extends JPanel {
 				linha[2] = rs.getString("answerB");
 				linha[3] = rs.getString("answerC");
 				linha[4] = rs.getString("answerD");
-				linha[5] = rs.getString("rightanswer");
+				linha[5] = rs.getString("answerE");
 				linha[6] = rs.getString("id");
+				linha[7] = rs.getString("rightanswer");
 
 			}
 
@@ -80,6 +83,8 @@ public class Simulado extends JPanel {
 	 * Create the panel.
 	 */
 	public Simulado() {
+		 // Início do período da prova
+        inicio = System.currentTimeMillis();
 
 		setBackground(new Color(255, 255, 255));
 		setBounds(0, 0, 1280, 720);
@@ -326,71 +331,138 @@ public class Simulado extends JPanel {
 		txtB.setText(primeiraLinha[2]);
 		txtC.setText(primeiraLinha[3]);
 		txtD.setText(primeiraLinha[4]);
+		txtE.setText(primeiraLinha[5]);
 		lblNumQuestao.setText(primeiraLinha[6]);
 
 		btnPrx.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Resultados res = new Resultados();
 
 				// condição para quando um dos radio buttons estiverem selecionados
 				if (rdbA.isSelected() || rdbB.isSelected() || rdbC.isSelected() || rdbD.isSelected()) {
 
 					if (linhaAtual > 0) {
-						String[] novaLinha = nextRow(linhaAtual, anoS);
+						String[] novaLinha = nextRow(linhaAtual,anoS);
+						Gabarito gab = new Gabarito();
+						
+						if(rdbA.isSelected()) {
+							gab.respostas[i] = rdbA.getText();
+						} else if (rdbB.isSelected()) {
+							gab.respostas[i] = rdbB.getText();
+						}else if (rdbC.isSelected()) {
+							gab.respostas[i] = rdbC.getText();
+						}else if (rdbD.isSelected()) {
+							gab.respostas[i] = rdbD.getText();
+						}else if (rdbE.isSelected()) {
+							gab.respostas[i] = rdbE.getText();
+						}
+						i++;
+
+						
 
 						// Verifica se a opção está correta;
 
-						if ((rdbA.isSelected() && novaLinha[5].equals("a"))
-								|| (rdbB.isSelected() && novaLinha[5].equals("b"))
-								|| (rdbC.isSelected() && novaLinha[5].equals("c"))
-								|| (rdbD.isSelected() && novaLinha[5].equals("d"))) {
+						if ((rdbA.isSelected() && novaLinha[7].equals("a"))
+								|| (rdbB.isSelected() && novaLinha[7].equals("b"))
+								|| (rdbC.isSelected() && novaLinha[7].equals("c"))
+								|| (rdbD.isSelected() && novaLinha[7].equals("d"))
+								|| (rdbE.isSelected() && novaLinha[7].equals("e"))) {
 							// Soma os pontos certos
-							acertos++;
+							res.acertos++;
 							JOptionPane.showMessageDialog(null, "Você acertou!");
 						} else {
 							JOptionPane.showMessageDialog(null, "Você errou!");
 							// Soma os pontos errados
-							erros++;
+							res.erros++;
 						}
 						// Atualiza o valor de linha atual, para ir para os próximos textos
 						linhaAtual++;
 
 						// Guarda os novos dados num array e bota nos componentes;
 
-						String[] proxLinha = nextRow(linhaAtual, anoS);
+						String[] proxLinha = nextRow(linhaAtual,anoS);
 
 						textPane.setText(proxLinha[0]);
 						txtA.setText(proxLinha[1]);
 						txtB.setText(proxLinha[2]);
 						txtC.setText(proxLinha[3]);
 						txtD.setText(proxLinha[4]);
+						txtE.setText(proxLinha[5]);
 						lblNumQuestao.setText(proxLinha[6]);
 
 						// Zera a seleção dos Radio Buttons
 						bg.clearSelection();
 
 					}
+					
+					
 
 					if (tipoSimu == 1) {
 
 						// Fecha o Quiz; Depois mudamos esta parte para passar pra tela de resultado
 						if (linhaAtual > 90) {
 							JOptionPane.showMessageDialog(null,
-									"Fim do Quiz! Você acertou" + acertos + "pontos! E errou " + erros);
-							System.exit(0);
+									"Prova finalizada");
+							
+							 // Fim do período da prova
+					         fim = System.currentTimeMillis();
+					        
+					        // Cálculo do tempo em milissegundos
+					        tempoTotal = fim - inicio;
+					        
+					        // Conversão para minutos e segundos
+					        res.horas = tempoTotal / (60 * 60 * 1000);
+					        res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
+					        res.segundos = (tempoTotal % (60 * 1000)) / 1000;
+					        
+							removeAll();
+							add(res);
+							revalidate();
+							repaint();
 						}
 
 					} else if (tipoSimu == 2) {
 						if (tempoSimu == "Curto") {
 							if (linhaAtual > 30) {
 								JOptionPane.showMessageDialog(null,
-										"Fim do Quiz! Você acertou" + acertos + "pontos! E errou " + erros);
-								System.exit(0);
+										"Prova finalizada");
+								 // Fim do período da prova
+						         fim = System.currentTimeMillis();
+						        
+						        // Cálculo do tempo em milissegundos
+						        tempoTotal = fim - inicio;
+						        
+						        // Conversão para minutos e segundos
+						        res.horas = tempoTotal / (60 * 60 * 1000);
+						        res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
+						        res.segundos = (tempoTotal % (60 * 1000)) / 1000;
+						        
+								removeAll();
+								add(res);
+								revalidate();
+								repaint();
 							}
 						} else if (tempoSimu == "Médio") {
 							if (linhaAtual > 60) {
 								JOptionPane.showMessageDialog(null,
-										"Fim do Quiz! Você acertou" + acertos + "pontos! E errou " + erros);
-								System.exit(0);
+										"Prova finalizada");
+								
+								 // Fim do período da prova
+						         fim = System.currentTimeMillis();
+						        
+						        // Cálculo do tempo em milissegundos
+						        tempoTotal = fim - inicio;
+						        
+						        // Conversão para minutos e segundos
+						        res.horas = tempoTotal / (60 * 60 * 1000);
+						        res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
+						        res.segundos = (tempoTotal % (60 * 1000)) / 1000;
+						        
+								removeAll();
+								add(res);
+								revalidate();
+								repaint();
+								
 							}
 						}
 
