@@ -201,7 +201,7 @@ public class MeuPerfil extends JPanel {
 			panel_2.add(lblNewLabel);
 			
 			JLabel primeironome = new JLabel("Henrique");
-			primeironome.setFont(new Font("Poppins", Font.PLAIN, 18));
+			primeironome.setFont(new Font("Poppins", Font.PLAIN, 17));
 			primeironome.setBounds(244, 111, 135, 27);
 			panel_2.add(primeironome);
 			
@@ -211,7 +211,7 @@ public class MeuPerfil extends JPanel {
 			panel_2.add(lblSobrenome);
 			
 			JLabel lblSobrenome_1 = new JLabel("Silveira");
-			lblSobrenome_1.setFont(new Font("Poppins", Font.PLAIN, 18));
+			lblSobrenome_1.setFont(new Font("Poppins", Font.PLAIN, 17));
 			lblSobrenome_1.setBounds(294, 136, 135, 27);
 			panel_2.add(lblSobrenome_1);
 			
@@ -250,9 +250,9 @@ public class MeuPerfil extends JPanel {
 			
 			JLabel lblNewLabel_3 = new JLabel("Simulados");
 			lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_3.setFont(new Font("Poppins", Font.PLAIN, 17));
+			lblNewLabel_3.setFont(new Font("Poppins", Font.PLAIN, 18));
 			lblNewLabel_3.setForeground(new Color(255, 255, 255));
-			lblNewLabel_3.setBounds(-2, -1, 426, 40);
+			lblNewLabel_3.setBounds(0, 0, 422, 40);
 			panel_3.add(lblNewLabel_3);
 			
 			JPanel panel_3_3 = new JPanel();
@@ -266,7 +266,7 @@ public class MeuPerfil extends JPanel {
 			panel_2.add(lblDataDeNascimento);
 			
 			JLabel dataNasc = new JLabel("19 Anos");
-			dataNasc.setFont(new Font("Poppins", Font.PLAIN, 18));
+			dataNasc.setFont(new Font("Poppins", Font.PLAIN, 17));
 			dataNasc.setBounds(244, 161, 104, 27);
 			panel_2.add(dataNasc);
 			
