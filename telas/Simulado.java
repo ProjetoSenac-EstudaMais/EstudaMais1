@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.Timer;
+import java.awt.Choice;
 
 public class Simulado extends JPanel {
 	private JTextField textField;
@@ -46,11 +47,11 @@ public class Simulado extends JPanel {
 
 		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
 		// definir ele fora do comando
-		String query = "select id,question,answerA,answerB,answerC,answerD,answerE,rightanswer from questions where id=? and ano=?";
+		String query = "select id,question,answerA,answerB,answerC,answerD,answerE, rightanswer from questions where id=? and ano=?";
 
 		// Este comando retorna os valores solicitados, e primeiro vem o comando e
 		// depois o valor do '?'
-		ResultSet rs = con.executeQuery(query, id, ano);
+		ResultSet rs = con.executeQuery(query, id,ano);
 
 		// Este comando armazena os valores recebidos em uma variavel
 		try {
@@ -83,8 +84,8 @@ public class Simulado extends JPanel {
 	 * Create the panel.
 	 */
 	public Simulado() {
-		 // Início do período da prova
-        inicio = System.currentTimeMillis();
+		// Início do período da prova
+		inicio = System.currentTimeMillis();
 
 		setBackground(new Color(255, 255, 255));
 		setBounds(0, 0, 1280, 720);
@@ -151,7 +152,7 @@ public class Simulado extends JPanel {
 		JTextPane textPane = new JTextPane();
 		textPane.setBorder(null);
 		textPane.setEditable(false);
-		textPane.setBounds(70, 129, 585, 538);
+		textPane.setBounds(0, 0, 474, 520);
 		add(textPane);
 
 		JScrollPane scrollPane = new JScrollPane(textPane);
@@ -334,8 +335,49 @@ public class Simulado extends JPanel {
 		txtE.setText(primeiraLinha[5]);
 		lblNumQuestao.setText(primeiraLinha[6]);
 
+		Choice choice = new Choice();
+		choice.setBounds(893, 59, 103, 20);
+		add(choice);
+
+		//Cria 90 numeros de seleção
+		for(int i=1;i<=90;i++) {
+			choice.add(""+i);
+		}
+
+		//Ao apertar o botão pega a questao selecionada e troca para ela
+		JButton btnOk = new JButton("Ok");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				//ID pega pega o valor da caixa de texto selecionada
+				linhaAtual = Integer.parseInt(choice.getSelectedItem());
+				String[] linhaSelecionada = nextRow(linhaAtual,anoS);
+
+				//Bota os dados referentes ao valor da idnos componentes
+				textPane.setText(linhaSelecionada[0]);
+				txtA.setText(linhaSelecionada[1]);
+				txtB.setText(linhaSelecionada[2]);
+				txtC.setText(linhaSelecionada[3]);
+				txtD.setText(linhaSelecionada[4]);
+				txtE.setText(linhaSelecionada[5]);
+				lblNumQuestao.setText(linhaSelecionada[6]);
+			}
+		});
+		btnOk.setForeground(Color.WHITE);
+		btnOk.setFont(new Font("Poppins Medium", Font.PLAIN, 14));
+		btnOk.setFocusPainted(false);
+		btnOk.setBorderPainted(false);
+		btnOk.setBackground(new Color(64, 74, 204));
+		btnOk.setBounds(1002, 59, 57, 20);
+		add(btnOk);
+
+
+
 		btnPrx.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				//A caixa de seleção atualiza o valor para ficar o mesmo número da questão
+				choice.select(linhaAtual);
+
 				Resultados res = new Resultados();
 
 				// condição para quando um dos radio buttons estiverem selecionados
@@ -344,7 +386,7 @@ public class Simulado extends JPanel {
 					if (linhaAtual > 0) {
 						String[] novaLinha = nextRow(linhaAtual,anoS);
 						Gabarito gab = new Gabarito();
-						
+
 						if(rdbA.isSelected()) {
 							gab.respostas[i] = rdbA.getText();
 						} else if (rdbB.isSelected()) {
@@ -358,7 +400,7 @@ public class Simulado extends JPanel {
 						}
 						i++;
 
-						
+
 
 						// Verifica se a opção está correta;
 
@@ -380,6 +422,7 @@ public class Simulado extends JPanel {
 
 						// Guarda os novos dados num array e bota nos componentes;
 
+
 						String[] proxLinha = nextRow(linhaAtual,anoS);
 
 						textPane.setText(proxLinha[0]);
@@ -394,8 +437,8 @@ public class Simulado extends JPanel {
 						bg.clearSelection();
 
 					}
-					
-					
+
+
 
 					if (tipoSimu == 1) {
 
@@ -403,18 +446,18 @@ public class Simulado extends JPanel {
 						if (linhaAtual > 90) {
 							JOptionPane.showMessageDialog(null,
 									"Prova finalizada");
-							
-							 // Fim do período da prova
-					         fim = System.currentTimeMillis();
-					        
-					        // Cálculo do tempo em milissegundos
-					        tempoTotal = fim - inicio;
-					        
-					        // Conversão para minutos e segundos
-					        res.horas = tempoTotal / (60 * 60 * 1000);
-					        res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
-					        res.segundos = (tempoTotal % (60 * 1000)) / 1000;
-					        
+
+							// Fim do período da prova
+							fim = System.currentTimeMillis();
+
+							// Cálculo do tempo em milissegundos
+							tempoTotal = fim - inicio;
+
+							// Conversão para minutos e segundos
+							res.horas = tempoTotal / (60 * 60 * 1000);
+							res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
+							res.segundos = (tempoTotal % (60 * 1000)) / 1000;
+
 							removeAll();
 							add(res);
 							revalidate();
@@ -426,17 +469,17 @@ public class Simulado extends JPanel {
 							if (linhaAtual > 30) {
 								JOptionPane.showMessageDialog(null,
 										"Prova finalizada");
-								 // Fim do período da prova
-						         fim = System.currentTimeMillis();
-						        
-						        // Cálculo do tempo em milissegundos
-						        tempoTotal = fim - inicio;
-						        
-						        // Conversão para minutos e segundos
-						        res.horas = tempoTotal / (60 * 60 * 1000);
-						        res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
-						        res.segundos = (tempoTotal % (60 * 1000)) / 1000;
-						        
+								// Fim do período da prova
+								fim = System.currentTimeMillis();
+
+								// Cálculo do tempo em milissegundos
+								tempoTotal = fim - inicio;
+
+								// Conversão para minutos e segundos
+								res.horas = tempoTotal / (60 * 60 * 1000);
+								res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
+								res.segundos = (tempoTotal % (60 * 1000)) / 1000;
+
 								removeAll();
 								add(res);
 								revalidate();
@@ -446,23 +489,23 @@ public class Simulado extends JPanel {
 							if (linhaAtual > 60) {
 								JOptionPane.showMessageDialog(null,
 										"Prova finalizada");
-								
-								 // Fim do período da prova
-						         fim = System.currentTimeMillis();
-						        
-						        // Cálculo do tempo em milissegundos
-						        tempoTotal = fim - inicio;
-						        
-						        // Conversão para minutos e segundos
-						        res.horas = tempoTotal / (60 * 60 * 1000);
-						        res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
-						        res.segundos = (tempoTotal % (60 * 1000)) / 1000;
-						        
+
+								// Fim do período da prova
+								fim = System.currentTimeMillis();
+
+								// Cálculo do tempo em milissegundos
+								tempoTotal = fim - inicio;
+
+								// Conversão para minutos e segundos
+								res.horas = tempoTotal / (60 * 60 * 1000);
+								res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
+								res.segundos = (tempoTotal % (60 * 1000)) / 1000;
+
 								removeAll();
 								add(res);
 								revalidate();
 								repaint();
-								
+
 							}
 						}
 
