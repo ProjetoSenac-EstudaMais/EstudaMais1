@@ -15,8 +15,10 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.Cursor;
 
 public class EscolhaSimulado extends JPanel {
+	private String email2;
 	
 	// Faz um metódo para puxar a proxima linha de acordo com o id
 		public String[] nextRow(String email) {
@@ -63,6 +65,7 @@ public class EscolhaSimulado extends JPanel {
 		
 		Simulado simu = new Simulado();
 		
+		String [] nomeInfo = nextRow(email2);
 		
 			setLayout(null);
 			setBounds(100,100,1280,720);
@@ -85,29 +88,30 @@ public class EscolhaSimulado extends JPanel {
 			panel_1.add(panel_3);
 			panel_3.setLayout(null);
 			
-			JLabel lblHenriqueSilveira = new JLabel("Henrique Silveira");
-			lblHenriqueSilveira.setForeground(new Color(255, 255, 255));
-			lblHenriqueSilveira.setFont(new Font("Dialog", Font.PLAIN, 12));
-			lblHenriqueSilveira.setBackground(Color.WHITE);
-			lblHenriqueSilveira.setBounds(100, 20, 115, 20);
-			panel_3.add(lblHenriqueSilveira);
+			JLabel lblNomeUsuario = new JLabel("" + nomeInfo[0]);
+			lblNomeUsuario.setForeground(new Color(255, 255, 255));
+			lblNomeUsuario.setFont(new Font("Dialog", Font.PLAIN, 12));
+			lblNomeUsuario.setBackground(Color.WHITE);
+			lblNomeUsuario.setBounds(100, 20, 115, 20);
+			panel_3.add(lblNomeUsuario);
 			
-			JLabel lblQuemCedoMadruga = new JLabel("Quem cedo madruga");
-			lblQuemCedoMadruga.setForeground(new Color(188, 188, 188));
-			lblQuemCedoMadruga.setFont(new Font("Poppins", Font.PLAIN, 12));
-			lblQuemCedoMadruga.setBackground(Color.WHITE);
-			lblQuemCedoMadruga.setBounds(100, 35, 149, 20);
-			panel_3.add(lblQuemCedoMadruga);
+			JLabel lblTituloUsuario = new JLabel("" + nomeInfo[1]);
+			lblTituloUsuario.setForeground(new Color(188, 188, 188));
+			lblTituloUsuario.setFont(new Font("Poppins", Font.PLAIN, 12));
+			lblTituloUsuario.setBackground(Color.WHITE);
+			lblTituloUsuario.setBounds(100, 35, 149, 20);
+			panel_3.add(lblTituloUsuario);
 			
 			JLabel lblNewLabel_3 = new JLabel("");
 			lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_3.setRequestFocusEnabled(false);
-			lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\icon_id2.png"));
+			lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\icons\\icon_id2.png"));
 			lblNewLabel_3.setBounds(24, 15, 68, 68);
 			panel_3.add(lblNewLabel_3);
 			
 			//ACAO DE VOLTAR PARA A TELA INICIAL NO BOTAO VOLTAR
 			JButton btnVoltar = new JButton("Voltar");
+			btnVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			btnVoltar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					TelaInicial a = new TelaInicial();
@@ -154,6 +158,7 @@ public class EscolhaSimulado extends JPanel {
 			
 			//BOTAO DE INICAR O SIMULADO COMPLETO
 			JButton btnIniciarSC = new JButton("INICIAR");
+			btnIniciarSC.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			
 			btnIniciarSC.setBorderPainted(false);
 			btnIniciarSC.setBorder(new LineBorder(new Color(64, 74, 204), 1, true));
@@ -174,7 +179,7 @@ public class EscolhaSimulado extends JPanel {
 			
 			//LABEL PARA INSERIR ICONE DO RELOGIO NO SIMULADO COMPLETO
 			JLabel lblNewLabel = new JLabel("");
-			lblNewLabel.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\clock.png"));
+			lblNewLabel.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\clock.png"));
 			lblNewLabel.setBounds(74, 185, 50, 50);
 			panel_5.add(lblNewLabel);
 			
@@ -188,7 +193,7 @@ public class EscolhaSimulado extends JPanel {
 			
 			//LABEL PARA INSERIR ICONE DO PAPEL NO SIMULADO COMPLETO
 			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\paper.png"));
+			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\paper.png"));
 			lblNewLabel_1.setBounds(74, 242, 50, 50);
 			panel_5.add(lblNewLabel_1);
 			
@@ -202,7 +207,7 @@ public class EscolhaSimulado extends JPanel {
 			
 			//LABEL PARA INSERIR ICONE DO CALENDARIO NO SIMULADO COMPLETO
 			JLabel lblNewLabel_1_1 = new JLabel("");
-			lblNewLabel_1_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\calendar.png"));
+			lblNewLabel_1_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\calendar.png"));
 			lblNewLabel_1_1.setBounds(74, 302, 50, 50);
 			panel_5.add(lblNewLabel_1_1);
 			
@@ -266,7 +271,7 @@ public class EscolhaSimulado extends JPanel {
 			
 			//LABEL PARA O ICONE DE RELOGIO NO SIMULADO PERSONALIZADO
 			JLabel lblNewLabel_2 = new JLabel("");
-			lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\clock.png"));
+			lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\clock.png"));
 			lblNewLabel_2.setBounds(60, 182, 50, 50);
 			panel_5_1.add(lblNewLabel_2);
 			
@@ -291,7 +296,7 @@ public class EscolhaSimulado extends JPanel {
 						
 			//LABEL PARA O ICONE DE PAPEL NO SIMULADO PERSONALIZADO
 			JLabel lblNewLabel_1_2 = new JLabel("");
-			lblNewLabel_1_2.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\paper.png"));
+			lblNewLabel_1_2.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\paper.png"));
 			lblNewLabel_1_2.setBounds(60, 248, 50, 50);
 			panel_5_1.add(lblNewLabel_1_2);
 			
@@ -305,7 +310,7 @@ public class EscolhaSimulado extends JPanel {
 			
 			//LABEL PARA O ICONE DE CALENDARIO NO SIMULADO PERSONALIZADO
 			JLabel lblNewLabel_1_1_1 = new JLabel("");
-			lblNewLabel_1_1_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\UC4 PROJETO INTEGRADOR\\ICONES\\calendar.png"));
+			lblNewLabel_1_1_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\calendar.png"));
 			lblNewLabel_1_1_1.setBounds(60, 307, 50, 50);
 			panel_5_1.add(lblNewLabel_1_1_1);
 			
