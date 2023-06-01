@@ -1,519 +1,280 @@
 package Telas;
 
 import javax.swing.JPanel;
+import java.awt.Color;
+import java.awt.Font;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.awt.Color;
-import javax.swing.JButton;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
-import javax.swing.SwingConstants;
-import javax.swing.JTextField;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.Timer;
-import java.awt.Choice;
+import javax.swing.JButton;
+import javax.swing.SwingConstants;
+import java.awt.Cursor;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class Simulado extends JPanel {
-	private JTextField textField;
-	public ButtonGroup bg;
-	private static int linhaAtual = 1;
-	public String anoSP;
-	public String anoSC;
-	public String tempoSimu;
-	private static int anoS;
-	public long inicio;
-	public long fim;
-	public  long tempoTotal;
-	public int tipoSimu;
-	public int tempoInicialSegundos = 300 * 60; // Tempo em segundos
-	private int i =0;
-
-	// Faz um metódo para puxar a proxima linha de acordo com o id
-	public String[] nextRow(int id, int ano) {
-		String[] linha = new String[8];
-
-		// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
-		// configurar o JDBC no computador para funcionar
-		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "quiz", "root", "root2606!");
-
-		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
-		// definir ele fora do comando
-		String query = "select id,question,answerA,answerB,answerC,answerD,answerE, rightanswer from questions where id=? and ano=?";
-
-		// Este comando retorna os valores solicitados, e primeiro vem o comando e
-		// depois o valor do '?'
-		ResultSet rs = con.executeQuery(query, id,ano);
-
-		// Este comando armazena os valores recebidos em uma variavel
-		try {
-			if (rs.next()) {
-
-				// Armazenando em uma array posso livremente puxalos posteriormente no código e
-				// atualizalos conforme o id avança
-				linha[0] = rs.getString("question");
-				linha[1] = rs.getString("answerA");
-				linha[2] = rs.getString("answerB");
-				linha[3] = rs.getString("answerC");
-				linha[4] = rs.getString("answerD");
-				linha[5] = rs.getString("answerE");
-				linha[6] = rs.getString("id");
-				linha[7] = rs.getString("rightanswer");
-
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// sempre fechar a conexão após o uso necessário
-		con.closeConnection();
-		return linha;
-	}
+public class Gabarito extends JPanel {
+	private int lines=1;
+	public String[] respostas = new String[90];
+	private JLabel questoes;
+	private JPanel pnlQuestoes;
+	private int page=0;
 
 	/**
 	 * Create the panel.
 	 */
-	public Simulado() {
-		// Início do período da prova
-		inicio = System.currentTimeMillis();
 
-		setBackground(new Color(255, 255, 255));
-		setBounds(0, 0, 1280, 720);
-		setLayout(null);
+	//Metodo para conectar com o banco de dados e armazenar os dados em uma array
+	public String[] nextLine(int id) {
+		String[] line = new String[2];
 
-		JPanel painelLateral = new JPanel();
-		painelLateral.setBackground(new Color(36, 44, 136));
-		painelLateral.setBounds(0, 0, 50, 720);
-		add(painelLateral);
+		//estabelece conexão
+		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "quiz", "root", "root2606!");
 
-		// Quando apertar o botão finalizar ira aparecer uma mensagem de confirmação
-		JButton btnFinalizar = new JButton("Finalizar");
-		btnFinalizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		//manda o comando para o banco de dados
+		String query = "select id,questaoCerta from questions where id=?";
+		ResultSet rs = con.executeQuery(query, id);
 
-				// Aqui cria um array para botar os textos sim e não no botao do painel de
-				// escolha
-				Object[] opcoes = { "Sim", "Não" };
-
-				// Cria uma variavel q atribui o valor da escolha feita pelo usuario
-				/*
-				 * O JOptionPane é configurado da seguinte maneira (posição da mensage 'null' é
-				 * no centro do painel, 'Deseja finalizar a prova?' é a mensagem que ira
-				 * aparecer no centro do painel, 'Confirmação' é o titulo do painel
-				 * YES_NO_OPTION é o tipo de botão inserido no painel 'QUESTION_MESSAGE' Define
-				 * o icone no topo do painel 'null' é onde define caso queira usar um icone
-				 * personalizado 'opcoes' é onde é definido os textos dos botões 'opcoes[0]'
-				 * define o botão que ira iniciar selecionado, no caso o não
-				 */
-				int opcao = JOptionPane.showOptionDialog(null, "Deseja finalizar a prova?", "Confirmação",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opcoes, opcoes[1]);
-
-				// Caso o Sim for pressionado, troca de tela
-				if (opcao == JOptionPane.YES_OPTION) {
-					Gabarito test = new Gabarito();
-					removeAll();
-					add(test);
-					revalidate();
-					repaint();
-
-				}
+		//recebe os dados solicitados
+		try {
+			if(rs.next()) {
+				line[0] = rs.getString("id");
+				line[1] = rs.getString("questaoCerta");
 			}
-		});
-		btnFinalizar.setHorizontalAlignment(SwingConstants.LEADING);
-		btnFinalizar.setBackground(new Color(64, 74, 204));
-		btnFinalizar.setBorderPainted(false);
-		btnFinalizar.setContentAreaFilled(false);
-		btnFinalizar.setFocusPainted(false);
-		btnFinalizar.setForeground(new Color(34, 44, 204));
-		btnFinalizar.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
-		btnFinalizar.setBounds(56, 37, 138, 32);
-		add(btnFinalizar);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		con.closeConnection();
+		return line;
+	}
+
+	public Gabarito() {
+		setBackground(new Color(64, 74, 204));
+		setLayout(null);
+		setBounds(0,0,1280,720);
+
+
+
+		JPanel pnlHeader = new JPanel();
+		pnlHeader.setBorder(null);
+		pnlHeader.setBackground(new Color(36, 44, 136,178));
+		pnlHeader.setBounds(0, 0, 1280, 85);
+		add(pnlHeader);
+		pnlHeader.setLayout(null);
 
 		JLabel lblQuestao = new JLabel("Questão");
-		lblQuestao.setFont(new Font("Poppins Medium", Font.PLAIN, 24));
-		lblQuestao.setBounds(70, 80, 103, 49);
-		add(lblQuestao);
+		lblQuestao.setHorizontalAlignment(SwingConstants.CENTER);
+		lblQuestao.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
+		lblQuestao.setForeground(new Color(255, 255, 255));
+		lblQuestao.setBounds(82, 38, 126, 32);
+		pnlHeader.add(lblQuestao);
 
-		JLabel lblNumQuestao = new JLabel("01");
-		lblNumQuestao.setFont(new Font("Poppins Medium", Font.PLAIN, 24));
-		lblNumQuestao.setBounds(181, 80, 70, 49);
-		add(lblNumQuestao);
+		JLabel lblGabarito = new JLabel("Gabarito");
+		lblGabarito.setHorizontalAlignment(SwingConstants.CENTER);
+		lblGabarito.setForeground(Color.WHITE);
+		lblGabarito.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
+		lblGabarito.setBounds(412, 38, 126, 32);
+		pnlHeader.add(lblGabarito);
 
-		JTextPane textPane = new JTextPane();
-		textPane.setBorder(null);
-		textPane.setEditable(false);
-		textPane.setBounds(0, 0, 474, 520);
-		add(textPane);
+		JLabel lblSuaResposta = new JLabel("Sua Resposta");
+		lblSuaResposta.setForeground(Color.WHITE);
+		lblSuaResposta.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
+		lblSuaResposta.setBounds(869, 38, 178, 32);
+		pnlHeader.add(lblSuaResposta);
 
-		JScrollPane scrollPane = new JScrollPane(textPane);
-		scrollPane.setBorder(null);
-		scrollPane.setBounds(67, 140, 474, 532);
-		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		add(scrollPane);
+		JPanel pnlBottom = new JPanel();
+		pnlBottom.setBorder(null);
+		pnlBottom.setBackground(new Color(255, 255, 255));
+		pnlBottom.setBounds(0, 648, 1280, 72);
+		add(pnlBottom);
+		pnlBottom.setLayout(null);
 
-		JLabel lblSimulado = new JLabel("Simulado");
-		lblSimulado.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSimulado.setVerticalAlignment(SwingConstants.TOP);
-		lblSimulado.setFont(new Font("Poppins Medium", Font.PLAIN, 28));
-		lblSimulado.setBounds(559, 30, 154, 37);
-		add(lblSimulado);
-
-		textField = new JTextField();
-		textField.setOpaque(false);
-		textField.setEditable(false);
-		textField.setBorder(null);
-		textField.setBounds(827, 109, 374, 57);
-		add(textField);
-		textField.setColumns(10);
-
-		JPanel painelRespostas = new JPanel();
-		painelRespostas.setBackground(new Color(64, 74, 204));
-		painelRespostas.setBounds(828, 166, 374, 506);
-		add(painelRespostas);
-		painelRespostas.setLayout(null);
-
-		JRadioButton rdbA = new JRadioButton("A)");
-		rdbA.setFocusPainted(false);
-		rdbA.setOpaque(false);
-		rdbA.setForeground(new Color(255, 255, 255));
-		rdbA.setFont(new Font("Poppins Light", Font.PLAIN, 12));
-		rdbA.setBounds(6, 26, 39, 23);
-		painelRespostas.add(rdbA);
-
-		JRadioButton rdbB = new JRadioButton("B)");
-		rdbB.setOpaque(false);
-		rdbB.setForeground(Color.WHITE);
-		rdbB.setFont(new Font("Poppins Light", Font.PLAIN, 12));
-		rdbB.setFocusPainted(false);
-		rdbB.setBounds(6, 120, 39, 23);
-		painelRespostas.add(rdbB);
-
-		JRadioButton rdbC = new JRadioButton("C)");
-		rdbC.setOpaque(false);
-		rdbC.setForeground(Color.WHITE);
-		rdbC.setFont(new Font("Poppins Light", Font.PLAIN, 12));
-		rdbC.setFocusPainted(false);
-		rdbC.setBounds(6, 214, 39, 23);
-		painelRespostas.add(rdbC);
-
-		JRadioButton rdbD = new JRadioButton("D)");
-		rdbD.setOpaque(false);
-		rdbD.setForeground(Color.WHITE);
-		rdbD.setFont(new Font("Poppins Light", Font.PLAIN, 12));
-		rdbD.setFocusPainted(false);
-		rdbD.setBounds(6, 308, 39, 23);
-		painelRespostas.add(rdbD);
-
-		JRadioButton rdbE = new JRadioButton("E)");
-		rdbE.setOpaque(false);
-		rdbE.setForeground(Color.WHITE);
-		rdbE.setFont(new Font("Poppins Light", Font.PLAIN, 12));
-		rdbE.setFocusPainted(false);
-		rdbE.setBounds(6, 402, 39, 23);
-		painelRespostas.add(rdbE);
-
-		JLabel imgTempo = new JLabel("");
-		imgTempo.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\clock.png"));
-		imgTempo.setFont(new Font("Poppins Medium", Font.PLAIN, 24));
-		imgTempo.setBounds(1184, 11, 44, 49);
-		add(imgTempo);
-
-		JLabel tempo = new JLabel("");
-		tempo.setHorizontalAlignment(SwingConstants.CENTER);
-		tempo.setFont(new Font("Poppins Light", Font.PLAIN, 15));
-		tempo.setBounds(1168, 59, 70, 22);
-		add(tempo);
-
-		// Junta os RadioButtons em um grupo para quando apertar um o outro para de ser
-		// selecionado
-		bg = new ButtonGroup();
-		bg.add(rdbA);
-		bg.add(rdbB);
-		bg.add(rdbC);
-		bg.add(rdbD);
-
-		JButton btnPrx = new JButton("Próximo");
-		btnPrx.setBorderPainted(false);
-		btnPrx.setForeground(new Color(255, 255, 255));
-		btnPrx.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
-		btnPrx.setFocusPainted(false);
-		btnPrx.setBackground(new Color(64, 74, 204));
-		btnPrx.setBounds(1066, 677, 138, 32);
-		add(btnPrx);
-
-		JTextArea txtA = new JTextArea();
-		txtA.setEditable(false);
-		txtA.setWrapStyleWord(true);
-		txtA.setOpaque(false);
-		txtA.setLineWrap(true);
-		txtA.setBounds(63, 25, 268, 82);
-		painelRespostas.add(txtA);
-
-		JTextArea txtB = new JTextArea();
-		txtB.setEditable(false);
-		txtB.setWrapStyleWord(true);
-		txtB.setOpaque(false);
-		txtB.setLineWrap(true);
-		txtB.setBounds(63, 119, 268, 82);
-		painelRespostas.add(txtB);
-
-		JTextArea txtC = new JTextArea();
-		txtC.setEditable(false);
-		txtC.setWrapStyleWord(true);
-		txtC.setOpaque(false);
-		txtC.setLineWrap(true);
-		txtC.setBounds(63, 213, 268, 82);
-		painelRespostas.add(txtC);
-
-		JTextArea txtD = new JTextArea();
-		txtD.setEditable(false);
-		txtD.setWrapStyleWord(true);
-		txtD.setOpaque(false);
-		txtD.setLineWrap(true);
-		txtD.setBounds(63, 307, 268, 82);
-		painelRespostas.add(txtD);
-
-		JTextArea txtE = new JTextArea();
-		txtE.setEditable(false);
-		txtE.setWrapStyleWord(true);
-		txtE.setOpaque(false);
-		txtE.setLineWrap(true);
-		txtE.setBounds(63, 401, 268, 82);
-		painelRespostas.add(txtE);
-
-		// Cria um coutdown de 5 horas que conta cada 1000 milisegundos ou seja 1
-		// segundo
-		Timer timer = new Timer(1000, e -> {
-			// É decretado que o tempo inicial é a variavel declarada tempoInicialSegundos
-			// que esta definida para contar 5 horas
-			tempoInicialSegundos--;
-
-			// Aqui faz uma condição para caso o tempo não tiver chego a zero ele continua
-			// aparecendo
-			if (tempoInicialSegundos >= 0) {
-				int horas = tempoInicialSegundos / 3600;
-				int minutos = (tempoInicialSegundos % 3600) / 60;
-				int segundos = tempoInicialSegundos % 60;
-				tempo.setText(horas + ": " + minutos + ": " + segundos);
-
-				// Chegando a zero aparece uma mensagem de tempo esgotado
-			} else {
-				((Timer) e.getSource()).stop();
-				tempo.setText("Tempo esgotado!");
+		//Botão para voltar a tela de resultados
+		JButton btnVoltar = new JButton("VOLTAR");
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Resultados res=new Resultados();
+				removeAll();
+				add(res);
+				revalidate();
+				repaint();
 			}
 		});
+		btnVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnVoltar.setFocusPainted(false);
+		btnVoltar.setBorderPainted(false);
+		btnVoltar.setForeground(new Color(255, 255, 255));
+		btnVoltar.setBackground(new Color(64, 74, 204));
+		btnVoltar.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
+		btnVoltar.setBounds(27, 18, 158, 36);
+		pnlBottom.add(btnVoltar);
 
-		// Iniciar o temporizador
-		timer.start();
-
-		// define o valor da variavel anoS que sera usada para substituir o valor de
-		// pesquisa do ano no banco de dados
-		if (tipoSimu == 1) {
-			anoS = Integer.parseInt(anoSC);
-		} else if (tipoSimu == 2) {
-			anoS = Integer.parseInt(anoSP);
-		}
-
-		// Aqui eu defino o primeiro texto das caixas de texto e defino o id com o valor
-		// da variavel linha atual
-		String[] primeiraLinha = nextRow(linhaAtual, anoS);
-		textPane.setText(primeiraLinha[0]);
-		txtA.setText(primeiraLinha[1]);
-		txtB.setText(primeiraLinha[2]);
-		txtC.setText(primeiraLinha[3]);
-		txtD.setText(primeiraLinha[4]);
-		txtE.setText(primeiraLinha[5]);
-		lblNumQuestao.setText(primeiraLinha[6]);
-
-		Choice choice = new Choice();
-		choice.setBounds(893, 59, 103, 20);
-		add(choice);
-
-		//Cria 90 numeros de seleção
-		for(int i=1;i<=90;i++) {
-			choice.add(""+i);
-		}
-
-		//Ao apertar o botão pega a questao selecionada e troca para ela
-		JButton btnOk = new JButton("Ok");
-		btnOk.addActionListener(new ActionListener() {
+		//Botão que atualiza os valores das questoes, gabaritos e resposta de acordo com o id do banco de dados
+		JButton setaProximo = new JButton("");
+		setaProximo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(page<3) {
+					page++;
+					if(page==1) {
+						//O painel que contem os componentes remove todos os componentes para zerar os textos
+						pnlQuestoes.removeAll();
+						//Revalida os  componentes
+						revalidate();
+						//Reimprime eles na tela
+						repaint();
 
-				//ID pega pega o valor da caixa de texto selecionada
-				linhaAtual = Integer.parseInt(choice.getSelectedItem());
-				String[] linhaSelecionada = nextRow(linhaAtual,anoS);
+						//Valor atualizado do id por pagina
+						posicaoInicial(11,10);
+					} else if(page==2) {
+						pnlQuestoes.removeAll();
+						revalidate();
+						repaint();
 
-				//Bota os dados referentes ao valor da idnos componentes
-				textPane.setText(linhaSelecionada[0]);
-				txtA.setText(linhaSelecionada[1]);
-				txtB.setText(linhaSelecionada[2]);
-				txtC.setText(linhaSelecionada[3]);
-				txtD.setText(linhaSelecionada[4]);
-				txtE.setText(linhaSelecionada[5]);
-				lblNumQuestao.setText(linhaSelecionada[6]);
+						posicaoInicial(21,30);
+					}else if(page==3) {
+						pnlQuestoes.removeAll();
+						revalidate();
+						repaint();
+
+						posicaoInicial(31,30);
+					}
+				}
+
+
 			}
 		});
-		btnOk.setForeground(Color.WHITE);
-		btnOk.setFont(new Font("Poppins Medium", Font.PLAIN, 14));
-		btnOk.setFocusPainted(false);
-		btnOk.setBorderPainted(false);
-		btnOk.setBackground(new Color(64, 74, 204));
-		btnOk.setBounds(1002, 59, 57, 20);
-		add(btnOk);
+		setaProximo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		setaProximo.setFocusPainted(false);
+		setaProximo.setContentAreaFilled(false);
+		setaProximo.setBorderPainted(false);
+		setaProximo.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\arrowb_rotated_resized.png"));
+		setaProximo.setBounds(714, 25, 31, 29);
+		pnlBottom.add(setaProximo);
 
-
-
-		btnPrx.addActionListener(new ActionListener() {
+		//Mesma função da setaProximo, porem quando acionado retorna os valores da pagina anterior
+		JButton setaAnterior = new JButton("");
+		setaAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//A caixa de seleção atualiza o valor para ficar o mesmo número da questão
-				choice.select(linhaAtual);
+				if(page>0) {
+					page--;
+					if(page==1) {
+						pnlQuestoes.removeAll();
+						revalidate();
+						repaint();
 
-				Resultados res = new Resultados();
+						posicaoInicial(11,10);
+					} else if(page==2) {
+						pnlQuestoes.removeAll();
+						revalidate();
+						repaint();
 
-				// condição para quando um dos radio buttons estiverem selecionados
-				if (rdbA.isSelected() || rdbB.isSelected() || rdbC.isSelected() || rdbD.isSelected()) {
+						posicaoInicial(21,20);
+					}else if(page==3) {
+						pnlQuestoes.removeAll();
+						revalidate();
+						repaint();
 
-					if (linhaAtual > 0) {
-						String[] novaLinha = nextRow(linhaAtual,anoS);
-						Gabarito gab = new Gabarito();
+						posicaoInicial(31,30);
+					} else if(page==0) {
+						pnlQuestoes.removeAll();
+						revalidate();
+						repaint();
 
-						if(rdbA.isSelected()) {
-							gab.respostas[i] = rdbA.getText();
-						} else if (rdbB.isSelected()) {
-							gab.respostas[i] = rdbB.getText();
-						}else if (rdbC.isSelected()) {
-							gab.respostas[i] = rdbC.getText();
-						}else if (rdbD.isSelected()) {
-							gab.respostas[i] = rdbD.getText();
-						}else if (rdbE.isSelected()) {
-							gab.respostas[i] = rdbE.getText();
-						}
-						i++;
-
-
-
-						// Verifica se a opção está correta;
-
-						if ((rdbA.isSelected() && novaLinha[7].equals("a"))
-								|| (rdbB.isSelected() && novaLinha[7].equals("b"))
-								|| (rdbC.isSelected() && novaLinha[7].equals("c"))
-								|| (rdbD.isSelected() && novaLinha[7].equals("d"))
-								|| (rdbE.isSelected() && novaLinha[7].equals("e"))) {
-							// Soma os pontos certos
-							res.acertos++;
-							JOptionPane.showMessageDialog(null, "Você acertou!");
-						} else {
-							JOptionPane.showMessageDialog(null, "Você errou!");
-							// Soma os pontos errados
-							res.erros++;
-						}
-						// Atualiza o valor de linha atual, para ir para os próximos textos
-						linhaAtual++;
-
-						// Guarda os novos dados num array e bota nos componentes;
-
-
-						String[] proxLinha = nextRow(linhaAtual,anoS);
-
-						textPane.setText(proxLinha[0]);
-						txtA.setText(proxLinha[1]);
-						txtB.setText(proxLinha[2]);
-						txtC.setText(proxLinha[3]);
-						txtD.setText(proxLinha[4]);
-						txtE.setText(proxLinha[5]);
-						lblNumQuestao.setText(proxLinha[6]);
-
-						// Zera a seleção dos Radio Buttons
-						bg.clearSelection();
-
+						posicaoInicial(1,0);
 					}
-
-
-
-					if (tipoSimu == 1) {
-
-						// Fecha o Quiz; Depois mudamos esta parte para passar pra tela de resultado
-						if (linhaAtual > 90) {
-							JOptionPane.showMessageDialog(null,
-									"Prova finalizada");
-
-							// Fim do período da prova
-							fim = System.currentTimeMillis();
-
-							// Cálculo do tempo em milissegundos
-							tempoTotal = fim - inicio;
-
-							// Conversão para minutos e segundos
-							res.horas = tempoTotal / (60 * 60 * 1000);
-							res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
-							res.segundos = (tempoTotal % (60 * 1000)) / 1000;
-
-							removeAll();
-							add(res);
-							revalidate();
-							repaint();
-						}
-
-					} else if (tipoSimu == 2) {
-						if (tempoSimu == "Curto") {
-							if (linhaAtual > 30) {
-								JOptionPane.showMessageDialog(null,
-										"Prova finalizada");
-								// Fim do período da prova
-								fim = System.currentTimeMillis();
-
-								// Cálculo do tempo em milissegundos
-								tempoTotal = fim - inicio;
-
-								// Conversão para minutos e segundos
-								res.horas = tempoTotal / (60 * 60 * 1000);
-								res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
-								res.segundos = (tempoTotal % (60 * 1000)) / 1000;
-
-								removeAll();
-								add(res);
-								revalidate();
-								repaint();
-							}
-						} else if (tempoSimu == "Médio") {
-							if (linhaAtual > 60) {
-								JOptionPane.showMessageDialog(null,
-										"Prova finalizada");
-
-								// Fim do período da prova
-								fim = System.currentTimeMillis();
-
-								// Cálculo do tempo em milissegundos
-								tempoTotal = fim - inicio;
-
-								// Conversão para minutos e segundos
-								res.horas = tempoTotal / (60 * 60 * 1000);
-								res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
-								res.segundos = (tempoTotal % (60 * 1000)) / 1000;
-
-								removeAll();
-								add(res);
-								revalidate();
-								repaint();
-
-							}
-						}
-
-					}
-
 				}
 			}
 		});
+		setaAnterior.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		setaAnterior.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\arrowb_resized.png"));
+		setaAnterior.setFocusPainted(false);
+		setaAnterior.setContentAreaFilled(false);
+		setaAnterior.setBorderPainted(false);
+		setaAnterior.setBounds(534, 25, 31, 29);
+		pnlBottom.add(setaAnterior);
+
+		JLabel lblHeader = new JLabel("");
+		lblHeader.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\header.png"));
+		lblHeader.setBounds(0, 0, 1280, 72);
+		add(lblHeader);
+
+		JPanel pnlLinha = new JPanel();
+		pnlLinha.setBorder(null);
+		pnlLinha.setBackground(new Color(36, 44, 136));
+		pnlLinha.setBounds(0, 632, 1280, 17);
+		add(pnlLinha);
+		pnlLinha.setLayout(null);
+
+
+		pnlQuestoes = new JPanel();
+		pnlQuestoes.setBackground(new Color(64, 74, 204));
+		pnlQuestoes.setBounds(0, 0, 1280, 720);
+		pnlQuestoes.setLayout(null);
+		add(pnlQuestoes);
+
+
+		//Imprime os componentes na tela quando inicia o painel com o valor do id 1
+		posicaoInicial(1,0);
 
 	}
+
+	//Metodo para gerar os componentes na tela
+	public void posicaoInicial(int id, int i) {
+		int aumPosicao = 54;
+		int pos = 96;
+		lines=id;
+
+		for(i=0;i<=10;i++) {
+			//Variavel que contém os dados do banco de dados
+			String[] infoQuestao = nextLine(lines);
+
+			questoes = new JLabel("");
+			questoes.setHorizontalAlignment(SwingConstants.CENTER);
+			questoes.setForeground(Color.WHITE);
+			questoes.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
+			questoes.setBounds(83, pos, 126, 32);
+			pnlQuestoes.add(questoes);
+
+			JLabel gabarito = new JLabel("a");
+			gabarito.setHorizontalAlignment(SwingConstants.CENTER);
+			gabarito.setForeground(Color.WHITE);
+			gabarito.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
+			gabarito.setBounds(412, pos, 126, 32);
+			pnlQuestoes.add(gabarito);
+
+			JLabel seta1 = new JLabel("");
+			seta1.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\arrow_rotated_resized.png"));
+			seta1.setHorizontalAlignment(SwingConstants.CENTER);
+			seta1.setForeground(Color.WHITE);
+			seta1.setFont(new Font("Poppins Light", Font.PLAIN, 24));
+			seta1.setBounds(643, pos, 28, 32);
+			pnlQuestoes.add(seta1);
+
+			JPanel painelResposta1 = new JPanel();
+			painelResposta1.setBounds(812, pos, 275, 32);
+			pnlQuestoes.add(painelResposta1);
+			painelResposta1.setLayout(null);
+
+			JLabel resposta = new JLabel("a");
+			resposta.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
+			resposta.setForeground(new Color(64, 74, 204));
+			resposta.setHorizontalAlignment(SwingConstants.CENTER);
+			resposta.setBounds(104, 0, 53, 32);
+			painelResposta1.add(resposta);
+
+			//Coloca os textos nos componentes
+			gabarito.setText(infoQuestao[1]);
+			questoes.setText(infoQuestao[0]);
+			resposta.setText(respostas[i]);
+
+
+			pos=pos+aumPosicao;			
+
+			//Atualiza o id
+			lines++;
+		}
+
+	}
+
 }
