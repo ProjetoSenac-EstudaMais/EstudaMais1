@@ -2,6 +2,8 @@ package telas;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.SystemColor;
@@ -10,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -18,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Cursor;
 import javax.swing.JFormattedTextField;
+import javax.swing.border.MatteBorder;
+
 
 public class Registrar extends JPanel {
 	private JTextField emailField;
@@ -181,11 +186,22 @@ public class Registrar extends JPanel {
 		birthField.setBounds(121, 472, 300, 25);
 		panel.add(birthField);
 
-		JLabel lblVerificacao = new JLabel("Resolva a equação: 10 +2");
+		JLabel lblVerificacao = new JLabel("Resolva a equação:");
 		lblVerificacao.setForeground(Color.WHITE);
 		lblVerificacao.setFont(new Font("Poppins", Font.PLAIN, 11));
-		lblVerificacao.setBounds(121, 508, 148, 14);
+		lblVerificacao.setBounds(121, 508, 103, 14);
 		panel.add(lblVerificacao);
+		
+		Random random = new Random();		
+		int numero = random.nextInt(50);
+		int numero1 = random.nextInt(50);
+		int result = numero + numero1;
+		
+		JLabel lblRandom = new JLabel(numero + " + " + numero1); //Label para aparecer o número random de equação
+		lblRandom.setForeground(Color.WHITE);
+		lblRandom.setFont(new Font("Dialog", Font.PLAIN, 11));
+		lblRandom.setBounds(226, 508, 103, 14);
+		panel.add(lblRandom);	
 
 		verificationField = new JTextField();
 		verificationField.setForeground(Color.WHITE);
@@ -249,23 +265,28 @@ public class Registrar extends JPanel {
 				String ver = verificationField.getText();
 				char[] passChar = passwordField.getPassword();
 				String senha = new String(passChar);
+				String resultstr = String.valueOf(result);
 
-				if ((nameField.getText() == "") 
-						|| (sobrenomeField.getText() == "") 
-						|| (infos[2]=="") 
-						|| (infos[3] == "")
-						|| (passwordField.getText() == "")
-						|| (birthField.getText() =="")) {
-					nameField.setForeground(Color.RED);
-					nameField.setForeground(Color.RED);
-					nameField.setForeground(Color.RED);
-					nameField.setForeground(Color.RED);
-					nameField.setForeground(Color.RED);
-					nameField.setForeground(Color.RED);
-
+				if (nameField.getText() == "") {
+					nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED)); //Altera a cor da borda para Vermelho
 				}
+				if (sobrenomeField.getText() == "") {
+					sobrenomeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
+				}
+				if (infos[2] == "") {
+					usernameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
+				}
+				if (infos[3] == "") {
+					emailField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
+				}
+				if (senha == "") {
+					passwordField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
+				}
+				if (birthField.getText() == "") {
+					birthField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));}
+
 				else {
-					if ((infos[2] == null) && (infos[3] == null) && (ver == "12")){
+					if ((infos[2] == null) && (infos[3] == null) && (ver == resultstr)){
 						ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 						String query = "insert into dados values (,?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
 						try {
@@ -282,7 +303,13 @@ public class Registrar extends JPanel {
 							e1.printStackTrace();
 						}
 						conn1.closeConnection();
-					}}
+					}else{
+						if(infos[2] != null ){
+							JOptionPane.showMessageDialog(null, "Usuário já existente.");}
+						if(infos[3] != null ){
+							JOptionPane.showMessageDialog(null, "E-mail já cadastrado.");}
+					}
+				}
 			}
 		});
 

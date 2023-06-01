@@ -721,15 +721,15 @@ public class TelaInicial extends JPanel {
 		btnIniciarSimulados.setBounds(84, 250, 116, 36);
 		panel_1_1.add(btnIniciarSimulados);
 		
-		btnIniciarSimulados.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EscolhaSimulado a = new EscolhaSimulado();
-				removeAll();
-				add(a);
-				revalidate();
-				repaint();
-			}
-		});
+//		btnIniciarSimulados.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				EscolhaSimulado a = new EscolhaSimulado();
+//				removeAll();
+//				add(a);
+//				revalidate();
+//				repaint();
+//			}
+//		});
 		
 		JLabel lbl_simulados = new JLabel("SIMULADOS");
 		lbl_simulados.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
