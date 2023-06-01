@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -34,24 +35,26 @@ import java.awt.Insets;
 public class Login extends JPanel {
 	private JTextField login_emailField;
 	private JPasswordField login_passwordField;
+	private String userInfo;
 
-	public static String[] DB(String usuario) {
-		String[] infouser = new String [2]; //Armazena os dados de login se um usuário em Array.
+	public static String[] DB(String email) {
+		String[] infouser = new String [3]; //Armazena os dados de login se um usuário em Array.
 
 		try {
 			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
-			String query = "select usuario,senha from estudamais where usuario =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
-			ResultSet rs = conn1.executeQuery(query,usuario); //Retornar os resultados da SQL
+			String query = "select senha, email from estudamais where email =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			ResultSet rs = conn1.executeQuery(query,email); //Retornar os resultados da SQL
 
 			/*
 			 *Comando para guardar os dados dentro de uma variável;/
 			 */
 			if(rs.next()) {
-				infouser[0] = rs.getString("usuario"); //Busca o vetor 0 das infos, equivalente ao Usuário
-				infouser[1] = rs.getString("senha");} //Busca o vetor 1 das infos, equivalente à Senha
+				infouser[0] = rs.getString("senha"); //Busca o vetor 1 das infos, equivalente à Senha
+				infouser[1] = rs.getString("email");} //Busca o vetor 1 das infos, equivalente ao Email
 
+			
 			rs.close();
 			conn1.closeConnection();
 		}
@@ -158,17 +161,42 @@ public class Login extends JPanel {
 		btnLogin.setBackground(new Color(64, 74, 204));
 		btnLogin.setBounds(230, 428, 89, 23);
 		panel.add(btnLogin);
+		
+		String [] emailInfo = DB(userInfo);
 
 		// Interação do botão "Login" com a "Tela Inicial" - ao clicar vai para a tela Principal do app
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaInicial a = new TelaInicial();
-				removeAll();
-				add(a);
-				revalidate();
-				repaint();
+				
+				emailInfo[1] = login_emailField.getText();
+				char [] passChar = login_passwordField.getPassword();
+				String senha = new String(passChar);
+				
+				if (login_emailField.getText() == "") {
+					JOptionPane.showMessageDialog(null, "Senha ou email não foram digitados!");
+				}
+				else {
+					if (emailInfo[1] == null) {
+						JOptionPane.showMessageDialog(null, "Usuário não encontrado!");
+					}
+					else {
+						if (login_emailField.getText() == emailInfo[1] && senha == emailInfo[0]) {
+							
+							TelaInicial a = new TelaInicial();
+							removeAll();
+							add(a);
+							revalidate();
+							repaint();
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "Senha inválida!");
 
-			}});
+						}
+				}
+				
+				
+				
+			}}});
 
 		//Texto "Não tem uma conta?"
 		JLabel lblSemConta = new JLabel("Não tem uma conta?");
