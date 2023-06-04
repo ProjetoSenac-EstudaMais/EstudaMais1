@@ -44,7 +44,7 @@ public class Login extends JPanel {
 			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
-			String query = "select senha, email from estudamais where email =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			String query = "select senha, email from usuario where email =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
 			ResultSet rs = conn1.executeQuery(query,email); //Retornar os resultados da SQL
 
 			/*
@@ -162,41 +162,50 @@ public class Login extends JPanel {
 		btnLogin.setBounds(230, 428, 89, 23);
 		panel.add(btnLogin);
 		
-		String [] emailInfo = DB(userInfo);
-
 		// Interação do botão "Login" com a "Tela Inicial" - ao clicar vai para a tela Principal do app
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				emailInfo[1] = login_emailField.getText();
-				char [] passChar = login_passwordField.getPassword();
-				String senha = new String(passChar);
+				userInfo = login_emailField.getText();
 				
-				if (login_emailField.getText() == "") {
+				String [] emailInfo = DB(userInfo);
+				
+				char[] passChar = login_passwordField.getPassword();
+				
+				String senha = new String(passChar);
+
+				if (login_emailField.getText().isEmpty() || senha.isEmpty()) {
+					
 					JOptionPane.showMessageDialog(null, "Senha ou email não foram digitados!");
-				}
+				} 
+				
 				else {
+					
 					if (emailInfo[1] == null) {
 						JOptionPane.showMessageDialog(null, "Usuário não encontrado!");
-					}
-					else {
-						if (login_emailField.getText() == emailInfo[1] && senha == emailInfo[0]) {
+					} 
+					else if (login_emailField.getText().equals(login_emailField.getText())){
+					
+						if (emailInfo[0].equals(senha)) {
 							
 							TelaInicial a = new TelaInicial();
 							removeAll();
 							add(a);
 							revalidate();
 							repaint();
+							
 						}
+						
 						else {
+							
 							JOptionPane.showMessageDialog(null, "Senha inválida!");
 
 						}
+					}
 				}
-				
-				
-				
-			}}});
+
+			}
+		});
 
 		//Texto "Não tem uma conta?"
 		JLabel lblSemConta = new JLabel("Não tem uma conta?");
@@ -230,5 +239,4 @@ public class Login extends JPanel {
 
 	}
 }
-
 
