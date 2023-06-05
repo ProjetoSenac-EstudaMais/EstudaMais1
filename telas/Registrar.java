@@ -191,12 +191,12 @@ public class Registrar extends JPanel {
 		lblVerificacao.setFont(new Font("Poppins", Font.PLAIN, 11));
 		lblVerificacao.setBounds(121, 508, 103, 14);
 		panel.add(lblVerificacao);
-		
+
 		Random random = new Random();		
 		int numero = random.nextInt(50);
 		int numero1 = random.nextInt(50);
 		int result = numero + numero1;
-		
+
 		JLabel lblRandom = new JLabel(numero + " + " + numero1); //Label para aparecer o número random de equação
 		lblRandom.setForeground(Color.WHITE);
 		lblRandom.setFont(new Font("Dialog", Font.PLAIN, 11));
@@ -259,9 +259,10 @@ public class Registrar extends JPanel {
 				 * se existir, avisar que já tem e precisa mudar;
 				 * se não existir, registrar e aparecer um POP-UP falando que registro feito e envia pra tela de login
 				 */
+
+				usuario = usernameField.getText();
+				email = emailField.getText();
 				infos = DB(usuario, email);
-				infos[2] = usernameField.getText();
-				infos[3] = emailField.getText();
 				String ver = verificationField.getText();
 				char[] passChar = passwordField.getPassword();
 				String senha = new String(passChar);
@@ -273,10 +274,10 @@ public class Registrar extends JPanel {
 				if (sobrenomeField.getText() == "") {
 					sobrenomeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
 				}
-				if (infos[2] == "") {
+				if (usuario == "") {
 					usernameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
 				}
-				if (infos[3] == "") {
+				if (email == "") {
 					emailField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
 				}
 				if (senha == "") {
@@ -286,9 +287,11 @@ public class Registrar extends JPanel {
 					birthField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));}
 
 				else {
-					if ((infos[2] == null) && (infos[3] == null) && (ver == resultstr)){
+					if ((infos[0] == null || infos[0].isEmpty()) 
+							&& (infos[1] == null || infos[1].isEmpty()) && (ver == resultstr)){
 						ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
-						String query = "insert into dados values (,?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
+						String query = "insert into dados values (default,?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
+						System.out.println("Entrou no if");
 						try {
 							PreparedStatement pstmt = conn1.conn.prepareStatement(query);
 							pstmt.setString(1,nameField.getText());
@@ -304,9 +307,9 @@ public class Registrar extends JPanel {
 						}
 						conn1.closeConnection();
 					}else{
-						if(infos[2] != null ){
+						if(infos[0] != null ){
 							JOptionPane.showMessageDialog(null, "Usuário já existente.");}
-						if(infos[3] != null ){
+						if(infos[1] != null ){
 							JOptionPane.showMessageDialog(null, "E-mail já cadastrado.");}
 					}
 				}
