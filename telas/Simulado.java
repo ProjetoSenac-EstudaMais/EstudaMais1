@@ -25,17 +25,43 @@ import java.awt.Choice;
 public class Simulado extends JPanel {
 	private JTextField textField;
 	public ButtonGroup bg;
-	private static int linhaAtual = 1;
-	public String anoSP;
-	public String anoSC;
-	public String tempoSimu;
-	private static int anoS;
-	public long inicio;
-	public long fim;
-	public  long tempoTotal;
-	public int tipoSimu;
-	public int tempoInicialSegundos = 300 * 60; // Tempo em segundos
-	private int i =0;
+	private int linhaAtual = 1;
+
+	private int anoS;
+	private long inicio;
+	private long fim;
+	private  long tempoTotal;
+	private int tempoInicialSegundos = 300 * 60; // Tempo em segundos
+	private int i =1;
+	private int acertos=0;
+	private int erros=0;
+	private long horas;
+	private long minutos;
+	private long segundos;
+	private int questaoRespondida=0;
+	private boolean[] foiRespondida = new boolean[4];
+	private JLabel tempo;
+	private Choice choice;
+	private String anoSC;
+	private String anoSP;
+	private int tipoSimu;
+	private String tempoSimu;
+	private JTextArea txtA;
+	private JTextArea txtB;
+	private JTextArea txtC;
+	private JTextArea txtD;
+	private JTextArea txtE;
+	private JTextPane textPane;
+	private JLabel lblNumQuestao;
+	private JRadioButton rdbA;
+	private JRadioButton rdbB;
+	private JRadioButton rdbC ;
+	private JRadioButton rdbD;
+	private JRadioButton rdbE;
+
+
+
+
 
 	// Faz um metódo para puxar a proxima linha de acordo com o id
 	public String[] nextRow(int id, int ano) {
@@ -43,11 +69,11 @@ public class Simulado extends JPanel {
 
 		// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
 		// configurar o JDBC no computador para funcionar
-		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "quiz", "root", "root2606!");
+		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
 
 		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
 		// definir ele fora do comando
-		String query = "select id,question,answerA,answerB,answerC,answerD,answerE, rightanswer from questions where id=? and ano=?";
+		String query = "select id,questao,respostaA,respostaB,respostaC,respostaD,respostaE, respostaCerta from questoes where id=? and ano=?";
 
 		// Este comando retorna os valores solicitados, e primeiro vem o comando e
 		// depois o valor do '?'
@@ -59,14 +85,14 @@ public class Simulado extends JPanel {
 
 				// Armazenando em uma array posso livremente puxalos posteriormente no código e
 				// atualizalos conforme o id avança
-				linha[0] = rs.getString("question");
-				linha[1] = rs.getString("answerA");
-				linha[2] = rs.getString("answerB");
-				linha[3] = rs.getString("answerC");
-				linha[4] = rs.getString("answerD");
-				linha[5] = rs.getString("answerE");
+				linha[0] = rs.getString("questao");
+				linha[1] = rs.getString("respostaA");
+				linha[2] = rs.getString("respostaB");
+				linha[3] = rs.getString("respostaC");
+				linha[4] = rs.getString("respostaD");
+				linha[5] = rs.getString("respostaE");
 				linha[6] = rs.getString("id");
-				linha[7] = rs.getString("rightanswer");
+				linha[7] = rs.getString("respostaCerta");
 
 			}
 
@@ -83,7 +109,11 @@ public class Simulado extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Simulado() {
+	public Simulado(String anoSC, String anoSP, int tipoSimu, String tempoSimu) {
+		this.anoSC=anoSC;
+		this.anoSP=anoSP;
+		this.tipoSimu=tipoSimu;
+		this.tempoSimu=tempoSimu;
 		// Início do período da prova
 		inicio = System.currentTimeMillis();
 
@@ -96,60 +126,21 @@ public class Simulado extends JPanel {
 		painelLateral.setBounds(0, 0, 50, 720);
 		add(painelLateral);
 
-		// Quando apertar o botão finalizar ira aparecer uma mensagem de confirmação
-		JButton btnFinalizar = new JButton("Finalizar");
-		btnFinalizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
 
-				// Aqui cria um array para botar os textos sim e não no botao do painel de
-				// escolha
-				Object[] opcoes = { "Sim", "Não" };
-
-				// Cria uma variavel q atribui o valor da escolha feita pelo usuario
-				/*
-				 * O JOptionPane é configurado da seguinte maneira (posição da mensage 'null' é
-				 * no centro do painel, 'Deseja finalizar a prova?' é a mensagem que ira
-				 * aparecer no centro do painel, 'Confirmação' é o titulo do painel
-				 * YES_NO_OPTION é o tipo de botão inserido no painel 'QUESTION_MESSAGE' Define
-				 * o icone no topo do painel 'null' é onde define caso queira usar um icone
-				 * personalizado 'opcoes' é onde é definido os textos dos botões 'opcoes[0]'
-				 * define o botão que ira iniciar selecionado, no caso o não
-				 */
-				int opcao = JOptionPane.showOptionDialog(null, "Deseja finalizar a prova?", "Confirmação",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opcoes, opcoes[1]);
-
-				// Caso o Sim for pressionado, troca de tela
-				if (opcao == JOptionPane.YES_OPTION) {
-					Gabarito test = new Gabarito();
-					removeAll();
-					add(test);
-					revalidate();
-					repaint();
-
-				}
-			}
-		});
-		btnFinalizar.setHorizontalAlignment(SwingConstants.LEADING);
-		btnFinalizar.setBackground(new Color(64, 74, 204));
-		btnFinalizar.setBorderPainted(false);
-		btnFinalizar.setContentAreaFilled(false);
-		btnFinalizar.setFocusPainted(false);
-		btnFinalizar.setForeground(new Color(34, 44, 204));
-		btnFinalizar.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
-		btnFinalizar.setBounds(56, 37, 138, 32);
-		add(btnFinalizar);
 
 		JLabel lblQuestao = new JLabel("Questão");
 		lblQuestao.setFont(new Font("Poppins Medium", Font.PLAIN, 24));
 		lblQuestao.setBounds(70, 80, 103, 49);
 		add(lblQuestao);
 
-		JLabel lblNumQuestao = new JLabel("01");
+		lblNumQuestao = new JLabel("01");
 		lblNumQuestao.setFont(new Font("Poppins Medium", Font.PLAIN, 24));
 		lblNumQuestao.setBounds(181, 80, 70, 49);
 		add(lblNumQuestao);
 
-		JTextPane textPane = new JTextPane();
+
+		textPane = new JTextPane();
+		textPane.setFont(new Font("Poppins", Font.PLAIN, 16));
 		textPane.setBorder(null);
 		textPane.setEditable(false);
 		textPane.setBounds(0, 0, 474, 520);
@@ -182,7 +173,8 @@ public class Simulado extends JPanel {
 		add(painelRespostas);
 		painelRespostas.setLayout(null);
 
-		JRadioButton rdbA = new JRadioButton("A)");
+
+		rdbA = new JRadioButton("A)");
 		rdbA.setFocusPainted(false);
 		rdbA.setOpaque(false);
 		rdbA.setForeground(new Color(255, 255, 255));
@@ -190,7 +182,8 @@ public class Simulado extends JPanel {
 		rdbA.setBounds(6, 26, 39, 23);
 		painelRespostas.add(rdbA);
 
-		JRadioButton rdbB = new JRadioButton("B)");
+
+		rdbB = new JRadioButton("B)");
 		rdbB.setOpaque(false);
 		rdbB.setForeground(Color.WHITE);
 		rdbB.setFont(new Font("Poppins Light", Font.PLAIN, 12));
@@ -198,7 +191,9 @@ public class Simulado extends JPanel {
 		rdbB.setBounds(6, 120, 39, 23);
 		painelRespostas.add(rdbB);
 
-		JRadioButton rdbC = new JRadioButton("C)");
+
+
+		rdbC = new JRadioButton("C)");
 		rdbC.setOpaque(false);
 		rdbC.setForeground(Color.WHITE);
 		rdbC.setFont(new Font("Poppins Light", Font.PLAIN, 12));
@@ -206,7 +201,7 @@ public class Simulado extends JPanel {
 		rdbC.setBounds(6, 214, 39, 23);
 		painelRespostas.add(rdbC);
 
-		JRadioButton rdbD = new JRadioButton("D)");
+		rdbD = new JRadioButton("D)");
 		rdbD.setOpaque(false);
 		rdbD.setForeground(Color.WHITE);
 		rdbD.setFont(new Font("Poppins Light", Font.PLAIN, 12));
@@ -214,7 +209,7 @@ public class Simulado extends JPanel {
 		rdbD.setBounds(6, 308, 39, 23);
 		painelRespostas.add(rdbD);
 
-		JRadioButton rdbE = new JRadioButton("E)");
+		rdbE = new JRadioButton("E)");
 		rdbE.setOpaque(false);
 		rdbE.setForeground(Color.WHITE);
 		rdbE.setFont(new Font("Poppins Light", Font.PLAIN, 12));
@@ -228,19 +223,11 @@ public class Simulado extends JPanel {
 		imgTempo.setBounds(1184, 11, 44, 49);
 		add(imgTempo);
 
-		JLabel tempo = new JLabel("");
+		tempo = new JLabel("");
 		tempo.setHorizontalAlignment(SwingConstants.CENTER);
 		tempo.setFont(new Font("Poppins Light", Font.PLAIN, 15));
 		tempo.setBounds(1168, 59, 70, 22);
 		add(tempo);
-
-		// Junta os RadioButtons em um grupo para quando apertar um o outro para de ser
-		// selecionado
-		bg = new ButtonGroup();
-		bg.add(rdbA);
-		bg.add(rdbB);
-		bg.add(rdbC);
-		bg.add(rdbD);
 
 		JButton btnPrx = new JButton("Próximo");
 		btnPrx.setBorderPainted(false);
@@ -251,7 +238,9 @@ public class Simulado extends JPanel {
 		btnPrx.setBounds(1066, 677, 138, 32);
 		add(btnPrx);
 
-		JTextArea txtA = new JTextArea();
+		txtA = new JTextArea();
+		txtA.setForeground(new Color(255, 255, 255));
+		txtA.setFont(new Font("Poppins", Font.PLAIN, 14));
 		txtA.setEditable(false);
 		txtA.setWrapStyleWord(true);
 		txtA.setOpaque(false);
@@ -259,7 +248,10 @@ public class Simulado extends JPanel {
 		txtA.setBounds(63, 25, 268, 82);
 		painelRespostas.add(txtA);
 
-		JTextArea txtB = new JTextArea();
+
+		txtB = new JTextArea();
+		txtB.setForeground(new Color(255, 255, 255));
+		txtB.setFont(new Font("Poppins", Font.PLAIN, 14));
 		txtB.setEditable(false);
 		txtB.setWrapStyleWord(true);
 		txtB.setOpaque(false);
@@ -267,7 +259,9 @@ public class Simulado extends JPanel {
 		txtB.setBounds(63, 119, 268, 82);
 		painelRespostas.add(txtB);
 
-		JTextArea txtC = new JTextArea();
+		txtC = new JTextArea();
+		txtC.setForeground(new Color(255, 255, 255));
+		txtC.setFont(new Font("Poppins", Font.PLAIN, 14));
 		txtC.setEditable(false);
 		txtC.setWrapStyleWord(true);
 		txtC.setOpaque(false);
@@ -275,7 +269,9 @@ public class Simulado extends JPanel {
 		txtC.setBounds(63, 213, 268, 82);
 		painelRespostas.add(txtC);
 
-		JTextArea txtD = new JTextArea();
+		txtD = new JTextArea();
+		txtD.setForeground(new Color(255, 255, 255));
+		txtD.setFont(new Font("Poppins", Font.PLAIN, 14));
 		txtD.setEditable(false);
 		txtD.setWrapStyleWord(true);
 		txtD.setOpaque(false);
@@ -283,7 +279,9 @@ public class Simulado extends JPanel {
 		txtD.setBounds(63, 307, 268, 82);
 		painelRespostas.add(txtD);
 
-		JTextArea txtE = new JTextArea();
+		txtE = new JTextArea();
+		txtE.setForeground(new Color(255, 255, 255));
+		txtE.setFont(new Font("Poppins", Font.PLAIN, 14));
 		txtE.setEditable(false);
 		txtE.setWrapStyleWord(true);
 		txtE.setOpaque(false);
@@ -291,6 +289,111 @@ public class Simulado extends JPanel {
 		txtE.setBounds(63, 401, 268, 82);
 		painelRespostas.add(txtE);
 
+		choice = new Choice();
+		choice.setBounds(893, 59, 103, 20);
+		add(choice);
+
+		// Junta os RadioButtons em um grupo para quando apertar um o outro para de ser
+		// selecionado
+		bg = new ButtonGroup();
+		bg.add(rdbA);
+		bg.add(rdbB);
+		bg.add(rdbC);
+		bg.add(rdbD);
+
+		//Countdown
+		temporizador();
+
+		//Condição para o valor do anoS
+		condicaoAnoS();
+
+		//Quantidade de opões na caixa choice
+		qntChoice();
+
+		//Define os primeiros dados puxados para os componentes
+		primeiraLinha();
+
+		// Quando apertar o botão finalizar ira aparecer uma mensagem de confirmação
+		JButton btnFinalizar = new JButton("Finalizar");
+		btnFinalizar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				finalizar();
+
+			}
+
+		});
+		btnFinalizar.setHorizontalAlignment(SwingConstants.LEADING);
+		btnFinalizar.setBackground(new Color(64, 74, 204));
+		btnFinalizar.setBorderPainted(false);
+		btnFinalizar.setContentAreaFilled(false);
+		btnFinalizar.setFocusPainted(false);
+		btnFinalizar.setForeground(new Color(34, 44, 204));
+		btnFinalizar.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
+		btnFinalizar.setBounds(56, 37, 138, 32);
+		add(btnFinalizar);
+
+		//Ao apertar o botão pega a questao selecionada e troca para ela
+		JButton btnOk = new JButton("Ok");
+		btnOk.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				btnOkay();
+
+			}
+		});
+		btnOk.setForeground(Color.WHITE);
+		btnOk.setFont(new Font("Poppins Medium", Font.PLAIN, 14));
+		btnOk.setFocusPainted(false);
+		btnOk.setBorderPainted(false);
+		btnOk.setBackground(new Color(64, 74, 204));
+		btnOk.setBounds(1002, 59, 57, 20);
+		add(btnOk);
+
+
+
+		btnPrx.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				choice.select(linhaAtual);
+
+				questaoRespondida();
+				condicaoEncerrar();
+			}});
+
+	}
+
+	public void finalizar() {
+
+		// Aqui cria um array para botar os textos sim e não no botao do painel de
+		// escolha
+		Object[] opcoes = { "Sim", "Não" };
+
+		// Cria uma variavel q atribui o valor da escolha feita pelo usuario
+		/*
+		 * O JOptionPane é configurado da seguinte maneira (posição da mensage 'null' é
+		 * no centro do painel, 'Deseja finalizar a prova?' é a mensagem que ira
+		 * aparecer no centro do painel, 'Confirmação' é o titulo do painel
+		 * YES_NO_OPTION é o tipo de botão inserido no painel 'QUESTION_MESSAGE' Define
+		 * o icone no topo do painel 'null' é onde define caso queira usar um icone
+		 * personalizado 'opcoes' é onde é definido os textos dos botões 'opcoes[0]'
+		 * define o botão que ira iniciar selecionado, no caso o não
+		 */
+		int opcao = JOptionPane.showOptionDialog(null, "Deseja finalizar a prova?", "Confirmação",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, opcoes, opcoes[1]);
+
+		// Caso o Sim for pressionado, troca de tela
+		if (opcao == JOptionPane.YES_OPTION) {
+
+			linhaAtual=1;
+			Resultados res = new Resultados(acertos, erros, segundos, minutos, horas);
+			removeAll();
+			add(res);
+			revalidate();
+			repaint();
+		}}
+
+
+	public void temporizador() {
 		// Cria um coutdown de 5 horas que conta cada 1000 milisegundos ou seja 1
 		// segundo
 		Timer timer = new Timer(1000, e -> {
@@ -312,10 +415,12 @@ public class Simulado extends JPanel {
 				tempo.setText("Tempo esgotado!");
 			}
 		});
-
 		// Iniciar o temporizador
 		timer.start();
+	}
 
+
+	public void condicaoAnoS() {
 		// define o valor da variavel anoS que sera usada para substituir o valor de
 		// pesquisa do ano no banco de dados
 		if (tipoSimu == 1) {
@@ -323,9 +428,257 @@ public class Simulado extends JPanel {
 		} else if (tipoSimu == 2) {
 			anoS = Integer.parseInt(anoSP);
 		}
+	}
 
-		// Aqui eu defino o primeiro texto das caixas de texto e defino o id com o valor
-		// da variavel linha atual
+
+	public void qntChoice() {
+		//Cria 90 numeros de seleção
+
+		//VALOR CERTO I<=90
+
+		if(tipoSimu==1) {
+			for(int i=0;i<4;i++) {
+				if(i==0) {
+					choice.add("-");
+				}else {
+					choice.add(""+i);}
+			}} else if(tipoSimu==2) {
+				if(tempoSimu == "Curto") {
+					for(int i=0;i<2;i++) {
+						if(i==0) {
+							choice.add("-");
+						}else {
+							choice.add(""+i);}
+					} 
+
+				}else if(tempoSimu == "Medio") {
+					for(int i=0;i<3;i++) {
+						if(i==0) {
+							choice.add("-");
+						}else {
+							choice.add(""+i);}
+					} 
+				}
+			}
+	}
+
+
+	public void btnOkay() {
+		linhaAtual = Integer.parseInt(choice.getSelectedItem());
+
+		String[] linhaSelecionada = nextRow(linhaAtual,anoS);
+		//ID pega pega o valor da caixa de texto selecionada
+
+
+		//Bota os dados referentes ao valor da idnos componentes
+		textPane.setText(linhaSelecionada[0]);
+		txtA.setText(linhaSelecionada[1]);
+		txtB.setText(linhaSelecionada[2]);
+		txtC.setText(linhaSelecionada[3]);
+		txtD.setText(linhaSelecionada[4]);
+		txtE.setText(linhaSelecionada[5]);
+		lblNumQuestao.setText(linhaSelecionada[6]);
+	}
+
+
+	public void questaoRespondida() {
+		// condição para quando um dos radio buttons estiverem selecionados
+		if (rdbA.isSelected() || rdbB.isSelected() || rdbC.isSelected() || rdbD.isSelected() || rdbE.isSelected()) {
+
+			if (linhaAtual > 0) {
+				String[] novaLinha = nextRow(linhaAtual,anoS);
+				// Verifica se a opção está correta;
+
+				if ((rdbA.isSelected() && novaLinha[7].equals("A"))
+						|| (rdbB.isSelected() && novaLinha[7].equals("B"))
+						|| (rdbC.isSelected() && novaLinha[7].equals("C"))
+						|| (rdbD.isSelected() && novaLinha[7].equals("D"))
+						|| (rdbE.isSelected() && novaLinha[7].equals("E"))) {
+					// Soma os pontos certos
+					if (!foiRespondida[linhaAtual]) {
+						// Incrementar acertos ou erros
+						acertos++;
+						questaoRespondida++;
+						// ...
+						// Marcar a questão como respondida
+						foiRespondida[linhaAtual] = true;
+
+					}
+				} else {
+					if (!foiRespondida[linhaAtual]) {
+						// Incrementar acertos ou erros
+						erros++;
+						questaoRespondida++;
+						// ...
+						// Marcar a questão como respondida
+						foiRespondida[linhaAtual] = true;
+					}
+				}
+				// Atualiza o valor de linha atual, para ir para os próximos textos
+				linhaAtual++;
+
+				String[] proxLinha = nextRow(linhaAtual,anoS);
+
+				textPane.setText(proxLinha[0]);
+				txtA.setText(proxLinha[1]);
+				txtB.setText(proxLinha[2]);
+				txtC.setText(proxLinha[3]);
+				txtD.setText(proxLinha[4]);
+				txtE.setText(proxLinha[5]);
+				lblNumQuestao.setText(proxLinha[6]);
+				// Zera a seleção dos Radio Buttons
+				bg.clearSelection();
+			}}
+	}
+
+
+	public void condicaoEncerrar() {
+		if (tipoSimu == 1) {
+
+			System.out.println("Entrou no if");
+			// Fecha o Quiz; Depois mudamos esta parte para passar pra tela de resultado
+
+			//VALOR CORRETO LINHA ATUAL > 90
+			if (linhaAtual > 3 && questaoRespondida==3 ) {
+				JOptionPane.showMessageDialog(null,
+						"Prova finalizada");
+
+				questaoRespondida=0;
+				linhaAtual=1;
+				// Fim do período da prova
+				fim = System.currentTimeMillis();
+				// Cálculo do tempo em milissegundos
+				tempoTotal = fim - inicio;
+				// Conversão para minutos e segundos
+				horas = tempoTotal / (60 * 60 * 1000);
+				minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
+				segundos = (tempoTotal % (60 * 1000)) / 1000;
+
+				Resultados res = new Resultados(acertos, erros, segundos, minutos, horas);
+
+				removeAll();
+				add(res);
+				revalidate();
+				repaint();
+			}else if(linhaAtual >3 && questaoRespondida<3) {
+
+				linhaAtual=3;
+
+				String[] linhaContinuo = nextRow(linhaAtual,anoS);
+
+				textPane.setText(linhaContinuo[0]);
+				txtA.setText(linhaContinuo[1]);
+				txtB.setText(linhaContinuo[2]);
+				txtC.setText(linhaContinuo[3]);
+				txtD.setText(linhaContinuo[4]);
+				txtE.setText(linhaContinuo[5]);
+				lblNumQuestao.setText(linhaContinuo[6]);
+
+				JOptionPane.showMessageDialog(null, "Responda todas as questões.");
+			}
+
+		} else if (tipoSimu == 2) {
+			if (tempoSimu == "Curto" ) {
+
+				System.out.println("Entrou no m=if");
+
+				//VALOR CERTO LINHA ATUAL > 30
+				if (linhaAtual > 1 && questaoRespondida==1) {
+					JOptionPane.showMessageDialog(null,
+							"Prova finalizada");
+
+					questaoRespondida=0;
+					linhaAtual=1;
+
+					// Fim do período da prova
+					fim = System.currentTimeMillis();
+
+
+
+					// Cálculo do tempo em milissegundos
+					tempoTotal = fim - inicio;
+
+					// Conversão para minutos e segundos
+					horas = tempoTotal / (60 * 60 * 1000);
+					minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
+					segundos = (tempoTotal % (60 * 1000)) / 1000;
+
+
+
+					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas);
+
+					removeAll();
+					add(res);
+					revalidate();
+					repaint();
+				}else if(linhaAtual >1 && questaoRespondida!=1) {
+
+					linhaAtual=1;
+
+					String[] linhaContinuo = nextRow(linhaAtual,anoS);
+
+					textPane.setText(linhaContinuo[0]);
+					txtA.setText(linhaContinuo[1]);
+					txtB.setText(linhaContinuo[2]);
+					txtC.setText(linhaContinuo[3]);
+					txtD.setText(linhaContinuo[4]);
+					txtE.setText(linhaContinuo[5]);
+					lblNumQuestao.setText(linhaContinuo[6]);
+
+					JOptionPane.showMessageDialog(null, "Responda todas as questões.");
+				}
+			} else if (tempoSimu == "Medio" ) {
+
+				System.out.println("Entrou no if do médio");
+
+				//VALO0R CERTO LINHA ATUAL > 60
+				if (linhaAtual > 2 && questaoRespondida==2) {
+					JOptionPane.showMessageDialog(null,
+							"Prova finalizada");
+
+					questaoRespondida=0;
+					linhaAtual=1;
+
+					// Fim do período da prova
+					fim = System.currentTimeMillis();
+
+					// Cálculo do tempo em milissegundos
+					tempoTotal = fim - inicio;
+
+					// Conversão para minutos e segundos
+					horas = tempoTotal / (60 * 60 * 1000);
+					minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
+					segundos = (tempoTotal % (60 * 1000)) / 1000;
+
+					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas);
+
+					removeAll();
+					add(res);
+					revalidate();
+					repaint();
+
+				} else if(linhaAtual >2 && questaoRespondida!=2) {
+
+					linhaAtual=3;
+
+					String[] linhaContinuo = nextRow(linhaAtual,anoS);
+
+					textPane.setText(linhaContinuo[0]);
+					txtA.setText(linhaContinuo[1]);
+					txtB.setText(linhaContinuo[2]);
+					txtC.setText(linhaContinuo[3]);
+					txtD.setText(linhaContinuo[4]);
+					txtE.setText(linhaContinuo[5]);
+					lblNumQuestao.setText(linhaContinuo[6]);
+
+					JOptionPane.showMessageDialog(null, "Responda todas as questões.");
+				}
+			}}	
+	}
+
+
+	public void primeiraLinha() {
+
 		String[] primeiraLinha = nextRow(linhaAtual, anoS);
 		textPane.setText(primeiraLinha[0]);
 		txtA.setText(primeiraLinha[1]);
@@ -334,186 +687,6 @@ public class Simulado extends JPanel {
 		txtD.setText(primeiraLinha[4]);
 		txtE.setText(primeiraLinha[5]);
 		lblNumQuestao.setText(primeiraLinha[6]);
-
-		Choice choice = new Choice();
-		choice.setBounds(893, 59, 103, 20);
-		add(choice);
-
-		//Cria 90 numeros de seleção
-		for(int i=1;i<=90;i++) {
-			choice.add(""+i);
-		}
-
-		//Ao apertar o botão pega a questao selecionada e troca para ela
-		JButton btnOk = new JButton("Ok");
-		btnOk.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				//ID pega pega o valor da caixa de texto selecionada
-				linhaAtual = Integer.parseInt(choice.getSelectedItem());
-				String[] linhaSelecionada = nextRow(linhaAtual,anoS);
-
-				//Bota os dados referentes ao valor da idnos componentes
-				textPane.setText(linhaSelecionada[0]);
-				txtA.setText(linhaSelecionada[1]);
-				txtB.setText(linhaSelecionada[2]);
-				txtC.setText(linhaSelecionada[3]);
-				txtD.setText(linhaSelecionada[4]);
-				txtE.setText(linhaSelecionada[5]);
-				lblNumQuestao.setText(linhaSelecionada[6]);
-			}
-		});
-		btnOk.setForeground(Color.WHITE);
-		btnOk.setFont(new Font("Poppins Medium", Font.PLAIN, 14));
-		btnOk.setFocusPainted(false);
-		btnOk.setBorderPainted(false);
-		btnOk.setBackground(new Color(64, 74, 204));
-		btnOk.setBounds(1002, 59, 57, 20);
-		add(btnOk);
-
-
-
-		btnPrx.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//A caixa de seleção atualiza o valor para ficar o mesmo número da questão
-				choice.select(linhaAtual);
-
-				Resultados res = new Resultados();
-
-				// condição para quando um dos radio buttons estiverem selecionados
-				if (rdbA.isSelected() || rdbB.isSelected() || rdbC.isSelected() || rdbD.isSelected()) {
-
-					if (linhaAtual > 0) {
-						String[] novaLinha = nextRow(linhaAtual,anoS);
-						Gabarito gab = new Gabarito();
-
-						if(rdbA.isSelected()) {
-							gab.respostas[i] = rdbA.getText();
-						} else if (rdbB.isSelected()) {
-							gab.respostas[i] = rdbB.getText();
-						}else if (rdbC.isSelected()) {
-							gab.respostas[i] = rdbC.getText();
-						}else if (rdbD.isSelected()) {
-							gab.respostas[i] = rdbD.getText();
-						}else if (rdbE.isSelected()) {
-							gab.respostas[i] = rdbE.getText();
-						}
-						i++;
-
-
-
-						// Verifica se a opção está correta;
-
-						if ((rdbA.isSelected() && novaLinha[7].equals("a"))
-								|| (rdbB.isSelected() && novaLinha[7].equals("b"))
-								|| (rdbC.isSelected() && novaLinha[7].equals("c"))
-								|| (rdbD.isSelected() && novaLinha[7].equals("d"))
-								|| (rdbE.isSelected() && novaLinha[7].equals("e"))) {
-							// Soma os pontos certos
-							res.acertos++;
-							JOptionPane.showMessageDialog(null, "Você acertou!");
-						} else {
-							JOptionPane.showMessageDialog(null, "Você errou!");
-							// Soma os pontos errados
-							res.erros++;
-						}
-						// Atualiza o valor de linha atual, para ir para os próximos textos
-						linhaAtual++;
-
-						// Guarda os novos dados num array e bota nos componentes;
-
-
-						String[] proxLinha = nextRow(linhaAtual,anoS);
-
-						textPane.setText(proxLinha[0]);
-						txtA.setText(proxLinha[1]);
-						txtB.setText(proxLinha[2]);
-						txtC.setText(proxLinha[3]);
-						txtD.setText(proxLinha[4]);
-						txtE.setText(proxLinha[5]);
-						lblNumQuestao.setText(proxLinha[6]);
-
-						// Zera a seleção dos Radio Buttons
-						bg.clearSelection();
-
-					}
-
-
-
-					if (tipoSimu == 1) {
-
-						// Fecha o Quiz; Depois mudamos esta parte para passar pra tela de resultado
-						if (linhaAtual > 90) {
-							JOptionPane.showMessageDialog(null,
-									"Prova finalizada");
-
-							// Fim do período da prova
-							fim = System.currentTimeMillis();
-
-							// Cálculo do tempo em milissegundos
-							tempoTotal = fim - inicio;
-
-							// Conversão para minutos e segundos
-							res.horas = tempoTotal / (60 * 60 * 1000);
-							res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
-							res.segundos = (tempoTotal % (60 * 1000)) / 1000;
-
-							removeAll();
-							add(res);
-							revalidate();
-							repaint();
-						}
-
-					} else if (tipoSimu == 2) {
-						if (tempoSimu == "Curto") {
-							if (linhaAtual > 30) {
-								JOptionPane.showMessageDialog(null,
-										"Prova finalizada");
-								// Fim do período da prova
-								fim = System.currentTimeMillis();
-
-								// Cálculo do tempo em milissegundos
-								tempoTotal = fim - inicio;
-
-								// Conversão para minutos e segundos
-								res.horas = tempoTotal / (60 * 60 * 1000);
-								res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
-								res.segundos = (tempoTotal % (60 * 1000)) / 1000;
-
-								removeAll();
-								add(res);
-								revalidate();
-								repaint();
-							}
-						} else if (tempoSimu == "Médio") {
-							if (linhaAtual > 60) {
-								JOptionPane.showMessageDialog(null,
-										"Prova finalizada");
-
-								// Fim do período da prova
-								fim = System.currentTimeMillis();
-
-								// Cálculo do tempo em milissegundos
-								tempoTotal = fim - inicio;
-
-								// Conversão para minutos e segundos
-								res.horas = tempoTotal / (60 * 60 * 1000);
-								res.minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
-								res.segundos = (tempoTotal % (60 * 1000)) / 1000;
-
-								removeAll();
-								add(res);
-								revalidate();
-								repaint();
-
-							}
-						}
-
-					}
-
-				}
-			}
-		});
-
 	}
+
 }
