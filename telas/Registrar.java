@@ -268,27 +268,27 @@ public class Registrar extends JPanel {
 				String senha = new String(passChar);
 				String resultstr = String.valueOf(result);
 
-				if (nameField.getText() == "") {
+				if (nameField.getText().isEmpty()) {
 					nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED)); //Altera a cor da borda para Vermelho
 				}
-				if (sobrenomeField.getText() == "") {
+				if (sobrenomeField.getText().isEmpty()) {
 					sobrenomeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
 				}
-				if (usuario == "") {
+				if (usuario.isEmpty()) {
 					usernameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
 				}
-				if (email == "") {
+				if (email.isEmpty()) {
 					emailField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
 				}
-				if (senha == "") {
+				if (senha.isEmpty()) {
 					passwordField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
 				}
-				if (birthField.getText() == "") {
+				if (birthField.getText().isEmpty()) {
 					birthField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));}
 
 				else {
 					if ((infos[0] == null || infos[0].isEmpty()) 
-							&& (infos[1] == null || infos[1].isEmpty()) && (ver == resultstr)){
+							&& (infos[1] == null || infos[1].isEmpty()) && (resultstr.equals(ver))){
 						ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 						String query = "insert into dados values (default,?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
 						System.out.println("Entrou no if");
