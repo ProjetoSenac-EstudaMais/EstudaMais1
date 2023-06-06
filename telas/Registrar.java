@@ -1,4 +1,4 @@
-package telas;
+package Telas;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -17,11 +17,14 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.Cursor;
 import javax.swing.JFormattedTextField;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
 public class Registrar extends JPanel {
@@ -35,31 +38,7 @@ public class Registrar extends JPanel {
 	private JTextField birthField;
 	private JTextField nameField;
 	private JTextField verificationField;
-
-	public static String[] DB(String usuario, String email) {
-		String[] infouser = new String [2]; //Armazena os dados de login se um usuário em Array.
-
-		try {
-			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
-
-			//Envia comandos para o DB.
-
-			String query = "select email,usuario from dados where email =? or usuario =?";
-			ResultSet rs = conn1.executeQuery(query,email,usuario);
-
-			/*
-			 *Comando para guardar os dados dentro de uma variável;/
-			 */
-			if(rs.next()) {
-				infouser[0] = rs.getString("usuario"); //Busca o vetor 0 das infos, equivalente ao Usuário
-				infouser[1] = rs.getString("email");} //Busca o vetor 1 das infos, equivalente ao E-mail
-
-			rs.close();
-			conn1.closeConnection();
-		}
-		catch (SQLException e){e.printStackTrace();}
-		return infouser;
-	}
+	private int result;	
 
 	/**
 	 * Create the panel.
@@ -92,7 +71,6 @@ public class Registrar extends JPanel {
 		lblInformeSeusDados.setFont(new Font("Poppins", Font.PLAIN, 11));
 		lblInformeSeusDados.setBounds(208, 96, 121, 14);
 		panel.add(lblInformeSeusDados);
-
 
 		JLabel lblNome = new JLabel("Nome:");
 		lblNome.setForeground(Color.WHITE);
@@ -193,9 +171,9 @@ public class Registrar extends JPanel {
 		panel.add(lblVerificacao);
 
 		Random random = new Random();		
-		int numero = random.nextInt(50);
-		int numero1 = random.nextInt(50);
-		int result = numero + numero1;
+		int numero = random.nextInt(20);
+		int numero1 = random.nextInt(20);
+		result = numero + numero1;
 
 		JLabel lblRandom = new JLabel(numero + " + " + numero1); //Label para aparecer o número random de equação
 		lblRandom.setForeground(Color.WHITE);
@@ -231,17 +209,6 @@ public class Registrar extends JPanel {
 		btnLogin.setBounds(290, 623, 103, 23);
 		panel.add(btnLogin);
 
-		// Interação do botão "Faça Login" para voltar à "tela de Login"
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Login a = new Login();
-				removeAll();
-				add(a);
-				revalidate();
-				repaint();
-
-			}});
-
 		// Botão Registrar uma conta
 		JButton btnRegistrar = new JButton("Registrar");
 		btnRegistrar.setFont(new Font("Poppins", Font.PLAIN, 11));
@@ -253,69 +220,298 @@ public class Registrar extends JPanel {
 		btnRegistrar.setBounds(226, 589, 89, 23);
 		panel.add(btnRegistrar);
 
+		nameFieldMudancaCor();
+		emailFieldMudancaCor();
+		sobrenomeFieldMudancaCor();
+		passwordFieldMudancaCor();
+		usernameFieldMudancaCor();
+		birthMudancaCor();
+
+		// Interação do botão "Faça Login" para voltar à "tela de Login"
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				telaLogin();
+
+			}});
+
 		btnRegistrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/* verificar usuario e email ja existem;
-				 * se existir, avisar que já tem e precisa mudar;
-				 * se não existir, registrar e aparecer um POP-UP falando que registro feito e envia pra tela de login
-				 */
 
-				usuario = usernameField.getText();
-				email = emailField.getText();
-				infos = DB(usuario, email);
-				String ver = verificationField.getText();
-				char[] passChar = passwordField.getPassword();
-				String senha = new String(passChar);
-				String resultstr = String.valueOf(result);
+				condicaoRegistro();
 
+			}
+		});
+	}
+	
+	public static String[] DB(String usuario, String email) {
+		String[] infouser = new String [2]; //Armazena os dados de login se um usuário em Array.
+
+		try {
+			ConexãoMysql conn1 = new ConexãoMysql("localhost","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
+
+			//Envia comandos para o DB.
+
+			String query = "select email,Usuario from dados where email =? or Usuario =?";
+			ResultSet rs = conn1.executeQuery(query,email,usuario);
+
+			/*
+			 *Comando para guardar os dados dentro de uma variável;/
+			 */
+			if(rs.next()) {
+				infouser[0] = rs.getString("Usuario"); //Busca o vetor 0 das infos, equivalente ao Usuário
+				infouser[1] = rs.getString("email");} //Busca o vetor 1 das infos, equivalente ao E-mail
+
+			rs.close();
+			conn1.closeConnection();
+		}
+		catch (SQLException e){e.printStackTrace();}
+		return infouser;
+	}
+
+	public void condicaoRegistro() {
+		/* verificar usuario e email ja existem;
+		 * se existir, avisar que já tem e precisa mudar;
+		 * se não existir, registrar e aparecer um POP-UP falando que registro feito e envia pra tela de login
+		 */
+		usuario = usernameField.getText();
+		email = emailField.getText();
+
+		infos = DB(usuario, email);
+
+		String ver = verificationField.getText();
+		char[] passChar = passwordField.getPassword();
+		String senha = new String(passChar);
+		String resultstr = String.valueOf(result);
+
+		if (nameField.getText().isEmpty()) {
+			System.out.println("Entrou no if");
+			nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED)); //Altera a cor da borda para Vermelho
+		} 
+		if (sobrenomeField.getText().isEmpty()) {
+			sobrenomeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
+		}
+		if (usernameField.getText().isEmpty()) {
+			usernameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
+		}
+		if (emailField.getText().isEmpty()) {
+			emailField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
+		}
+		if (senha.isEmpty()) {
+			passwordField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
+		}
+		if (birthField.getText().isEmpty()) {
+			birthField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));}
+
+		else {
+
+			if(!resultstr.equals(ver)) {
+				JOptionPane.showMessageDialog(null, "Respota incorreta para a soma");
+			}
+			else {if ((infos[0] == null) || (infos[0].isEmpty()) && (infos[1] == null) || (infos[1].isEmpty())){
+				System.out.println(ver);
+				System.out.println(resultstr);
+				System.out.println("entrou o else");
+				ConexãoMysql conn1 = new ConexãoMysql("localhost","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
+				String query = "insert into dados (nome, sobrenome,Usuario,email,senha,nascimento) values (?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
+				try {
+					PreparedStatement pstmt = conn1.conn.prepareStatement(query);
+					pstmt.setString(1,nameField.getText());
+					pstmt.setString(2,sobrenomeField.getText());
+					pstmt.setString(3,usernameField.getText());
+					pstmt.setString(4,emailField.getText());
+					pstmt.setString(5,senha);
+					pstmt.setString(6,birthField.getText());
+					pstmt.executeUpdate();
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				conn1.closeConnection();
+
+				Login a = new Login();
+				removeAll();
+				add(a);
+				revalidate();
+				repaint();
+			}else{
+				if((infos[0] !=null )&&(infos[0].equals(usernameField.getText()) )){
+					System.out.println(infos[0]);
+					JOptionPane.showMessageDialog(null, "Usuário já existente.");}
+				else if((infos[1] !=null )&&(infos[1].equals(emailField.getText()))){
+					JOptionPane.showMessageDialog(null, "E-mail já cadastrado.");}
+			}}
+		}
+	}
+
+	public void telaLogin() {
+		Login a = new Login();
+		removeAll();
+		add(a);
+		revalidate();
+		repaint();
+	}
+
+	public void nameFieldMudancaCor() {
+		nameField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			private void updateBorder() {
 				if (nameField.getText().isEmpty()) {
-					nameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED)); //Altera a cor da borda para Vermelho
-				}
-				if (sobrenomeField.getText().isEmpty()) {
-					sobrenomeField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
-				}
-				if (usuario.isEmpty()) {
-					usernameField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
-				}
-				if (email.isEmpty()) {
-					emailField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
-				}
-				if (senha.isEmpty()) {
-					passwordField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
-				}
-				if (birthField.getText().isEmpty()) {
-					birthField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));}
-
-				else {
-					if ((infos[0] == null || infos[0].isEmpty()) 
-							&& (infos[1] == null || infos[1].isEmpty()) && (resultstr.equals(ver))){
-						ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
-						String query = "insert into dados values (default,?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
-						System.out.println("Entrou no if");
-						try {
-							PreparedStatement pstmt = conn1.conn.prepareStatement(query);
-							pstmt.setString(1,nameField.getText());
-							pstmt.setString(2,sobrenomeField.getText());
-							pstmt.setString(3,usernameField.getText());
-							pstmt.setString(4,emailField.getText());
-							pstmt.setString(5,senha);
-							pstmt.setString(6,birthField.getText());
-							pstmt.executeUpdate();
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						conn1.closeConnection();
-					}else{
-						if(infos[0] != null ){
-							JOptionPane.showMessageDialog(null, "Usuário já existente.");}
-						if(infos[1] != null ){
-							JOptionPane.showMessageDialog(null, "E-mail já cadastrado.");}
-					}
+					nameField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+				} else {
+					nameField.setBorder(UIManager.getBorder("TextField.border"));
 				}
 			}
 		});
-
-
 	}
+
+	public void emailFieldMudancaCor() {
+		emailField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			private void updateBorder() {
+				if (emailField.getText().isEmpty()) {
+					emailField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+				} else {
+					emailField.setBorder(UIManager.getBorder("TextField.border"));
+				}
+			}
+		});
+	}
+
+	public void sobrenomeFieldMudancaCor() {
+		sobrenomeField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			private void updateBorder() {
+				if (sobrenomeField.getText().isEmpty()) {
+					sobrenomeField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+				} else {
+					sobrenomeField.setBorder(UIManager.getBorder("TextField.border"));
+				}
+			}
+		});
+	}
+
+	public void passwordFieldMudancaCor() {
+		passwordField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			private void updateBorder() {
+				if (passwordField.getPassword().length == 0) {
+					passwordField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+				} else {
+					passwordField.setBorder(UIManager.getBorder("TextField.border"));
+				}
+			}
+		});
+	}
+
+	public void usernameFieldMudancaCor() {
+		usernameField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			private void updateBorder() {
+				if (usernameField.getText().isEmpty()) {
+					usernameField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+				} else {
+					usernameField.setBorder(UIManager.getBorder("TextField.border"));
+				}
+			}
+		});
+	}
+
+	public void birthMudancaCor() {
+		birthField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			private void updateBorder() {
+				if (birthField.getText().isEmpty()) {
+					birthField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+				} else {
+					birthField.setBorder(UIManager.getBorder("TextField.border"));
+				}
+			}
+		});
+	}
+
 }
