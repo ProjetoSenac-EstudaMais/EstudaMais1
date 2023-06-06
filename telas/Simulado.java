@@ -26,13 +26,11 @@ public class Simulado extends JPanel {
 	private JTextField textField;
 	public ButtonGroup bg;
 	private int linhaAtual = 1;
-
 	private int anoS;
 	private long inicio;
 	private long fim;
 	private  long tempoTotal;
 	private int tempoInicialSegundos = 300 * 60; // Tempo em segundos
-	private int i =1;
 	private int acertos=0;
 	private int erros=0;
 	private long horas;
@@ -59,53 +57,6 @@ public class Simulado extends JPanel {
 	private JRadioButton rdbD;
 	private JRadioButton rdbE;
 
-
-
-
-
-	// Faz um metódo para puxar a proxima linha de acordo com o id
-	public String[] nextRow(int id, int ano) {
-		String[] linha = new String[8];
-
-		// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
-		// configurar o JDBC no computador para funcionar
-		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
-
-		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
-		// definir ele fora do comando
-		String query = "select id,questao,respostaA,respostaB,respostaC,respostaD,respostaE, respostaCerta from questoes where id=? and ano=?";
-
-		// Este comando retorna os valores solicitados, e primeiro vem o comando e
-		// depois o valor do '?'
-		ResultSet rs = con.executeQuery(query, id,ano);
-
-		// Este comando armazena os valores recebidos em uma variavel
-		try {
-			if (rs.next()) {
-
-				// Armazenando em uma array posso livremente puxalos posteriormente no código e
-				// atualizalos conforme o id avança
-				linha[0] = rs.getString("questao");
-				linha[1] = rs.getString("respostaA");
-				linha[2] = rs.getString("respostaB");
-				linha[3] = rs.getString("respostaC");
-				linha[4] = rs.getString("respostaD");
-				linha[5] = rs.getString("respostaE");
-				linha[6] = rs.getString("id");
-				linha[7] = rs.getString("respostaCerta");
-
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		// sempre fechar a conexão após o uso necessário
-		con.closeConnection();
-		return linha;
-	}
-
 	/**
 	 * Create the panel.
 	 */
@@ -126,8 +77,6 @@ public class Simulado extends JPanel {
 		painelLateral.setBounds(0, 0, 50, 720);
 		add(painelLateral);
 
-
-
 		JLabel lblQuestao = new JLabel("Questão");
 		lblQuestao.setFont(new Font("Poppins Medium", Font.PLAIN, 24));
 		lblQuestao.setBounds(70, 80, 103, 49);
@@ -137,7 +86,6 @@ public class Simulado extends JPanel {
 		lblNumQuestao.setFont(new Font("Poppins Medium", Font.PLAIN, 24));
 		lblNumQuestao.setBounds(181, 80, 70, 49);
 		add(lblNumQuestao);
-
 
 		textPane = new JTextPane();
 		textPane.setFont(new Font("Poppins", Font.PLAIN, 16));
@@ -190,8 +138,6 @@ public class Simulado extends JPanel {
 		rdbB.setFocusPainted(false);
 		rdbB.setBounds(6, 120, 39, 23);
 		painelRespostas.add(rdbB);
-
-
 
 		rdbC = new JRadioButton("C)");
 		rdbC.setOpaque(false);
@@ -247,7 +193,6 @@ public class Simulado extends JPanel {
 		txtA.setLineWrap(true);
 		txtA.setBounds(63, 25, 268, 82);
 		painelRespostas.add(txtA);
-
 
 		txtB = new JTextArea();
 		txtB.setForeground(new Color(255, 255, 255));
@@ -362,6 +307,49 @@ public class Simulado extends JPanel {
 
 	}
 
+	// Faz um metódo para puxar a proxima linha de acordo com o id
+	public String[] nextRow(int id, int ano) {
+		String[] linha = new String[8];
+
+		// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
+		// configurar o JDBC no computador para funcionar
+		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
+
+		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
+		// definir ele fora do comando
+		String query = "select id,questao,respostaA,respostaB,respostaC,respostaD,respostaE, respostaCerta from questoes where id=? and ano=?";
+
+		// Este comando retorna os valores solicitados, e primeiro vem o comando e
+		// depois o valor do '?'
+		ResultSet rs = con.executeQuery(query, id,ano);
+
+		// Este comando armazena os valores recebidos em uma variavel
+		try {
+			if (rs.next()) {
+
+				// Armazenando em uma array posso livremente puxalos posteriormente no código e
+				// atualizalos conforme o id avança
+				linha[0] = rs.getString("questao");
+				linha[1] = rs.getString("respostaA");
+				linha[2] = rs.getString("respostaB");
+				linha[3] = rs.getString("respostaC");
+				linha[4] = rs.getString("respostaD");
+				linha[5] = rs.getString("respostaE");
+				linha[6] = rs.getString("id");
+				linha[7] = rs.getString("respostaCerta");
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// sempre fechar a conexão após o uso necessário
+		con.closeConnection();
+		return linha;
+	}
+
 	public void finalizar() {
 
 		// Aqui cria um array para botar os textos sim e não no botao do painel de
@@ -392,7 +380,6 @@ public class Simulado extends JPanel {
 			repaint();
 		}}
 
-
 	public void temporizador() {
 		// Cria um coutdown de 5 horas que conta cada 1000 milisegundos ou seja 1
 		// segundo
@@ -419,7 +406,6 @@ public class Simulado extends JPanel {
 		timer.start();
 	}
 
-
 	public void condicaoAnoS() {
 		// define o valor da variavel anoS que sera usada para substituir o valor de
 		// pesquisa do ano no banco de dados
@@ -429,7 +415,6 @@ public class Simulado extends JPanel {
 			anoS = Integer.parseInt(anoSP);
 		}
 	}
-
 
 	public void qntChoice() {
 		//Cria 90 numeros de seleção
@@ -462,7 +447,6 @@ public class Simulado extends JPanel {
 			}
 	}
 
-
 	public void btnOkay() {
 		linhaAtual = Integer.parseInt(choice.getSelectedItem());
 
@@ -479,7 +463,6 @@ public class Simulado extends JPanel {
 		txtE.setText(linhaSelecionada[5]);
 		lblNumQuestao.setText(linhaSelecionada[6]);
 	}
-
 
 	public void questaoRespondida() {
 		// condição para quando um dos radio buttons estiverem selecionados
@@ -530,7 +513,6 @@ public class Simulado extends JPanel {
 				bg.clearSelection();
 			}}
 	}
-
 
 	public void condicaoEncerrar() {
 		if (tipoSimu == 1) {
@@ -675,7 +657,6 @@ public class Simulado extends JPanel {
 				}
 			}}	
 	}
-
 
 	public void primeiraLinha() {
 
