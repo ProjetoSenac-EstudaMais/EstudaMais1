@@ -20,41 +20,28 @@ public class Gabarito extends JPanel {
 	private JLabel questoes;
 	private JPanel pnlQuestoes;
 	private int page=0;
+	private int acertos; 
+	private int erros; 
+	private long segundos; 
+	private long minutos; 
+	private long horas;
 
 	/**
 	 * Create the panel.
 	 */
 
-	//Metodo para conectar com o banco de dados e armazenar os dados em uma array
-	public String[] nextLine(int id) {
-		String[] line = new String[2];
 
-		//estabelece conexão
-		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "quiz", "root", "root2606!");
 
-		//manda o comando para o banco de dados
-		String query = "select id,questaoCerta from questions where id=?";
-		ResultSet rs = con.executeQuery(query, id);
+	public Gabarito(int acertos, int erros, long segundos, long minutos, long horas) {
+		this.acertos=acertos;
+		this.erros=erros;
+		this.segundos=segundos;
+		this.minutos=minutos;
+		this.horas=horas;
 
-		//recebe os dados solicitados
-		try {
-			if(rs.next()) {
-				line[0] = rs.getString("id");
-				line[1] = rs.getString("questaoCerta");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		con.closeConnection();
-		return line;
-	}
-
-	public Gabarito() {
 		setBackground(new Color(64, 74, 204));
 		setLayout(null);
 		setBounds(0,0,1280,720);
-
-
 
 		JPanel pnlHeader = new JPanel();
 		pnlHeader.setBorder(null);
@@ -92,15 +79,6 @@ public class Gabarito extends JPanel {
 
 		//Botão para voltar a tela de resultados
 		JButton btnVoltar = new JButton("VOLTAR");
-		btnVoltar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Resultados res=new Resultados();
-				removeAll();
-				add(res);
-				revalidate();
-				repaint();
-			}
-		});
 		btnVoltar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnVoltar.setFocusPainted(false);
 		btnVoltar.setBorderPainted(false);
@@ -112,38 +90,6 @@ public class Gabarito extends JPanel {
 
 		//Botão que atualiza os valores das questoes, gabaritos e resposta de acordo com o id do banco de dados
 		JButton setaProximo = new JButton("");
-		setaProximo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(page<3) {
-					page++;
-					if(page==1) {
-						//O painel que contem os componentes remove todos os componentes para zerar os textos
-						pnlQuestoes.removeAll();
-						//Revalida os  componentes
-						revalidate();
-						//Reimprime eles na tela
-						repaint();
-
-						//Valor atualizado do id por pagina
-						posicaoInicial(11,10);
-					} else if(page==2) {
-						pnlQuestoes.removeAll();
-						revalidate();
-						repaint();
-
-						posicaoInicial(21,30);
-					}else if(page==3) {
-						pnlQuestoes.removeAll();
-						revalidate();
-						repaint();
-
-						posicaoInicial(31,30);
-					}
-				}
-
-
-			}
-		});
 		setaProximo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		setaProximo.setFocusPainted(false);
 		setaProximo.setContentAreaFilled(false);
@@ -154,38 +100,6 @@ public class Gabarito extends JPanel {
 
 		//Mesma função da setaProximo, porem quando acionado retorna os valores da pagina anterior
 		JButton setaAnterior = new JButton("");
-		setaAnterior.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(page>0) {
-					page--;
-					if(page==1) {
-						pnlQuestoes.removeAll();
-						revalidate();
-						repaint();
-
-						posicaoInicial(11,10);
-					} else if(page==2) {
-						pnlQuestoes.removeAll();
-						revalidate();
-						repaint();
-
-						posicaoInicial(21,20);
-					}else if(page==3) {
-						pnlQuestoes.removeAll();
-						revalidate();
-						repaint();
-
-						posicaoInicial(31,30);
-					} else if(page==0) {
-						pnlQuestoes.removeAll();
-						revalidate();
-						repaint();
-
-						posicaoInicial(1,0);
-					}
-				}
-			}
-		});
 		setaAnterior.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		setaAnterior.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\arrowb_resized.png"));
 		setaAnterior.setFocusPainted(false);
@@ -206,19 +120,62 @@ public class Gabarito extends JPanel {
 		add(pnlLinha);
 		pnlLinha.setLayout(null);
 
-
 		pnlQuestoes = new JPanel();
 		pnlQuestoes.setBackground(new Color(64, 74, 204));
 		pnlQuestoes.setBounds(0, 0, 1280, 720);
 		pnlQuestoes.setLayout(null);
 		add(pnlQuestoes);
 
+		btnVoltar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				telaResultados();
+
+			}
+		});
+
+		setaProximo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				setaProximo();
+
+			}
+		});
+
+		setaAnterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				setaAnterior();
+
+			}
+		});
 
 		//Imprime os componentes na tela quando inicia o painel com o valor do id 1
 		posicaoInicial(1,0);
-
 	}
+	//Metodo para conectar com o banco de dados e armazenar os dados em uma array
+	public String[] nextLine(int id) {
+		String[] line = new String[2];
 
+		//estabelece conexão
+		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
+
+		//manda o comando para o banco de dados
+		String query = "select id,respostaCerta from questoes where id=?";
+		ResultSet rs = con.executeQuery(query, id);
+
+		//recebe os dados solicitados
+		try {
+			if(rs.next()) {
+				line[0] = rs.getString("id");
+				line[1] = rs.getString("respostaCerta");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		con.closeConnection();
+		return line;
+	}
 	//Metodo para gerar os componentes na tela
 	public void posicaoInicial(int id, int i) {
 		int aumPosicao = 54;
@@ -277,4 +234,73 @@ public class Gabarito extends JPanel {
 
 	}
 
+	public void setaProximo() {
+		if(page<3) {
+			page++;
+			if(page==1) {
+				//O painel que contem os componentes remove todos os componentes para zerar os textos
+				pnlQuestoes.removeAll();
+				//Revalida os  componentes
+				revalidate();
+				//Reimprime eles na tela
+				repaint();
+
+				//Valor atualizado do id por pagina
+				posicaoInicial(11,10);
+			} else if(page==2) {
+				pnlQuestoes.removeAll();
+				revalidate();
+				repaint();
+
+				posicaoInicial(21,30);
+			}else if(page==3) {
+				pnlQuestoes.removeAll();
+				revalidate();
+				repaint();
+
+				posicaoInicial(31,30);
+			}
+		}
+	}
+
+	public void setaAnterior() {
+		if(page>0) {
+			page--;
+			if(page==1) {
+				pnlQuestoes.removeAll();
+				revalidate();
+				repaint();
+
+				posicaoInicial(11,10);
+			} else if(page==2) {
+				pnlQuestoes.removeAll();
+				revalidate();
+				repaint();
+
+				posicaoInicial(21,20);
+			}else if(page==3) {
+				pnlQuestoes.removeAll();
+				revalidate();
+				repaint();
+
+				posicaoInicial(31,30);
+			} else if(page==0) {
+				pnlQuestoes.removeAll();
+				revalidate();
+				repaint();
+
+				posicaoInicial(1,0);
+			}
+		}
+	}
+
+	public void telaResultados() {
+		Resultados res = new Resultados(acertos, erros, segundos, minutos, horas);
+		removeAll();
+		add(res);
+		revalidate();
+		repaint();
+	}
+
 }
+
