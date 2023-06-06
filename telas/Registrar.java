@@ -1,4 +1,4 @@
-package Telas;
+package telas;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -167,7 +167,7 @@ public class Registrar extends JPanel {
 		JLabel lblVerificacao = new JLabel("Resolva a equação:");
 		lblVerificacao.setForeground(Color.WHITE);
 		lblVerificacao.setFont(new Font("Poppins", Font.PLAIN, 11));
-		lblVerificacao.setBounds(121, 508, 103, 14);
+		lblVerificacao.setBounds(121, 508, 121, 14);
 		panel.add(lblVerificacao);
 
 		Random random = new Random();		
@@ -178,7 +178,7 @@ public class Registrar extends JPanel {
 		JLabel lblRandom = new JLabel(numero + " + " + numero1); //Label para aparecer o número random de equação
 		lblRandom.setForeground(Color.WHITE);
 		lblRandom.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblRandom.setBounds(226, 508, 103, 14);
+		lblRandom.setBounds(236, 507, 78, 14);
 		panel.add(lblRandom);	
 
 		verificationField = new JTextField();
@@ -220,11 +220,11 @@ public class Registrar extends JPanel {
 		btnRegistrar.setBounds(226, 589, 89, 23);
 		panel.add(btnRegistrar);
 
-		nameFieldMudancaCor();
-		emailFieldMudancaCor();
-		sobrenomeFieldMudancaCor();
+		textFieldMudancaCor(nameField);
+		textFieldMudancaCor(emailField);
+		textFieldMudancaCor(sobrenomeField);
 		passwordFieldMudancaCor();
-		usernameFieldMudancaCor();
+		textFieldMudancaCor(usernameField);
 		birthMudancaCor();
 
 		// Interação do botão "Faça Login" para voltar à "tela de Login"
@@ -243,12 +243,12 @@ public class Registrar extends JPanel {
 			}
 		});
 	}
-	
+
 	public static String[] DB(String usuario, String email) {
 		String[] infouser = new String [2]; //Armazena os dados de login se um usuário em Array.
 
 		try {
-			ConexãoMysql conn1 = new ConexãoMysql("localhost","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
 
@@ -306,14 +306,11 @@ public class Registrar extends JPanel {
 		else {
 
 			if(!resultstr.equals(ver)) {
-				JOptionPane.showMessageDialog(null, "Respota incorreta para a soma");
+				JOptionPane.showMessageDialog(null, "Respota incorreta para a soma"); //Pop-up de resposta incorreta.
 			}
 			else {if ((infos[0] == null) || (infos[0].isEmpty()) && (infos[1] == null) || (infos[1].isEmpty())){
-				System.out.println(ver);
-				System.out.println(resultstr);
-				System.out.println("entrou o else");
-				ConexãoMysql conn1 = new ConexãoMysql("localhost","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
-				String query = "insert into dados (nome, sobrenome,Usuario,email,senha,nascimento) values (?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
+				ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+				String query = "insert into dados (nome, sobrenome,Usuario,email,senha,birthdate) values (?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
 				try {
 					PreparedStatement pstmt = conn1.conn.prepareStatement(query);
 					pstmt.setString(1,nameField.getText());
@@ -328,12 +325,10 @@ public class Registrar extends JPanel {
 					e1.printStackTrace();
 				}
 				conn1.closeConnection();
+				JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso! Faça seu login.");
 
-				Login a = new Login();
-				removeAll();
-				add(a);
-				revalidate();
-				repaint();
+				telaLogin();
+
 			}else{
 				if((infos[0] !=null )&&(infos[0].equals(usernameField.getText()) )){
 					System.out.println(infos[0]);
@@ -344,6 +339,9 @@ public class Registrar extends JPanel {
 		}
 	}
 
+	/*
+	 * Métodos 
+	 */
 	public void telaLogin() {
 		Login a = new Login();
 		removeAll();
@@ -352,8 +350,8 @@ public class Registrar extends JPanel {
 		repaint();
 	}
 
-	public void nameFieldMudancaCor() {
-		nameField.getDocument().addDocumentListener(new DocumentListener() {
+	public void textFieldMudancaCor(JTextField textField) {
+		textField.getDocument().addDocumentListener(new DocumentListener() {
 			@Override
 			public void insertUpdate(DocumentEvent e) {
 				updateBorder();
@@ -370,64 +368,10 @@ public class Registrar extends JPanel {
 			}
 
 			private void updateBorder() {
-				if (nameField.getText().isEmpty()) {
-					nameField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+				if (textField.getText().isEmpty()) {
+					textField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
 				} else {
-					nameField.setBorder(UIManager.getBorder("TextField.border"));
-				}
-			}
-		});
-	}
-
-	public void emailFieldMudancaCor() {
-		emailField.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			private void updateBorder() {
-				if (emailField.getText().isEmpty()) {
-					emailField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
-				} else {
-					emailField.setBorder(UIManager.getBorder("TextField.border"));
-				}
-			}
-		});
-	}
-
-	public void sobrenomeFieldMudancaCor() {
-		sobrenomeField.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			private void updateBorder() {
-				if (sobrenomeField.getText().isEmpty()) {
-					sobrenomeField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
-				} else {
-					sobrenomeField.setBorder(UIManager.getBorder("TextField.border"));
+					textField.setBorder(UIManager.getBorder("TextField.border"));
 				}
 			}
 		});
@@ -460,32 +404,6 @@ public class Registrar extends JPanel {
 		});
 	}
 
-	public void usernameFieldMudancaCor() {
-		usernameField.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			private void updateBorder() {
-				if (usernameField.getText().isEmpty()) {
-					usernameField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
-				} else {
-					usernameField.setBorder(UIManager.getBorder("TextField.border"));
-				}
-			}
-		});
-	}
 
 	public void birthMudancaCor() {
 		birthField.getDocument().addDocumentListener(new DocumentListener() {

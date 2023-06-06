@@ -17,40 +17,21 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.MatteBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.JPasswordField;
+import java.awt.Cursor;
 
 public class EsqueciSenha extends JPanel {
 	private JTextField emailField;
-	private JTextField securityField;
 	private JPasswordField newPasswordField;
 	private JPasswordField newPasswordField_2;
 	private String usuario;
 	private String email;
 	private String[] infos = new String[4];
 
-	public static String[] DB(String email) {
-		String[] infouser = new String [1]; //Armazena os dados de login se um usuário em Array.
-
-		try {
-			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
-
-			//Envia comandos para o DB.
-			String query = "alter table dados modify column senha where e-mail=?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
-			ResultSet rs = conn1.executeQuery(query,email); //Retornar os resultados da SQL
-
-			/*
-			 *Comando para guardar os dados dentro de uma variável;/
-			 */
-			if(rs.next()) {
-				infouser[0] = rs.getString("email");} //Busca o vetor 0 das infos, equivalente ao E-mail
-
-			rs.close();
-			conn1.closeConnection();
-		}
-		catch (SQLException e){e.printStackTrace();}
-		return infouser;
-	}
 
 	/**
 	 * Create the panel.
@@ -81,7 +62,7 @@ public class EsqueciSenha extends JPanel {
 		JLabel lblEmailInputEsq = new JLabel("Email:");
 		lblEmailInputEsq.setForeground(SystemColor.text);
 		lblEmailInputEsq.setFont(new Font("Poppins", Font.PLAIN, 11));
-		lblEmailInputEsq.setBounds(118, 243, 78, 14);
+		lblEmailInputEsq.setBounds(118, 275, 78, 14);
 		panel.add(lblEmailInputEsq);
 
 		emailField = new JTextField();
@@ -90,28 +71,13 @@ public class EsqueciSenha extends JPanel {
 		emailField.setForeground(Color.WHITE);
 		emailField.setColumns(10);
 		emailField.setBackground(new Color(36, 44, 136));
-		emailField.setBounds(118, 263, 300, 25);
+		emailField.setBounds(118, 295, 300, 25);
 		panel.add(emailField);
-
-		JLabel lblPerguntaDeSegurana = new JLabel("Pergunta de Segurança:");
-		lblPerguntaDeSegurana.setForeground(Color.WHITE);
-		lblPerguntaDeSegurana.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblPerguntaDeSegurana.setBounds(118, 298, 121, 14);
-		panel.add(lblPerguntaDeSegurana);
-
-		securityField = new JTextField();
-		securityField.setForeground(Color.WHITE);
-		securityField.setFont(new Font("Dialog", Font.PLAIN, 12));
-		securityField.setColumns(10);
-		securityField.setCaretColor(Color.WHITE);
-		securityField.setBackground(new Color(36, 44, 136));
-		securityField.setBounds(118, 318, 300, 25);
-		panel.add(securityField);
 
 		JLabel lblnewPassword = new JLabel("Nova Senha:");
 		lblnewPassword.setForeground(Color.WHITE);
 		lblnewPassword.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblnewPassword.setBounds(118, 354, 121, 14);
+		lblnewPassword.setBounds(118, 331, 121, 14);
 		panel.add(lblnewPassword);
 
 		newPasswordField = new JPasswordField();
@@ -119,13 +85,13 @@ public class EsqueciSenha extends JPanel {
 		newPasswordField.setFont(new Font("Dialog", Font.PLAIN, 12));
 		newPasswordField.setCaretColor(Color.WHITE);
 		newPasswordField.setBackground(new Color(36, 44, 136));
-		newPasswordField.setBounds(118, 374, 300, 25);
+		newPasswordField.setBounds(118, 351, 300, 25);
 		panel.add(newPasswordField);
 
 		JLabel lblnewPassword_2 = new JLabel("Digite a Nova Senha novamente:");
 		lblnewPassword_2.setForeground(Color.WHITE);
 		lblnewPassword_2.setFont(new Font("Dialog", Font.PLAIN, 11));
-		lblnewPassword_2.setBounds(118, 410, 163, 14);
+		lblnewPassword_2.setBounds(118, 387, 163, 14);
 		panel.add(lblnewPassword_2);
 
 		newPasswordField_2 = new JPasswordField();
@@ -133,10 +99,11 @@ public class EsqueciSenha extends JPanel {
 		newPasswordField_2.setFont(new Font("Dialog", Font.PLAIN, 12));
 		newPasswordField_2.setCaretColor(Color.WHITE);
 		newPasswordField_2.setBackground(new Color(36, 44, 136));
-		newPasswordField_2.setBounds(118, 428, 300, 25);
+		newPasswordField_2.setBounds(118, 405, 300, 25);
 		panel.add(newPasswordField_2);
 
 		JButton btnEnviar = new JButton("Enviar");
+		btnEnviar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnEnviar.setFocusPainted(false);
 		btnEnviar.setForeground(Color.WHITE);
 		btnEnviar.setBorderPainted(false);
@@ -144,53 +111,60 @@ public class EsqueciSenha extends JPanel {
 		btnEnviar.setBounds(223, 484, 89, 23);
 		panel.add(btnEnviar);
 
+		emailFieldMudancaCor();
+		newPasswordMudancaCor(newPasswordField);
+		newPasswordMudancaCor(newPasswordField_2);
+
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				email = emailField.getText();
 				infos = DB(email);
-				infos[0] = emailField.getText();
-				infos[1] = securityField.getText();
-
-				String ver = securityField.getText();
 				char[] passChar = newPasswordField.getPassword();
 				char[] passChar2 = newPasswordField_2.getPassword();
 				String senha = new String(passChar);
 				String senha2 = new String(passChar2);
 
-				if (emailField.getText() == "") {
+				if (emailField.getText().isEmpty()) {
 					emailField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED)); //Altera a cor da borda para Vermelho
 				}
-				if (securityField.getText() == "") {
-					securityField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
-				}
-				if (senha == "") {
+				if (senha.isEmpty()) {
 					newPasswordField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
 				}
-				if (senha2 == "") {
+				if (senha2.isEmpty()) {
 					newPasswordField_2.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
 				}
 				else {
-					if(email == null) {
+					if(infos[0] == null || infos[0].isEmpty()) {
 						JOptionPane.showMessageDialog(null, "E-mail não existente.");
 					}
-					else {					
-						if ((emailField.getText() == email) && (infos[1] == null)){
-							ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
-							String query = "alter table registro modify column senha where email =?;"; //SQL de substituição (registro);
-							try {
+					else {			
+						if (emailField.getText().equals(email)) {
+
+							if ((senha.equals(senha2))) {
+								ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+								String query = "update dados set senha =? where email =?;"; //SQL de substituição (registro);
+								try {System.out.println("Entrou no try");
 								PreparedStatement pstmt = conn1.conn.prepareStatement(query);
-								pstmt.setString(5,senha);
+								pstmt.setString(1,senha);
+								pstmt.setString(2,email);
 								pstmt.executeUpdate();
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
+								} catch (SQLException e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+								conn1.closeConnection();
+								
+								JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!");
+								telaLogin();
 							}
-							conn1.closeConnection();
+							else {
+								JOptionPane.showMessageDialog(null, "As Senhas não são iguais. Digite novamente");
+							}
 						}
 					}
-				}
 
-			}
-		});
+				}
+			}});
 
 		JLabel lblPossuiConta = new JLabel("Já possui uma conta?");
 		lblPossuiConta.setForeground(SystemColor.text);
@@ -199,24 +173,113 @@ public class EsqueciSenha extends JPanel {
 		panel.add(lblPossuiConta);
 
 		JButton btnLogin = new JButton("Faça Login.");
+		btnLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnLogin.setFocusPainted(false);
 		btnLogin.setHorizontalAlignment(SwingConstants.LEFT);
 		btnLogin.setFont(new Font("Poppins", Font.PLAIN, 11));
 		btnLogin.setForeground(new Color(130, 209, 236));
 		btnLogin.setContentAreaFilled(false);
 		btnLogin.setBorderPainted(false);
-		btnLogin.setBounds(285, 518, 99, 23);
+		btnLogin.setBounds(301, 518, 99, 23);
 		panel.add(btnLogin);
 		// Interação do botão "Faça Login" para voltar à "tela de Login"
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login a = new Login();
-				removeAll();
-				add(a);
-				revalidate();
-				repaint();
+
+				telaLogin();
 
 			}});
 
+		}
+
+		/*
+		 * Métodos
+		 */
+
+		public static String[] DB(String email) {
+			String[] infouser = new String [1]; //Armazena os dados de login se um usuário em Array.
+
+			try {
+				ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+
+				//Envia comandos para o DB.
+				String query = "select * from dados where email = ?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+				ResultSet rs = conn1.executeQuery(query,email); //Retornar os resultados da SQL
+
+				/*
+				 *Comando para guardar os dados dentro de uma variável;/
+				 */
+				if(rs.next()) {
+					infouser[0] = rs.getString("email");} //Busca o vetor 0 das infos, equivalente ao E-mail
+
+				rs.close();
+				conn1.closeConnection();
+			}
+			catch (SQLException e){e.printStackTrace();}
+			return infouser;
+		}
+
+		public void telaLogin() {
+			Login a = new Login();
+			removeAll();
+			add(a);
+			revalidate();
+			repaint();
+		}
+
+		public void emailFieldMudancaCor() {
+			emailField.getDocument().addDocumentListener(new DocumentListener() {
+				@Override
+				public void insertUpdate(DocumentEvent e) {
+					updateBorder();
+				}
+
+				@Override
+				public void removeUpdate(DocumentEvent e) {
+					updateBorder();
+				}
+
+				@Override
+				public void changedUpdate(DocumentEvent e) {
+					updateBorder();
+				}
+
+				private void updateBorder() {
+					if (emailField.getText().isEmpty()) {
+						emailField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+					} else {
+						emailField.setBorder(UIManager.getBorder("TextField.border"));
+					}
+				}
+			});}
+
+		public void newPasswordMudancaCor(JPasswordField newPassword) {
+			newPassword.getDocument().addDocumentListener(new DocumentListener() {
+				@Override
+				public void insertUpdate(DocumentEvent e) {
+					updateBorder();
+				}
+
+				@Override
+				public void removeUpdate(DocumentEvent e) {
+					updateBorder();
+				}
+
+				@Override
+				public void changedUpdate(DocumentEvent e) {
+					updateBorder();
+				}
+
+				private void updateBorder() {
+					if (newPassword.getPassword().length == 0) {
+						newPassword.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+					} else {
+						newPassword.setBorder(UIManager.getBorder("TextField.border"));
+					}
+				}
+			});}
+
+
+
+
 	}
-}

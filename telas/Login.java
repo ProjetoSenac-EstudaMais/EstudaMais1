@@ -1,4 +1,4 @@
-package Telas;
+package telas;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -25,9 +25,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-import Telas.EsqueciSenha;
+import telas.EsqueciSenha;
 import java.awt.Dimension;
 import java.awt.Insets;
 
@@ -143,6 +147,8 @@ public class Login extends JPanel {
 		btnRegistrar.setBounds(290, 471, 110, 23);
 		panel.add(btnRegistrar);
 
+		emailFieldMudancaCor();
+		passwordFieldMudancaCor();
 		// Interação do botão "Esqueci a senha" com a tela de "EsqueciSenha"
 		btnEsqueceuASenha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -171,7 +177,7 @@ public class Login extends JPanel {
 		String[] infouser = new String [2]; //Armazena os dados de login se um usuário em Array.
 
 		try {
-			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
 			String query = "select senha, email from dados where email =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
@@ -202,6 +208,11 @@ public class Login extends JPanel {
 		String senha = new String(passChar);
 
 		if (login_emailField.getText().isEmpty()) {
+			login_emailField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));
+		}
+		if (senha.isEmpty()) {
+			login_passwordField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));}
+		if (login_emailField.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Senha ou email não foram digitados!");
 		}
 		else {
@@ -211,17 +222,21 @@ public class Login extends JPanel {
 			else if(emailInfo[1].equals(login_emailField.getText())){
 				if ( emailInfo[0].equals(senha)) {
 
-					TelaInicial a = new TelaInicial();
-					removeAll();
-					add(a);
-					revalidate();
-					repaint();
+					telaInicial();
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Senha inválida!");
 
 				}
 			}}
+	}
+
+	public void telaInicial() {
+		TelaInicial a = new TelaInicial();
+		removeAll();
+		add(a);
+		revalidate();
+		repaint();
 	}
 
 	public void telaEsqueciSenha() {
@@ -239,5 +254,60 @@ public class Login extends JPanel {
 		revalidate();
 		repaint();
 	}
-}
 
+	public void passwordFieldMudancaCor() {
+		login_passwordField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			private void updateBorder() {
+				if (login_passwordField.getPassword().length == 0) {
+					login_passwordField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+				} else {
+					login_passwordField.setBorder(UIManager.getBorder("TextField.border"));
+				}
+			}
+		});
+	}
+
+
+	public void emailFieldMudancaCor() {
+		login_emailField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			private void updateBorder() {
+				if (login_emailField.getText().isEmpty()) {
+					login_emailField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+				} else {
+					login_emailField.setBorder(UIManager.getBorder("TextField.border"));
+				}
+			}
+		});
+	}
+
+}
