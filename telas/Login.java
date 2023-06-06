@@ -1,4 +1,4 @@
-package telas;
+package Telas;
 
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -27,7 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import telas.EsqueciSenha;
+import Telas.EsqueciSenha;
 import java.awt.Dimension;
 import java.awt.Insets;
 
@@ -37,31 +37,6 @@ public class Login extends JPanel {
 	private JPasswordField login_passwordField;
 	private String userInfo;
 
-	public static String[] DB(String email) {
-		String[] infouser = new String [3]; //Armazena os dados de login se um usuário em Array.
-
-		try {
-			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
-
-			//Envia comandos para o DB.
-			String query = "select senha, email from usuario where email =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
-			ResultSet rs = conn1.executeQuery(query,email); //Retornar os resultados da SQL
-
-			/*
-			 *Comando para guardar os dados dentro de uma variável;/
-			 */
-			if(rs.next()) {
-				infouser[0] = rs.getString("senha"); //Busca o vetor 1 das infos, equivalente à Senha
-				infouser[1] = rs.getString("email");} //Busca o vetor 1 das infos, equivalente ao Email
-
-			
-			rs.close();
-			conn1.closeConnection();
-		}
-		catch (SQLException e){e.printStackTrace();}
-		return infouser;
-	}
-
 	/*
 	 * Create the panel.
 	 */
@@ -69,15 +44,14 @@ public class Login extends JPanel {
 		setLayout(null);
 		setBounds(0,0,1280,720);
 		// Criação do Panel
-				
-		
+
 		JPanel panel = new JPanel();
 		panel.setForeground(Color.WHITE);
 		panel.setBackground(new Color(36, 44, 136));
 		panel.setBounds(654, 0, 550, 720);
 		add(panel);
 		panel.setLayout(null);
-		
+
 		//Label da tela de fundo
 		JLabel lblFundo = new JLabel("");
 		lblFundo.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\OneDrive - SENAC-SC\\Programas\\ProjetoSenac-main\\EstudaMais1-main\\img\\img_telas\\bg_login.png"));
@@ -140,17 +114,6 @@ public class Login extends JPanel {
 		btnEsqueceuASenha.setBounds(195, 500, 188, 23);
 		panel.add(btnEsqueceuASenha);
 
-		// Interação do botão "Esqueci a senha" com a tela de "EsqueciSenha"
-		btnEsqueceuASenha.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EsqueciSenha a = new EsqueciSenha();
-				removeAll();
-				add(a);
-				revalidate();
-				repaint();
-
-			}});
-
 		//Campo LOGIN
 		JButton btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("Poppins", Font.PLAIN, 11));
@@ -161,51 +124,6 @@ public class Login extends JPanel {
 		btnLogin.setBackground(new Color(64, 74, 204));
 		btnLogin.setBounds(230, 428, 89, 23);
 		panel.add(btnLogin);
-		
-		// Interação do botão "Login" com a "Tela Inicial" - ao clicar vai para a tela Principal do app
-		btnLogin.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				userInfo = login_emailField.getText();
-				
-				String [] emailInfo = DB(userInfo);
-				
-				char[] passChar = login_passwordField.getPassword();
-				
-				String senha = new String(passChar);
-
-				if (login_emailField.getText().isEmpty() || senha.isEmpty()) {
-					
-					JOptionPane.showMessageDialog(null, "Senha ou email não foram digitados!");
-				} 
-				
-				else {
-					
-					if (emailInfo[1] == null) {
-						JOptionPane.showMessageDialog(null, "Usuário não encontrado!");
-					} 
-					else if (login_emailField.getText().equals(login_emailField.getText())){
-					
-						if (emailInfo[0].equals(senha)) {
-							
-							TelaInicial a = new TelaInicial();
-							removeAll();
-							add(a);
-							revalidate();
-							repaint();
-							
-						}
-						
-						else {
-							
-							JOptionPane.showMessageDialog(null, "Senha inválida!");
-
-						}
-					}
-				}
-
-			}
-		});
 
 		//Texto "Não tem uma conta?"
 		JLabel lblSemConta = new JLabel("Não tem uma conta?");
@@ -224,19 +142,102 @@ public class Login extends JPanel {
 		btnRegistrar.setBorderPainted(false);
 		btnRegistrar.setBounds(290, 471, 110, 23);
 		panel.add(btnRegistrar);
-		
-		// Interação do botão "Registrar" com a tela "Registrar" - quando o usuário não possui um registro
-		btnRegistrar.addActionListener(new ActionListener() {
+
+		// Interação do botão "Esqueci a senha" com a tela de "EsqueciSenha"
+		btnEsqueceuASenha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Registrar a = new Registrar();
-				removeAll();
-				add(a);
-				revalidate();
-				repaint();
+
+				telaEsqueciSenha();
+			}});
+
+		// Interação do botão "Login" com a "Tela Inicial" - ao clicar vai para a tela Principal do app
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				condicaoLogin();
 
 			}});
 
+		// Interação do botão "Registrar" com a tela "Registrar" - quando o usuário não possui um registro
+		btnRegistrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
+				telaRegistrar();
+
+			}});
+	}
+
+	public static String[] DB(String email) {
+		String[] infouser = new String [2]; //Armazena os dados de login se um usuário em Array.
+
+		try {
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
+
+			//Envia comandos para o DB.
+			String query = "select senha, email from dados where email =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			ResultSet rs = conn1.executeQuery(query,email); //Retornar os resultados da SQL
+
+			/*
+			 *Comando para guardar os dados dentro de uma variável;/
+			 */
+			if(rs.next()) {
+				infouser[0] = rs.getString("senha"); //Busca o vetor 1 das infos, equivalente à Senha
+				infouser[1] = rs.getString("email");} //Busca o vetor 1 das infos, equivalente ao Email
+
+
+			rs.close();
+			conn1.closeConnection();
+		}
+		catch (SQLException e){e.printStackTrace();}
+		return infouser;
+	}
+
+	public void condicaoLogin() {
+
+		userInfo = login_emailField.getText();
+
+		String [] emailInfo = DB(userInfo);
+
+		char [] passChar = login_passwordField.getPassword();
+		String senha = new String(passChar);
+
+		if (login_emailField.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Senha ou email não foram digitados!");
+		}
+		else {
+			if (emailInfo[1] == null || emailInfo[1].isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Usuário não encontrado!");
+			}
+			else if(emailInfo[1].equals(login_emailField.getText())){
+				if ( emailInfo[0].equals(senha)) {
+
+					TelaInicial a = new TelaInicial();
+					removeAll();
+					add(a);
+					revalidate();
+					repaint();
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "Senha inválida!");
+
+				}
+			}}
+	}
+
+	public void telaEsqueciSenha() {
+		EsqueciSenha esquecisenha = new EsqueciSenha();
+		removeAll();
+		add(esquecisenha);
+		revalidate();
+		repaint();
+	}
+
+	public void telaRegistrar() {
+		Registrar a = new Registrar();
+		removeAll();
+		add(a);
+		revalidate();
+		repaint();
 	}
 }
 
