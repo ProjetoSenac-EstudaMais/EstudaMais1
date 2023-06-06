@@ -30,29 +30,7 @@ public class Resultados extends JPanel {
 	 * 
 	 */
 
-	public String[] informacoesUsuario(String usuario) {
-		String[] infoUser = new String[2];
-
-		// Conexão com o banco de dados para puxar as informações do usuario
-		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
-
-		// Comando para o banco de dados puxar as informações
-		String query = "select nome,titulo from usuario where nome=?";
-		ResultSet rs = con.executeQuery(query, usuario);
-
-		// Comando para armazenar as informações no array
-		try {
-			if (rs.next()) {
-				infoUser[0] = rs.getString("nome");
-				infoUser[1] = rs.getString("titulo");
-
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return infoUser;
-	}
+	
 
 	public Resultados(int acertos, int erros, long segundos, long minutos, long horas) {
 
@@ -311,6 +289,30 @@ public class Resultados extends JPanel {
 
 		condicaoDesempenho();
 
+	}
+	
+	public String[] informacoesUsuario(String usuario) {
+		String[] infoUser = new String[2];
+
+		// Conexão com o banco de dados para puxar as informações do usuario
+		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
+
+		// Comando para o banco de dados puxar as informações
+		String query = "select nome,titulo from usuario where nome=?";
+		ResultSet rs = con.executeQuery(query, usuario);
+
+		// Comando para armazenar as informações no array
+		try {
+			if (rs.next()) {
+				infoUser[0] = rs.getString("nome");
+				infoUser[1] = rs.getString("titulo");
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return infoUser;
 	}
 
 	public void condicaoDesempenho() {
