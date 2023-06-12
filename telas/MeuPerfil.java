@@ -1,4 +1,4 @@
-package telas;
+package estuda;
 
 import java.awt.Choice;
 import java.awt.Color;
@@ -30,6 +30,8 @@ public class MeuPerfil extends JPanel {
 	//VARIAVEL PARA O TEMPO DO SIMULADO PERSONALIZADO
 	String tempoSP;
 	
+	
+	
 
 
 	/**
@@ -54,7 +56,7 @@ public class MeuPerfil extends JPanel {
 			Perfil.setLayout(null);
 			
 			JLabel badge_id = new JLabel("");
-			badge_id.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\badge\\badge_id1.png"));
+			badge_id.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\badge\\badge_id1.png"));
 			badge_id.setBounds(71, 55, 28, 28);
 			Perfil.add(badge_id);
 			
@@ -64,7 +66,7 @@ public class MeuPerfil extends JPanel {
 			icon_user.setIconTextGap(0);
 			icon_user.setBorder(null);
 			icon_user.setHorizontalAlignment(SwingConstants.CENTER);
-			icon_user.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\icons\\icon_id2.png"));
+			icon_user.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\icons\\chuu.png"));
 			icon_user.setBounds(24, 15, 68, 68);
 			Perfil.add(icon_user);
 			
@@ -220,17 +222,21 @@ public class MeuPerfil extends JPanel {
 			panel_1.setLayout(null);
 			
 			JButton btnAddIcon = new JButton("");
+			btnAddIcon.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
 			btnAddIcon.setHorizontalTextPosition(SwingConstants.CENTER);
 			btnAddIcon.setContentAreaFilled(false);
 			btnAddIcon.setBorderPainted(false);
 			btnAddIcon.setOpaque(false);
-			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\assets\\add.png"));
+			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\assets\\add.png"));
 			btnAddIcon.setBounds(97, 96, 28, 28);
 			panel_1.add(btnAddIcon);
 			
 			JLabel IconUser = new JLabel("");
 			IconUser.setIgnoreRepaint(true);
-			IconUser.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\MeuPerfil\\icon_id2.png"));
+			IconUser.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\icons\\chuu125.png"));
 			IconUser.setBounds(0, 0, 125, 125);
 			panel_1.add(IconUser);
 			
@@ -246,6 +252,12 @@ public class MeuPerfil extends JPanel {
 			lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_3.setFont(new Font("Poppins", Font.PLAIN, 18));
 			lblNewLabel_3.setForeground(new Color(255, 255, 255));
+			
+			// Simualdos Array Pane
+			JPanel SimuladosArrayPane = new JPanel();
+			SimuladosArrayPane.setBounds(0, 38, 422, 556);
+			panel_1_1_1.add(SimuladosArrayPane);
+			
 			
 			JLabel lblDataDeNascimento = new JLabel("Idade:");
 			lblDataDeNascimento.setFont(new Font("Poppins", Font.PLAIN, 17));
@@ -264,7 +276,7 @@ public class MeuPerfil extends JPanel {
 			panel_4.setLayout(null);
 			
 			JButton btnAddBadge = new JButton("");
-			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\assets\\add.png"));
+			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\assets\\add.png"));
 			btnAddBadge.setOpaque(false);
 			btnAddBadge.setHorizontalTextPosition(SwingConstants.CENTER);
 			btnAddBadge.setContentAreaFilled(false);
@@ -273,7 +285,7 @@ public class MeuPerfil extends JPanel {
 			panel_4.add(btnAddBadge);
 			
 			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\badge\\badge_id1.png"));
+			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\badge\\badge_id1.png"));
 			lblNewLabel_1.setBounds(5, 10, 28, 28);
 			panel_4.add(lblNewLabel_1);
 			
