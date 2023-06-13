@@ -9,12 +9,15 @@ import java.awt.Rectangle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JProgressBar;
 
 public class MeuPerfil extends JPanel {
 	
@@ -29,6 +32,10 @@ public class MeuPerfil extends JPanel {
 	
 	//VARIAVEL PARA O TEMPO DO SIMULADO PERSONALIZADO
 	String tempoSP;
+
+	private JTextField textField;
+
+	private JPanel SimuladosArrayPane;
 	
 	
 	
@@ -56,7 +63,7 @@ public class MeuPerfil extends JPanel {
 			Perfil.setLayout(null);
 			
 			JLabel badge_id = new JLabel("");
-			badge_id.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\badge\\badge_id1.png"));
+			badge_id.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\badge\\badge_id3.png"));
 			badge_id.setBounds(71, 55, 28, 28);
 			Perfil.add(badge_id);
 			
@@ -66,7 +73,7 @@ public class MeuPerfil extends JPanel {
 			icon_user.setIconTextGap(0);
 			icon_user.setBorder(null);
 			icon_user.setHorizontalAlignment(SwingConstants.CENTER);
-			icon_user.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\icons\\chuu.png"));
+			icon_user.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\icons\\chuu.png"));
 			icon_user.setBounds(24, 15, 68, 68);
 			Perfil.add(icon_user);
 			
@@ -76,7 +83,7 @@ public class MeuPerfil extends JPanel {
 			nome_id.setBounds(100, 20, 150, 25);
 			Perfil.add(nome_id);
 			
-			JLabel badge_subtitle_id = new JLabel("Primeiro Simulado");
+			JLabel badge_subtitle_id = new JLabel("Gabaritou um Simulado!");
 			badge_subtitle_id.setForeground(new Color(188, 188, 188));
 			badge_subtitle_id.setFont(new Font("Poppins", Font.PLAIN, 12));
 			badge_subtitle_id.setBounds(100, 35, 166, 25);
@@ -230,13 +237,13 @@ public class MeuPerfil extends JPanel {
 			btnAddIcon.setContentAreaFilled(false);
 			btnAddIcon.setBorderPainted(false);
 			btnAddIcon.setOpaque(false);
-			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\assets\\add.png"));
+			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\assets\\add.png"));
 			btnAddIcon.setBounds(97, 96, 28, 28);
 			panel_1.add(btnAddIcon);
 			
 			JLabel IconUser = new JLabel("");
 			IconUser.setIgnoreRepaint(true);
-			IconUser.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\icons\\chuu125.png"));
+			IconUser.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\icons\\chuu125.png"));
 			IconUser.setBounds(0, 0, 125, 125);
 			panel_1.add(IconUser);
 			
@@ -246,18 +253,135 @@ public class MeuPerfil extends JPanel {
 			panel_2.add(panel_1_1_1);
 			panel_1_1_1.setLayout(null);
 			
+			// Simualdos Array Pane	
+			
+			// TODO: 1. Criar um painel para exibir os simulados
+			// TODO: 2. Configurar o painel dos simulados
+			// TODO: 3. Criar um campo de texto para entrada de dados
+			// TODO: 4. Configurar o campo de texto
+			// TODO: 5. Criar um botão de adicionar
+			// TODO: 6. Configurar o botão de adicionar
+			// TODO: 7. Criar arrays para as checkboxes e botões de delete
+			// TODO: 8. Definir variáveis para posição Y inicial e distância entre checkboxes
+			// TODO: 9. Criar um loop para criar as checkboxes e botões de delete
+			// TODO: 10. Configurar as checkboxes e botões de delete
+			// TODO: 11. Adicionar ações aos botões de delete
+			// TODO: 12. Adicionar ação ao botão de adicionar
+
+			// TODO: 1. Criar um painel para exibir os simulados
+			JPanel SimuladosArrayPane_1 = new JPanel();
+			
+						// TODO: 2. Configurar o painel dos simulados
+						SimuladosArrayPane_1.setBounds(0, 78, 422, 470);
+						SimuladosArrayPane_1.setLayout(null);
+						SimuladosArrayPane_1.setBackground(new Color(192, 192, 192));
+						panel_1_1_1.add(SimuladosArrayPane_1);
+			
 			JLabel lblNewLabel_3 = new JLabel("Simulados");
 			lblNewLabel_3.setBounds(0, 0, 422, 40);
 			panel_1_1_1.add(lblNewLabel_3);
 			lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
 			lblNewLabel_3.setFont(new Font("Poppins", Font.PLAIN, 18));
 			lblNewLabel_3.setForeground(new Color(255, 255, 255));
+
+			// TODO: 3. Criar um campo de texto para entrada de dados
+			JTextField txtTeste = new JTextField();
+			txtTeste.setText("Teste");
+
+			// TODO: 4. Configurar o campo de texto
+			txtTeste.setBorder(new LineBorder(new Color(255, 255, 255)));
+			txtTeste.setForeground(new Color(255, 255, 255));
+			txtTeste.setOpaque(false);
+			txtTeste.setBackground(Color.WHITE);
+			txtTeste.setBounds(8, 34, 328, 33);
+			panel_1_1_1.add(txtTeste);
+			txtTeste.setColumns(10);
+
+			// TODO: 5. Criar um botão de adicionar
+			JButton btnAdd = new JButton("+");
+
+			// TODO: 6. Configurar o botão de adicionar
+			btnAdd.setFocusPainted(false);
+			btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnAdd.setBorderPainted(false);
+			btnAdd.setBackground(new Color(64, 74, 204));
+			btnAdd.setForeground(new Color(255, 255, 255));
+			btnAdd.setFont(new Font("Poppins", Font.BOLD, 12));
+			btnAdd.setBounds(346, 34, 66, 33);
+			panel_1_1_1.add(btnAdd);
+
+			// TODO: 7. Criar arrays para as checkboxes e botões de delete
+			JPanel[] SimPanel = new JPanel[5];
+			JButton[] GabaritoBtn = new JButton[5];
+
+			// TODO: 8. Definir variáveis para posição Y inicial e distância entre checkboxes
+			int startY = 0;
+			int yDistance = 25;
+
+			// TODO: 9. Criar um loop para criar as checkboxes e botões de delete
+			for (int i = 0; i < 5; i++) {
+			    // TODO: 10. Configurar as checkboxes e botões de delete
+			    SimPanel[i] = new JPanel();
+			    SimPanel[i].setFocusable(false);
+			    SimPanel[i].setOpaque(false);
+			    SimPanel[i].setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			    SimPanel[i].setFont(new Font("Poppins", Font.PLAIN, 11));
+			    SimPanel[i].setForeground(Color.WHITE);
+			    SimPanel[i].setBackground(new Color(36, 44, 136));
+			    SimPanel[i].setBounds(8, startY + i * yDistance, 399, 23);
+			    SimPanel[i].setVisible(false);
+			    panel_1_1_1.add(SimPanel[i]);
+
+			    GabaritoBtn[i] = new JButton("x");
+			    GabaritoBtn[i].setFocusPainted(false);
+			    GabaritoBtn[i].setFont(new Font("Poppins", Font.PLAIN, 11));
+			    GabaritoBtn[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			    GabaritoBtn[i].setContentAreaFilled(false);
+			    GabaritoBtn[i].setBorderPainted(false);
+			    GabaritoBtn[i].setForeground(Color.WHITE);
+			    GabaritoBtn[i].setBounds(413, startY + i * yDistance, 47, 23);
+			    GabaritoBtn[i].setVisible(false);
+			    panel_1_1_1.add(GabaritoBtn[i]);
 			
-			// Simualdos Array Pane
-			JPanel SimuladosArrayPane = new JPanel();
-			SimuladosArrayPane.setBounds(0, 38, 422, 556);
-			panel_1_1_1.add(SimuladosArrayPane);
-			
+			    }
+
+			// TODO: 12. Adicionar ação ao botão de adicionar
+			btnAdd.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			        String textFieldText = txtTeste.getText();
+			        if (!textFieldText.isEmpty()) {
+			            int index = -1;
+
+			            for (int i = 0; i < 5; i++) {
+			                if (!SimPanel[i].isVisible()) {
+			                    index = i;
+			                    break;
+			                }
+			            }
+
+			            if (index == -1) {
+			                index = 5 - 1;
+			            }
+
+			            if (index < 5 - 1 && SimPanel[index + 1].isVisible()) {
+			                for (int j = 5 - 2; j >= index; j--) {
+			                   // SimPanel[j + 1].setText(SimPanel[j].getText());
+			                    SimPanel[j + 1].setVisible(SimPanel[j].isVisible());
+			                    SimPanel[j].setVisible(false);
+			                    GabaritoBtn[j + 1].setVisible(GabaritoBtn[j].isVisible());
+			                    GabaritoBtn[j].setVisible(false);
+			                }
+			            }
+
+			            //SimPanel[index].setText(textFieldText);
+			            SimPanel[index].setVisible(true);
+			            GabaritoBtn[index].setVisible(true);
+
+			            txtTeste.setText("");
+			        }
+			    }
+			});
+
 			
 			JLabel lblDataDeNascimento = new JLabel("Idade:");
 			lblDataDeNascimento.setFont(new Font("Poppins", Font.PLAIN, 17));
@@ -276,7 +400,7 @@ public class MeuPerfil extends JPanel {
 			panel_4.setLayout(null);
 			
 			JButton btnAddBadge = new JButton("");
-			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\assets\\add.png"));
+			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\assets\\add.png"));
 			btnAddBadge.setOpaque(false);
 			btnAddBadge.setHorizontalTextPosition(SwingConstants.CENTER);
 			btnAddBadge.setContentAreaFilled(false);
@@ -285,7 +409,7 @@ public class MeuPerfil extends JPanel {
 			panel_4.add(btnAddBadge);
 			
 			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Pictures\\EstudaMais\\img\\badge\\badge_id1.png"));
+			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\badge\\badge_id1.png"));
 			lblNewLabel_1.setBounds(5, 10, 28, 28);
 			panel_4.add(lblNewLabel_1);
 			
@@ -298,9 +422,39 @@ public class MeuPerfil extends JPanel {
 			JPanel panel_5 = new JPanel();
 			panel_5.setBounds(10, 306, 568, 404);
 			panel_2.add(panel_5);
+			panel_5.setLayout(null);
 			
 			JLabel lblNewLabel_4 = new JLabel("Resumo do Desempenho");
+			lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
+			lblNewLabel_4.setBounds(191, 5, 201, 14);
 			panel_5.add(lblNewLabel_4);
+			
+			JLabel lblNewLabel_2 = new JLabel("Simulados Completos: 0");
+			lblNewLabel_2.setBounds(26, 52, 209, 14);
+			panel_5.add(lblNewLabel_2);
+			
+			JLabel lblNewLabel_2_1 = new JLabel("Simulados Personalizados: 0");
+			lblNewLabel_2_1.setBounds(26, 65, 173, 14);
+			panel_5.add(lblNewLabel_2_1);
+			
+			JLabel lblNewLabel_2_1_1 = new JLabel("Melhor resultado:");
+			lblNewLabel_2_1_1.setBounds(26, 90, 173, 14);
+			panel_5.add(lblNewLabel_2_1_1);
+			
+			JLabel lblNewLabel_2_2 = new JLabel("Média de acertos: ");
+			lblNewLabel_2_2.setBounds(26, 77, 160, 14);
+			panel_5.add(lblNewLabel_2_2);
+			
+			JProgressBar progressBar = new JProgressBar();
+			progressBar.setForeground(new Color(0, 0, 255));
+			progressBar.setValue(50);
+			progressBar.setStringPainted(true);
+			progressBar.setBounds(10, 379, 548, 14);
+			panel_5.add(progressBar);
+			
+			JLabel lblNewLabel_2_1_1_1 = new JLabel("Progresso em Metas:");
+			lblNewLabel_2_1_1_1.setBounds(10, 361, 173, 14);
+			panel_5.add(lblNewLabel_2_1_1_1);
 			
 			JLabel lblMembroDesde = new JLabel("Membro desde:");
 			lblMembroDesde.setFont(new Font("Poppins", Font.PLAIN, 17));
