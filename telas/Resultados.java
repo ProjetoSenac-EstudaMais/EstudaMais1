@@ -70,7 +70,7 @@ public class Resultados extends JPanel {
 		panel_3.setBounds(0, 0, 320, 10);
 		painelIcone.add(panel_3);
 
-		JLabel fotoUsuario = new JLabel("");
+		JLabel fotoUsuario = new JLabel(""+infoUser[2]);
 		fotoUsuario.setBounds(22, 21, 68, 68);
 		painelIcone.add(fotoUsuario);
 
@@ -292,20 +292,21 @@ public class Resultados extends JPanel {
 	}
 	
 	public String[] informacoesUsuario(String usuario) {
-		String[] infoUser = new String[2];
+		String[] infoUser = new String[3];
 
 		// Conexão com o banco de dados para puxar as informações do usuario
 		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
 
 		// Comando para o banco de dados puxar as informações
-		String query = "select nome,titulo from usuario where nome=?";
+		String query = "SELECT p.titulo_perfil, p.foto_perfil, d.usuario_user FROM dados_user d JOIN perfil_user p ON d.id_user = p.id_dados WHERE d.usuario_user = ?;";
 		ResultSet rs = con.executeQuery(query, usuario);
 
 		// Comando para armazenar as informações no array
 		try {
 			if (rs.next()) {
-				infoUser[0] = rs.getString("nome");
-				infoUser[1] = rs.getString("titulo");
+				infoUser[0] = rs.getString("usuarip_user");
+				infoUser[1] = rs.getString("titulo_perfil");
+				infoUser[2] = rs.getString("foto_perfil");
 
 			}
 		} catch (SQLException e) {
