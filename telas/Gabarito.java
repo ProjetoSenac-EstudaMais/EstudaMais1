@@ -155,20 +155,21 @@ public class Gabarito extends JPanel {
 	}
 	//Metodo para conectar com o banco de dados e armazenar os dados em uma array
 	public String[] nextLine(int id) {
-		String[] line = new String[2];
+		String[] line = new String[3];
 
 		//estabelece conexão
 		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
 
 		//manda o comando para o banco de dados
-		String query = "select id,respostaCerta from questoes where id=?";
+		String query = "SELECT qr.id_qresolv, qs.gabarito, qr.gabarito_user FROM questoes_resolv qr JOIN questoes_simu qs ON qr.id_questoes = qs.id_questoes WHERE qr.id_questoes = ?;";
 		ResultSet rs = con.executeQuery(query, id);
 
 		//recebe os dados solicitados
 		try {
 			if(rs.next()) {
-				line[0] = rs.getString("id");
-				line[1] = rs.getString("respostaCerta");
+				line[0] = rs.getString("id_qresolv");
+				line[1] = rs.getString("gabarito");
+				line[2] = rs.getString("gabarito_user")
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -223,7 +224,7 @@ public class Gabarito extends JPanel {
 			//Coloca os textos nos componentes
 			gabarito.setText(infoQuestao[1]);
 			questoes.setText(infoQuestao[0]);
-			resposta.setText(respostas[i]);
+			resposta.setText(infoQuestao[2]);
 
 
 			pos=pos+aumPosicao;			
