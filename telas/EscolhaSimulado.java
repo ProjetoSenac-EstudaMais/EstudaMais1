@@ -65,7 +65,7 @@ public class EscolhaSimulado extends JPanel {
 		lblTituloUsuario.setBounds(100, 35, 149, 20);
 		panelUsuario.add(lblTituloUsuario);
 
-		JLabel iconeUsuario = new JLabel("");
+		JLabel iconeUsuario = new JLabel(""+ nomeInfo[2]);
 		iconeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
 		iconeUsuario.setRequestFocusEnabled(false);
 		iconeUsuario.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\icons\\icon_id2.png"));
@@ -302,7 +302,7 @@ public class EscolhaSimulado extends JPanel {
 
 		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
 		// definir ele fora do comando
-		String query = "select nome, titulo from usuario where email=? ";
+		String query = "SELECT p.titulo_perfil, p.foto_perfil, d.usuario_user FROM dados_user d JOIN perfil_user p ON d.id_user = p.id_dados WHERE d.usuario_user = ?;";
 
 		// Este comando retorna os valores solicitados, e primeiro vem o comando e
 		// depois o valor do '?'
@@ -314,9 +314,9 @@ public class EscolhaSimulado extends JPanel {
 
 				// Armazenando em uma array posso livremente puxalos posteriormente no código e
 				// atualizalos conforme o id avança
-				linha[0] = rs.getString("nome");
-				linha[1] = rs.getString("titulo");
-
+				linha[0] = rs.getString("usuario_user");
+				linha[1] = rs.getString("titulo_perfil");
+				linha[2] = rs.getString("foto_perfil");
 
 			}
 
