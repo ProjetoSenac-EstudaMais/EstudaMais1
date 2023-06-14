@@ -11,14 +11,19 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JProgressBar;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.BevelBorder;
+import java.awt.ComponentOrientation;
 
 public class MeuPerfil extends JPanel {
 	
@@ -37,15 +42,7 @@ public class MeuPerfil extends JPanel {
 	private JTextField textField;
 
 	private JPanel SimuladosArrayPane;
-	
-	
-	
-	
 
-
-	/**
-	 * Create the panel.
-	 */
 	public MeuPerfil() {
 		
 			setLayout(null);
@@ -65,7 +62,7 @@ public class MeuPerfil extends JPanel {
 			Perfil.setLayout(null);
 			
 			JLabel badge_id = new JLabel("");
-			badge_id.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\badge\\badge_id3.png"));
+			badge_id.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id3.png"));
 			badge_id.setBounds(71, 55, 28, 28);
 			Perfil.add(badge_id);
 			
@@ -75,17 +72,17 @@ public class MeuPerfil extends JPanel {
 			icon_user.setIconTextGap(0);
 			icon_user.setBorder(null);
 			icon_user.setHorizontalAlignment(SwingConstants.CENTER);
-			icon_user.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\icons\\chuu.png"));
+			icon_user.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\icons\\chuu.png"));
 			icon_user.setBounds(24, 15, 68, 68);
 			Perfil.add(icon_user);
 			
-			JLabel nome_id = new JLabel("Henrique Silveira");
+			JLabel nome_id = new JLabel("nome_id");
 			nome_id.setForeground(new Color(255, 255, 255));
 			nome_id.setFont(new Font("Poppins", Font.PLAIN, 12));
 			nome_id.setBounds(100, 20, 150, 25);
 			Perfil.add(nome_id);
 			
-			JLabel badge_subtitle_id = new JLabel("Gabaritou um Simulado!");
+			JLabel badge_subtitle_id = new JLabel("badge_subtitle_id");
 			badge_subtitle_id.setForeground(new Color(188, 188, 188));
 			badge_subtitle_id.setFont(new Font("Poppins", Font.PLAIN, 12));
 			badge_subtitle_id.setBounds(100, 35, 166, 25);
@@ -206,22 +203,22 @@ public class MeuPerfil extends JPanel {
 			
 			JLabel lblNewLabel = new JLabel("Nome:");
 			lblNewLabel.setFont(new Font("Poppins", Font.PLAIN, 17));
-			lblNewLabel.setBounds(145, 111, 67, 27);
+			lblNewLabel.setBounds(145, 115, 67, 27);
 			panel_2.add(lblNewLabel);
 			
-			JLabel primeironome = new JLabel("Henrique");
+			JLabel primeironome = new JLabel("nome_id");
 			primeironome.setFont(new Font("Poppins", Font.PLAIN, 17));
-			primeironome.setBounds(210, 111, 172, 27);
+			primeironome.setBounds(210, 115, 172, 27);
 			panel_2.add(primeironome);
 			
 			JLabel lblSobrenome = new JLabel("Sobrenome:");
 			lblSobrenome.setFont(new Font("Poppins", Font.PLAIN, 17));
-			lblSobrenome.setBounds(145, 135, 104, 27);
+			lblSobrenome.setBounds(145, 139, 104, 27);
 			panel_2.add(lblSobrenome);
 			
-			JLabel lblSobrenome_1 = new JLabel("Silveira");
+			JLabel lblSobrenome_1 = new JLabel("sobrenome_id");
 			lblSobrenome_1.setFont(new Font("Poppins", Font.PLAIN, 17));
-			lblSobrenome_1.setBounds(259, 135, 135, 27);
+			lblSobrenome_1.setBounds(259, 139, 135, 27);
 			panel_2.add(lblSobrenome_1);
 			
 			JPanel panel_1 = new JPanel();
@@ -232,20 +229,27 @@ public class MeuPerfil extends JPanel {
 			
 			JButton btnAddIcon = new JButton("");
 			btnAddIcon.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-				}
+			    public void actionPerformed(ActionEvent e) {
+			    	IconTrade a = new IconTrade();
+					removeAll();
+					add(a);
+					revalidate();
+					repaint();			        
+			    }
 			});
+
 			btnAddIcon.setHorizontalTextPosition(SwingConstants.CENTER);
 			btnAddIcon.setContentAreaFilled(false);
 			btnAddIcon.setBorderPainted(false);
 			btnAddIcon.setOpaque(false);
-			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\assets\\add.png"));
-			btnAddIcon.setBounds(97, 96, 28, 28);
+			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\add.png"));
+			btnAddIcon.setBounds(97, 97, 28, 28);
 			panel_1.add(btnAddIcon);
 			
 			JLabel IconUser = new JLabel("");
+			IconUser.setBorder(new LineBorder(new Color(36, 46, 134), 4));
 			IconUser.setIgnoreRepaint(true);
-			IconUser.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\icons\\chuu125.png"));
+			IconUser.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\icons\\chuu125.png"));
 			IconUser.setBounds(0, 0, 125, 125);
 			panel_1.add(IconUser);
 			
@@ -266,7 +270,7 @@ public class MeuPerfil extends JPanel {
 			
 			//SIMULADO TEMPLATE PANEL
 			
-			int SimuladosQuant = 4;
+			int SimuladosQuant = 8;
 			
 			int startY = 50;
 			int panelHeight = 56;
@@ -324,13 +328,13 @@ public class MeuPerfil extends JPanel {
 			
 			JLabel lblDataDeNascimento = new JLabel("Idade:");
 			lblDataDeNascimento.setFont(new Font("Poppins", Font.PLAIN, 17));
-			lblDataDeNascimento.setBounds(145, 160, 56, 27);
+			lblDataDeNascimento.setBounds(145, 164, 56, 27);
 			panel_2.add(lblDataDeNascimento);
 			
-			JLabel dataNasc = new JLabel("19 Anos");
-			dataNasc.setFont(new Font("Poppins", Font.PLAIN, 17));
-			dataNasc.setBounds(205, 160, 104, 27);
-			panel_2.add(dataNasc);
+			JLabel idade_id = new JLabel("idade_id");
+			idade_id.setFont(new Font("Poppins", Font.PLAIN, 17));
+			idade_id.setBounds(205, 164, 104, 27);
+			panel_2.add(idade_id);
 			
 			JPanel panel_4 = new JPanel();
 			panel_4.setBackground(new Color(36, 44, 134));
@@ -339,7 +343,16 @@ public class MeuPerfil extends JPanel {
 			panel_4.setLayout(null);
 			
 			JButton btnAddBadge = new JButton("");
-			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\assets\\add.png"));
+			btnAddBadge.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					BadgeTrade b = new BadgeTrade();
+					removeAll();
+					add(b);
+					revalidate();
+					repaint();
+				}
+			});
+			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\add.png"));
 			btnAddBadge.setOpaque(false);
 			btnAddBadge.setHorizontalTextPosition(SwingConstants.CENTER);
 			btnAddBadge.setContentAreaFilled(false);
@@ -348,62 +361,64 @@ public class MeuPerfil extends JPanel {
 			panel_4.add(btnAddBadge);
 			
 			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\badge\\badge_id1.png"));
+			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id3.png"));
 			lblNewLabel_1.setBounds(5, 10, 28, 28);
 			panel_4.add(lblNewLabel_1);
 			
-			JLabel Label_NameMeta = new JLabel("Primeiro Simulado");
-			Label_NameMeta.setFont(new Font("Poppins", Font.PLAIN, 17));
-			Label_NameMeta.setForeground(new Color(255, 255, 255));
-			Label_NameMeta.setBounds(40, 15, 460, 19);
-			panel_4.add(Label_NameMeta);
+			JLabel lblGabaritouUmSimulado = new JLabel("badge_subtitle_id");
+			lblGabaritouUmSimulado.setFont(new Font("Poppins", Font.PLAIN, 17));
+			lblGabaritouUmSimulado.setForeground(new Color(255, 255, 255));
+			lblGabaritouUmSimulado.setBounds(40, 15, 460, 19);
+			panel_4.add(lblGabaritouUmSimulado);
 			
 			JPanel panel_5 = new JPanel();
+			panel_5.setBackground(new Color(255, 255, 255));
+			panel_5.setBorder(new LineBorder(new Color(36, 46, 134), 5));
 			panel_5.setBounds(10, 306, 568, 404);
 			panel_2.add(panel_5);
 			panel_5.setLayout(null);
 			
-			JLabel lblNewLabel_4 = new JLabel("Resumo do Desempenho");
-			lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_4.setBounds(191, 5, 201, 14);
-			panel_5.add(lblNewLabel_4);
+			JPanel GraficoPainel = new JPanel();
+			GraficoPainel.setBackground(new Color(192, 192, 192));
+			GraficoPainel.setBounds(12, 117, 545, 276);
+			panel_5.add(GraficoPainel);
+			GraficoPainel.setLayout(null);
 			
-			JLabel lblNewLabel_2 = new JLabel("Simulados Completos: 0");
-			lblNewLabel_2.setBounds(26, 52, 209, 14);
-			panel_5.add(lblNewLabel_2);
+			JLabel lblResumoDoDesempenho = new JLabel("Resumo do Desempenho");
+			lblResumoDoDesempenho.setHorizontalAlignment(SwingConstants.CENTER);
+			lblResumoDoDesempenho.setBounds(191, 15, 201, 14);
+			panel_5.add(lblResumoDoDesempenho);
 			
-			JLabel lblNewLabel_2_1 = new JLabel("Simulados Personalizados: 0");
-			lblNewLabel_2_1.setBounds(26, 65, 173, 14);
-			panel_5.add(lblNewLabel_2_1);
+			JLabel lblSimuladosCompletos = new JLabel("Simulados Completos: ");
+			lblSimuladosCompletos.setBounds(16, 25, 134, 14);
+			panel_5.add(lblSimuladosCompletos);
 			
-			JLabel lblNewLabel_2_1_1 = new JLabel("Melhor resultado:");
-			lblNewLabel_2_1_1.setBounds(26, 90, 173, 14);
-			panel_5.add(lblNewLabel_2_1_1);
+			JLabel lblSimuladosPersonalizados = new JLabel("Simulados Personalizados: 0");
+			lblSimuladosPersonalizados.setBounds(16, 38, 173, 14);
+			panel_5.add(lblSimuladosPersonalizados);
 			
-			JLabel lblNewLabel_2_2 = new JLabel("Média de acertos: ");
-			lblNewLabel_2_2.setBounds(26, 77, 160, 14);
-			panel_5.add(lblNewLabel_2_2);
+			JLabel lblMelhorResultado = new JLabel("Melhor resultado:");
+			lblMelhorResultado.setBounds(16, 63, 173, 14);
+			panel_5.add(lblMelhorResultado);
+			
+			JLabel lblMediaAcertos = new JLabel("Média de acertos: ");
+			lblMediaAcertos.setBounds(16, 50, 160, 14);
+			panel_5.add(lblMediaAcertos);
+			
+			JLabel lblProgressoMeta = new JLabel("Progresso em Metas:");
+			lblProgressoMeta.setBounds(16, 75, 529, 14);
+			panel_5.add(lblProgressoMeta);
 			
 			JProgressBar progressBar = new JProgressBar();
-			progressBar.setForeground(new Color(0, 0, 255));
-			progressBar.setValue(50);
 			progressBar.setStringPainted(true);
-			progressBar.setBounds(10, 379, 548, 14);
+			progressBar.setBounds(12, 92, 546, 14);
 			panel_5.add(progressBar);
+			progressBar.setForeground(new Color(36, 46, 134));
+			progressBar.setValue(50);
 			
-			JLabel lblNewLabel_2_1_1_1 = new JLabel("Progresso em Metas:");
-			lblNewLabel_2_1_1_1.setBounds(10, 361, 173, 14);
-			panel_5.add(lblNewLabel_2_1_1_1);
-			
-			JLabel lblMembroDesde = new JLabel("Membro desde:");
-			lblMembroDesde.setFont(new Font("Poppins", Font.PLAIN, 17));
-			lblMembroDesde.setBounds(145, 187, 145, 27);
-			panel_2.add(lblMembroDesde);
-			
-			JLabel dataNasc_1 = new JLabel("01/06/2023");
-			dataNasc_1.setFont(new Font("Poppins", Font.PLAIN, 17));
-			dataNasc_1.setBounds(300, 187, 104, 27);
-			panel_2.add(dataNasc_1);
+			JLabel lblQntSimulados = new JLabel(String.valueOf(SimuladosQuant));
+			lblQntSimulados.setBounds(160, 25, 64, 14);
+			panel_5.add(lblQntSimulados);
 			setBounds(0, 0, 1280, 720);
 	
 	
