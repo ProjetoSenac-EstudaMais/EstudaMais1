@@ -1,8 +1,9 @@
-package estuda;
+package telas;
 
 import java.awt.Choice;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Insets;
 import java.awt.Rectangle;
@@ -36,6 +37,7 @@ public class MeuPerfil extends JPanel {
 	private JTextField textField;
 
 	private JPanel SimuladosArrayPane;
+	
 	
 	
 	
@@ -247,140 +249,77 @@ public class MeuPerfil extends JPanel {
 			IconUser.setBounds(0, 0, 125, 125);
 			panel_1.add(IconUser);
 			
-			JPanel panel_1_1_1 = new JPanel();
-			panel_1_1_1.setBackground(new Color(36, 44, 134));
-			panel_1_1_1.setBounds(588, 115, 422, 594);
-			panel_2.add(panel_1_1_1);
-			panel_1_1_1.setLayout(null);
+			// Painel Simulados
 			
-			// Simualdos Array Pane	
+			JPanel PainelSimulados = new JPanel();
+			PainelSimulados.setBackground(new Color(36, 44, 134));
+			PainelSimulados.setBounds(588, 115, 422, 594);
+			panel_2.add(PainelSimulados);
+			PainelSimulados.setLayout(null);
 			
-			// TODO: 1. Criar um painel para exibir os simulados
-			// TODO: 2. Configurar o painel dos simulados
-			// TODO: 3. Criar um campo de texto para entrada de dados
-			// TODO: 4. Configurar o campo de texto
-			// TODO: 5. Criar um botão de adicionar
-			// TODO: 6. Configurar o botão de adicionar
-			// TODO: 7. Criar arrays para as checkboxes e botões de delete
-			// TODO: 8. Definir variáveis para posição Y inicial e distância entre checkboxes
-			// TODO: 9. Criar um loop para criar as checkboxes e botões de delete
-			// TODO: 10. Configurar as checkboxes e botões de delete
-			// TODO: 11. Adicionar ações aos botões de delete
-			// TODO: 12. Adicionar ação ao botão de adicionar
-
-			// TODO: 1. Criar um painel para exibir os simulados
-			JPanel SimuladosArrayPane_1 = new JPanel();
+			JLabel lblPainelSimulados = new JLabel("Simulados");
+			lblPainelSimulados.setBounds(0, 0, 422, 40);
+			PainelSimulados.add(lblPainelSimulados);
+			lblPainelSimulados.setHorizontalAlignment(SwingConstants.CENTER);
+			lblPainelSimulados.setFont(new Font("Poppins", Font.PLAIN, 18));
+			lblPainelSimulados.setForeground(new Color(255, 255, 255));
 			
-						// TODO: 2. Configurar o painel dos simulados
-						SimuladosArrayPane_1.setBounds(0, 78, 422, 470);
-						SimuladosArrayPane_1.setLayout(null);
-						SimuladosArrayPane_1.setBackground(new Color(192, 192, 192));
-						panel_1_1_1.add(SimuladosArrayPane_1);
+			//SIMULADO TEMPLATE PANEL
 			
-			JLabel lblNewLabel_3 = new JLabel("Simulados");
-			lblNewLabel_3.setBounds(0, 0, 422, 40);
-			panel_1_1_1.add(lblNewLabel_3);
-			lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-			lblNewLabel_3.setFont(new Font("Poppins", Font.PLAIN, 18));
-			lblNewLabel_3.setForeground(new Color(255, 255, 255));
-
-			// TODO: 3. Criar um campo de texto para entrada de dados
-			JTextField txtTeste = new JTextField();
-			txtTeste.setText("Teste");
-
-			// TODO: 4. Configurar o campo de texto
-			txtTeste.setBorder(new LineBorder(new Color(255, 255, 255)));
-			txtTeste.setForeground(new Color(255, 255, 255));
-			txtTeste.setOpaque(false);
-			txtTeste.setBackground(Color.WHITE);
-			txtTeste.setBounds(8, 34, 328, 33);
-			panel_1_1_1.add(txtTeste);
-			txtTeste.setColumns(10);
-
-			// TODO: 5. Criar um botão de adicionar
-			JButton btnAdd = new JButton("+");
-
-			// TODO: 6. Configurar o botão de adicionar
-			btnAdd.setFocusPainted(false);
-			btnAdd.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnAdd.setBorderPainted(false);
-			btnAdd.setBackground(new Color(64, 74, 204));
-			btnAdd.setForeground(new Color(255, 255, 255));
-			btnAdd.setFont(new Font("Poppins", Font.BOLD, 12));
-			btnAdd.setBounds(346, 34, 66, 33);
-			panel_1_1_1.add(btnAdd);
-
-			// TODO: 7. Criar arrays para as checkboxes e botões de delete
-			JPanel[] SimPanel = new JPanel[5];
-			JButton[] GabaritoBtn = new JButton[5];
-
-			// TODO: 8. Definir variáveis para posição Y inicial e distância entre checkboxes
-			int startY = 0;
-			int yDistance = 25;
-
-			// TODO: 9. Criar um loop para criar as checkboxes e botões de delete
-			for (int i = 0; i < 5; i++) {
-			    // TODO: 10. Configurar as checkboxes e botões de delete
-			    SimPanel[i] = new JPanel();
-			    SimPanel[i].setFocusable(false);
-			    SimPanel[i].setOpaque(false);
-			    SimPanel[i].setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-			    SimPanel[i].setFont(new Font("Poppins", Font.PLAIN, 11));
-			    SimPanel[i].setForeground(Color.WHITE);
-			    SimPanel[i].setBackground(new Color(36, 44, 136));
-			    SimPanel[i].setBounds(8, startY + i * yDistance, 399, 23);
-			    SimPanel[i].setVisible(false);
-			    panel_1_1_1.add(SimPanel[i]);
-
-			    GabaritoBtn[i] = new JButton("x");
-			    GabaritoBtn[i].setFocusPainted(false);
-			    GabaritoBtn[i].setFont(new Font("Poppins", Font.PLAIN, 11));
-			    GabaritoBtn[i].setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			    GabaritoBtn[i].setContentAreaFilled(false);
-			    GabaritoBtn[i].setBorderPainted(false);
-			    GabaritoBtn[i].setForeground(Color.WHITE);
-			    GabaritoBtn[i].setBounds(413, startY + i * yDistance, 47, 23);
-			    GabaritoBtn[i].setVisible(false);
-			    panel_1_1_1.add(GabaritoBtn[i]);
+			int SimuladosQuant = 4;
 			
-			    }
+			int startY = 50;
+			int panelHeight = 56;
+			int verticalSpacing = -25;
+			
+			
+			for (int i = 0; i < SimuladosQuant; i++) {
+				
+		    JPanel SimuladoTemplate = new JPanel();
+			SimuladoTemplate.setBorder(new LineBorder(new Color(255, 255, 255)));
+			SimuladoTemplate.setBackground(new Color(36, 46, 134));
+			SimuladoTemplate.setBounds(8, startY + i * (panelHeight + verticalSpacing), 404, panelHeight);
+			PainelSimulados.add(SimuladoTemplate);
+			SimuladoTemplate.setLayout(null);
 
-			// TODO: 12. Adicionar ação ao botão de adicionar
-			btnAdd.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {
-			        String textFieldText = txtTeste.getText();
-			        if (!textFieldText.isEmpty()) {
-			            int index = -1;
-
-			            for (int i = 0; i < 5; i++) {
-			                if (!SimPanel[i].isVisible()) {
-			                    index = i;
-			                    break;
-			                }
-			            }
-
-			            if (index == -1) {
-			                index = 5 - 1;
-			            }
-
-			            if (index < 5 - 1 && SimPanel[index + 1].isVisible()) {
-			                for (int j = 5 - 2; j >= index; j--) {
-			                   // SimPanel[j + 1].setText(SimPanel[j].getText());
-			                    SimPanel[j + 1].setVisible(SimPanel[j].isVisible());
-			                    SimPanel[j].setVisible(false);
-			                    GabaritoBtn[j + 1].setVisible(GabaritoBtn[j].isVisible());
-			                    GabaritoBtn[j].setVisible(false);
-			                }
-			            }
-
-			            //SimPanel[index].setText(textFieldText);
-			            SimPanel[index].setVisible(true);
-			            GabaritoBtn[index].setVisible(true);
-
-			            txtTeste.setText("");
-			        }
-			    }
-			});
+			JLabel Nome_Simulado = new JLabel("Nome_Simulado");
+		    Nome_Simulado.setForeground(new Color(255, 255, 255));
+			Nome_Simulado.setFont(new Font("Poppins", Font.PLAIN, 14));
+			Nome_Simulado.setBounds(10, 15, 163, 14);
+			SimuladoTemplate.add(Nome_Simulado);
+			
+			JLabel Data_Simulado = new JLabel("13/06/2023");
+			Data_Simulado.setHorizontalAlignment(SwingConstants.CENTER);
+			Data_Simulado.setForeground(Color.WHITE);
+			Data_Simulado.setFont(new Font("Poppins", Font.PLAIN, 14));
+			Data_Simulado.setBounds(10, 30, 123, 14);
+			SimuladoTemplate.add(Data_Simulado);
+			
+			JButton btnNewButton = new JButton("Ver Gabarito");
+			btnNewButton.setForeground(new Color(255, 255, 255));
+			btnNewButton.setBorderPainted(false);
+			btnNewButton.setBackground(new Color(98, 106, 204));
+			btnNewButton.setBounds(154, 15, 110, 23);
+			SimuladoTemplate.add(btnNewButton);
+			
+			JLabel Questoes_Gabarito = new JLabel("25/40");
+			Questoes_Gabarito.setHorizontalAlignment(SwingConstants.CENTER);
+			Questoes_Gabarito.setForeground(Color.WHITE);
+			Questoes_Gabarito.setFont(new Font("Poppins", Font.PLAIN, 14));
+			Questoes_Gabarito.setBounds(281, 20, 73, 14);
+			SimuladoTemplate.add(Questoes_Gabarito);
+			
+			JLabel icon_Acertos = new JLabel("");
+			icon_Acertos.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\check.png"));
+			icon_Acertos.setBounds(364, 14, 28, 28);
+			SimuladoTemplate.add(icon_Acertos);
+			
+			startY += panelHeight + verticalSpacing;
+			}
+			
+			int panelHeightTotal = SimuladosQuant * (panelHeight + verticalSpacing) - verticalSpacing;
+			PainelSimulados.setPreferredSize(new Dimension(422, panelHeightTotal));
+			PainelSimulados.revalidate();
 
 			
 			JLabel lblDataDeNascimento = new JLabel("Idade:");
