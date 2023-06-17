@@ -19,11 +19,17 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JProgressBar;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import java.awt.ComponentOrientation;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.Period;
 
 public class MeuPerfil extends JPanel {
 	
@@ -42,16 +48,316 @@ public class MeuPerfil extends JPanel {
 	private JTextField textField;
 
 	private JPanel SimuladosArrayPane;
+	
+	private String[] nome_id;
+	private String[] sobrenome_id;
+	private String icon;
+	private String[] badge_id;
+	private String subtitle_badge;
+	private String[] meta_id;
+	private String m_title;
+	private String m_subtitle;
+	private String[] birthdate_user;
+	
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
+    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
+    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
+    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");  
+    ImageIcon iconperfil_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu125.png");
+    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
+    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
+    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");	
 
 	public MeuPerfil() {
 		
 			setLayout(null);
 			setBounds(100,100,1280,720);
 			
+
+			JPanel panel = new JPanel();
+			panel.setBounds(0, 0, 1280, 720);
+			panel.setBackground(new Color(128, 128, 128));
+			add(panel);
+			panel.setLayout(null);
+			
+			
+			JPanel panel_2 = new JPanel();
+			panel_2.setBackground(new Color(255, 255, 255));
+			panel_2.setBounds(260, 0, 1020, 720);
+			panel.add(panel_2);
+			panel_2.setLayout(null);
+			
+			JPanel panel_3_1 = new JPanel();
+			panel_3_1.setBackground(new Color(36, 44, 136));
+			panel_3_1.setBounds(0, 0, 1020, 100);
+			panel_2.add(panel_3_1);
+			panel_3_1.setLayout(null);
+			
+			JLabel lblSimulados = new JLabel("Meu Perfil");
+			lblSimulados.setForeground(new Color(255, 255, 255));
+			lblSimulados.setFont(new Font("Poppins", Font.PLAIN, 35));
+			lblSimulados.setBounds(410, 20, 185, 53);
+			panel_3_1.add(lblSimulados);
+			
+			JLabel bg_header = new JLabel("");
+			bg_header.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\escolha_simulado\\bg_header.png"));
+			bg_header.setBounds(0, 0, 1020, 100);
+			panel_3_1.add(bg_header);
+			
+			this.nome_id = DB(1);
+			this.sobrenome_id = DB(1);
+			this.badge_id = DB(1);
+			this.birthdate_user = DB(1);
+			
+			JLabel lblNewLabel = new JLabel("Nome:");
+			lblNewLabel.setFont(new Font("Poppins", Font.PLAIN, 17));
+			lblNewLabel.setBounds(145, 115, 67, 27);
+			panel_2.add(lblNewLabel);
+			
+			JLabel primeironome = new JLabel("" + this.nome_id[0]);
+			primeironome.setFont(new Font("Poppins", Font.PLAIN, 17));
+			primeironome.setBounds(210, 115, 172, 27);
+			panel_2.add(primeironome);
+			
+			JLabel lblSobrenome = new JLabel("Sobrenome:");
+			lblSobrenome.setFont(new Font("Poppins", Font.PLAIN, 17));
+			lblSobrenome.setBounds(145, 139, 104, 27);
+			panel_2.add(lblSobrenome);
+			
+			JLabel lblSobrenome_1 = new JLabel("" + this.sobrenome_id[1]);
+			lblSobrenome_1.setFont(new Font("Poppins", Font.PLAIN, 17));
+			lblSobrenome_1.setBounds(259, 139, 135, 27);
+			panel_2.add(lblSobrenome_1);
+			
+			JPanel panel_1 = new JPanel();
+			panel_1.setBackground(new Color(64, 74, 204));
+			panel_1.setBounds(10, 115, 125, 125);
+			panel_2.add(panel_1);
+			panel_1.setLayout(null);
+			
+			JButton btnAddIcon = new JButton("");
+			btnAddIcon.addActionListener(new ActionListener() {
+			    public void actionPerformed(ActionEvent e) {
+			    	IconTrade a = new IconTrade();
+					removeAll();
+					add(a);
+					revalidate();
+					repaint();			        
+			    }
+			});
+
+			btnAddIcon.setHorizontalTextPosition(SwingConstants.CENTER);
+			btnAddIcon.setContentAreaFilled(false);
+			btnAddIcon.setBorderPainted(false);
+			btnAddIcon.setOpaque(false);
+			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\add.png"));
+			btnAddIcon.setBounds(97, 97, 28, 28);
+			panel_1.add(btnAddIcon);
+			
+			JLabel IconUser = new JLabel("");
+			IconUser.setBorder(new LineBorder(new Color(36, 46, 134), 4));
+			IconUser.setIgnoreRepaint(true);
+			IconUser.setIcon(iconperfil_1);
+			IconUser.setBounds(0, 0, 125, 125);
+			panel_1.add(IconUser);
+			
+			// Painel Simulados
+			
+			JPanel PainelSimulados = new JPanel();
+			PainelSimulados.setBackground(new Color(36, 44, 134));
+			PainelSimulados.setBounds(588, 115, 422, 594);
+			panel_2.add(PainelSimulados);
+			PainelSimulados.setLayout(null);
+			
+			JLabel lblPainelSimulados = new JLabel("Simulados");
+			lblPainelSimulados.setBounds(0, 0, 422, 40);
+			PainelSimulados.add(lblPainelSimulados);
+			lblPainelSimulados.setHorizontalAlignment(SwingConstants.CENTER);
+			lblPainelSimulados.setFont(new Font("Poppins", Font.PLAIN, 18));
+			lblPainelSimulados.setForeground(new Color(255, 255, 255));
+			
+			//SIMULADO TEMPLATE PANEL
+			
+			int SimuladosQuant = 3;
+			
+			int startY = 50;
+			int panelHeight = 56;
+			int verticalSpacing = -25;
+			
+			
+			for (int i = 0; i < SimuladosQuant; i++) {
+				
+		    JPanel SimuladoTemplate = new JPanel();
+			SimuladoTemplate.setBorder(new LineBorder(new Color(255, 255, 255)));
+			SimuladoTemplate.setBackground(new Color(36, 46, 134));
+			SimuladoTemplate.setBounds(8, startY + i * (panelHeight + verticalSpacing), 404, panelHeight);
+			PainelSimulados.add(SimuladoTemplate);
+			SimuladoTemplate.setLayout(null);
+
+			JLabel Nome_Simulado = new JLabel("Nome_Simulado");
+		    Nome_Simulado.setForeground(new Color(255, 255, 255));
+			Nome_Simulado.setFont(new Font("Poppins", Font.PLAIN, 14));
+			Nome_Simulado.setBounds(10, 15, 163, 14);
+			SimuladoTemplate.add(Nome_Simulado);
+			
+			JLabel Data_Simulado = new JLabel("13/06/2023");
+			Data_Simulado.setHorizontalAlignment(SwingConstants.CENTER);
+			Data_Simulado.setForeground(Color.WHITE);
+			Data_Simulado.setFont(new Font("Poppins", Font.PLAIN, 14));
+			Data_Simulado.setBounds(10, 30, 123, 14);
+			SimuladoTemplate.add(Data_Simulado);
+			
+			JButton btnNewButton = new JButton("Ver Gabarito");
+			btnNewButton.setForeground(new Color(255, 255, 255));
+			btnNewButton.setBorderPainted(false);
+			btnNewButton.setBackground(new Color(98, 106, 204));
+			btnNewButton.setBounds(154, 15, 110, 23);
+			SimuladoTemplate.add(btnNewButton);
+			
+			JLabel Questoes_Gabarito = new JLabel("25/40");
+			Questoes_Gabarito.setHorizontalAlignment(SwingConstants.CENTER);
+			Questoes_Gabarito.setForeground(Color.WHITE);
+			Questoes_Gabarito.setFont(new Font("Poppins", Font.PLAIN, 14));
+			Questoes_Gabarito.setBounds(281, 20, 73, 14);
+			SimuladoTemplate.add(Questoes_Gabarito);
+			
+			JLabel icon_Acertos = new JLabel("");
+			icon_Acertos.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\check.png"));
+			icon_Acertos.setBounds(364, 14, 28, 28);
+			SimuladoTemplate.add(icon_Acertos);
+			
+			startY += panelHeight + verticalSpacing;
+			}
+			
+			int panelHeightTotal = SimuladosQuant * (panelHeight + verticalSpacing) - verticalSpacing;
+			PainelSimulados.setPreferredSize(new Dimension(422, panelHeightTotal));
+			PainelSimulados.revalidate();
+
+			
+			JLabel lblDataDeNascimento = new JLabel("Idade:");
+			lblDataDeNascimento.setFont(new Font("Poppins", Font.PLAIN, 17));
+			lblDataDeNascimento.setBounds(145, 164, 56, 27);
+			panel_2.add(lblDataDeNascimento);
+			
+			// Obtém a data de nascimento fornecida pelo usuário (supondo que esteja no formato "yyyy-MM-dd")
+			String dataNascimentoStr = this.birthdate_user[4];
+
+			// Converte a data de nascimento em um objeto LocalDate
+			LocalDate dataNascimento = LocalDate.parse(dataNascimentoStr);
+
+			// Obtém a data atual
+			LocalDate dataAtual = LocalDate.now();
+
+			// Calcula a diferença entre a data atual e a data de nascimento
+			Period periodo = Period.between(dataNascimento, dataAtual);
+
+			// Obtém a idade em anos
+			int idade = periodo.getYears();					
+			
+			JLabel idade_id = new JLabel(""+ idade + " anos.");
+			idade_id.setFont(new Font("Poppins", Font.PLAIN, 17));
+			idade_id.setBounds(205, 164, 104, 27);
+			panel_2.add(idade_id);
+			
+			JPanel panel_4 = new JPanel();
+			panel_4.setBackground(new Color(36, 44, 134));
+			panel_4.setBounds(10, 250, 568, 45);
+			panel_2.add(panel_4);
+			panel_4.setLayout(null);
+			
+			JButton btnAddBadge = new JButton("");
+			btnAddBadge.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					BadgeTrade b = new BadgeTrade();
+					removeAll();
+					add(b);
+					revalidate();
+					repaint();
+				}
+			});
+			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\add.png"));
+			btnAddBadge.setOpaque(false);
+			btnAddBadge.setHorizontalTextPosition(SwingConstants.CENTER);
+			btnAddBadge.setContentAreaFilled(false);
+			btnAddBadge.setBorderPainted(false);
+			btnAddBadge.setBounds(530, 8, 28, 28);
+			panel_4.add(btnAddBadge);
+					
+			JLabel badge_trade_icon = new JLabel("");
+			badge_trade_icon.setIcon(badge_1);
+			badge_trade_icon.setBounds(5, 10, 28, 28);
+			panel_4.add(badge_trade_icon);		
+			
+			if(this.badge_id[2].equals("1")){
+				subtitle_badge = "Novato";
+				badge_trade_icon.setIcon(badge_1);
+			}else if(this.badge_id[2].equals("2")) {
+				subtitle_badge = "Vagabundo";
+				badge_trade_icon.setIcon(badge_2);
+			}else if(this.badge_id[2].equals("3")) {
+				subtitle_badge = "Sem Alma";
+				badge_trade_icon.setIcon(badge_3);
+			}		
+			
+			JLabel lblGabaritouUmSimulado = new JLabel(subtitle_badge);
+			lblGabaritouUmSimulado.setFont(new Font("Poppins", Font.PLAIN, 17));
+			lblGabaritouUmSimulado.setForeground(new Color(255, 255, 255));
+			lblGabaritouUmSimulado.setBounds(40, 15, 460, 19);
+			panel_4.add(lblGabaritouUmSimulado);
+			
+			JPanel panel_5 = new JPanel();
+			panel_5.setBackground(new Color(255, 255, 255));
+			panel_5.setBorder(new LineBorder(new Color(36, 46, 134), 5));
+			panel_5.setBounds(10, 306, 568, 404);
+			panel_2.add(panel_5);
+			panel_5.setLayout(null);
+			
+			JPanel GraficoPainel = new JPanel();
+			GraficoPainel.setBackground(new Color(192, 192, 192));
+			GraficoPainel.setBounds(12, 117, 545, 276);
+			panel_5.add(GraficoPainel);
+			GraficoPainel.setLayout(null);
+			
+			JLabel lblResumoDoDesempenho = new JLabel("Resumo do Desempenho");
+			lblResumoDoDesempenho.setHorizontalAlignment(SwingConstants.CENTER);
+			lblResumoDoDesempenho.setBounds(191, 15, 201, 14);
+			panel_5.add(lblResumoDoDesempenho);
+			
+			JLabel lblSimuladosCompletos = new JLabel("Simulados Completos: ");
+			lblSimuladosCompletos.setBounds(16, 25, 134, 14);
+			panel_5.add(lblSimuladosCompletos);
+			
+			JLabel lblSimuladosPersonalizados = new JLabel("Simulados Personalizados: 0");
+			lblSimuladosPersonalizados.setBounds(16, 38, 173, 14);
+			panel_5.add(lblSimuladosPersonalizados);
+			
+			JLabel lblMelhorResultado = new JLabel("Melhor resultado:");
+			lblMelhorResultado.setBounds(16, 63, 173, 14);
+			panel_5.add(lblMelhorResultado);
+			
+			JLabel lblMediaAcertos = new JLabel("Média de acertos: ");
+			lblMediaAcertos.setBounds(16, 50, 160, 14);
+			panel_5.add(lblMediaAcertos);
+			
+			JLabel lblProgressoMeta = new JLabel("Progresso em Metas:");
+			lblProgressoMeta.setBounds(16, 75, 529, 14);
+			panel_5.add(lblProgressoMeta);
+			
+			JProgressBar progressBar = new JProgressBar();
+			progressBar.setStringPainted(true);
+			progressBar.setBounds(12, 92, 546, 14);
+			panel_5.add(progressBar);
+			progressBar.setForeground(new Color(36, 46, 134));
+			progressBar.setValue(50);
+			
+			JLabel lblQntSimulados = new JLabel(String.valueOf(SimuladosQuant));
+			lblQntSimulados.setBounds(160, 25, 64, 14);
+			panel_5.add(lblQntSimulados);
+			
 			JPanel Sidebar = new JPanel();
-			Sidebar.setBackground(new Color(240, 240, 240));
 			Sidebar.setBounds(0, 0, 260, 720);
-			add(Sidebar);
+			panel.add(Sidebar);
+			Sidebar.setBackground(new Color(240, 240, 240));
 			Sidebar.setLayout(null);
 			
 			JPanel Perfil = new JPanel();
@@ -72,22 +378,34 @@ public class MeuPerfil extends JPanel {
 			icon_user.setIconTextGap(0);
 			icon_user.setBorder(null);
 			icon_user.setHorizontalAlignment(SwingConstants.CENTER);
-			icon_user.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\icons\\chuu.png"));
+			icon_user.setIcon(icon_1);
 			icon_user.setBounds(24, 15, 68, 68);
-			Perfil.add(icon_user);
+			Perfil.add(icon_user);		
 			
-			JLabel nome_id = new JLabel("nome_id");
+			if(this.badge_id[2].equals("1")){
+				subtitle_badge = "Novato";
+				badge_id.setIcon(badge_1);
+			}else if(this.badge_id[2].equals("2")) {
+				subtitle_badge = "Vagabundo";
+				badge_id.setIcon(badge_2);
+			}else if(this.badge_id[2].equals("3")) {
+				subtitle_badge = "Sem Alma";
+				badge_id.setIcon(badge_3);
+			}
+			
+			
+			JLabel nome_id = new JLabel("" + this.nome_id[0] + " " + this.sobrenome_id[1]);
 			nome_id.setForeground(new Color(255, 255, 255));
 			nome_id.setFont(new Font("Poppins", Font.PLAIN, 12));
 			nome_id.setBounds(100, 20, 150, 25);
 			Perfil.add(nome_id);
 			
-			JLabel badge_subtitle_id = new JLabel("badge_subtitle_id");
+			JLabel badge_subtitle_id = new JLabel(subtitle_badge);
 			badge_subtitle_id.setForeground(new Color(188, 188, 188));
 			badge_subtitle_id.setFont(new Font("Poppins", Font.PLAIN, 12));
 			badge_subtitle_id.setBounds(100, 35, 166, 25);
-			Perfil.add(badge_subtitle_id);
-			
+			Perfil.add(badge_subtitle_id);			
+									
 			JPanel panel_3_2 = new JPanel();
 			panel_3_2.setBackground(new Color(36, 44, 134));
 			panel_3_2.setBounds(0, 0, 320, 10);
@@ -169,260 +487,35 @@ public class MeuPerfil extends JPanel {
 					repaint();
 				}
 			});
-			
-
-			JPanel panel = new JPanel();
-			panel.setBounds(0, 0, 1280, 720);
-			panel.setBackground(new Color(128, 128, 128));
-			add(panel);
-			panel.setLayout(null);
-			
-			
-			JPanel panel_2 = new JPanel();
-			panel_2.setBackground(new Color(255, 255, 255));
-			panel_2.setBounds(260, 0, 1020, 720);
-			panel.add(panel_2);
-			panel_2.setLayout(null);
-			
-			JPanel panel_3_1 = new JPanel();
-			panel_3_1.setBackground(new Color(36, 44, 136));
-			panel_3_1.setBounds(0, 0, 1020, 100);
-			panel_2.add(panel_3_1);
-			panel_3_1.setLayout(null);
-			
-			JLabel lblSimulados = new JLabel("Meu Perfil");
-			lblSimulados.setForeground(new Color(255, 255, 255));
-			lblSimulados.setFont(new Font("Poppins", Font.PLAIN, 35));
-			lblSimulados.setBounds(410, 20, 185, 53);
-			panel_3_1.add(lblSimulados);
-			
-			JLabel bg_header = new JLabel("");
-			bg_header.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\escolha_simulado\\bg_header.png"));
-			bg_header.setBounds(0, 0, 1020, 100);
-			panel_3_1.add(bg_header);
-			
-			JLabel lblNewLabel = new JLabel("Nome:");
-			lblNewLabel.setFont(new Font("Poppins", Font.PLAIN, 17));
-			lblNewLabel.setBounds(145, 115, 67, 27);
-			panel_2.add(lblNewLabel);
-			
-			JLabel primeironome = new JLabel("nome_id");
-			primeironome.setFont(new Font("Poppins", Font.PLAIN, 17));
-			primeironome.setBounds(210, 115, 172, 27);
-			panel_2.add(primeironome);
-			
-			JLabel lblSobrenome = new JLabel("Sobrenome:");
-			lblSobrenome.setFont(new Font("Poppins", Font.PLAIN, 17));
-			lblSobrenome.setBounds(145, 139, 104, 27);
-			panel_2.add(lblSobrenome);
-			
-			JLabel lblSobrenome_1 = new JLabel("sobrenome_id");
-			lblSobrenome_1.setFont(new Font("Poppins", Font.PLAIN, 17));
-			lblSobrenome_1.setBounds(259, 139, 135, 27);
-			panel_2.add(lblSobrenome_1);
-			
-			JPanel panel_1 = new JPanel();
-			panel_1.setBackground(new Color(64, 74, 204));
-			panel_1.setBounds(10, 115, 125, 125);
-			panel_2.add(panel_1);
-			panel_1.setLayout(null);
-			
-			JButton btnAddIcon = new JButton("");
-			btnAddIcon.addActionListener(new ActionListener() {
-			    public void actionPerformed(ActionEvent e) {
-			    	IconTrade a = new IconTrade();
-					removeAll();
-					add(a);
-					revalidate();
-					repaint();			        
-			    }
-			});
-
-			btnAddIcon.setHorizontalTextPosition(SwingConstants.CENTER);
-			btnAddIcon.setContentAreaFilled(false);
-			btnAddIcon.setBorderPainted(false);
-			btnAddIcon.setOpaque(false);
-			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\add.png"));
-			btnAddIcon.setBounds(97, 97, 28, 28);
-			panel_1.add(btnAddIcon);
-			
-			JLabel IconUser = new JLabel("");
-			IconUser.setBorder(new LineBorder(new Color(36, 46, 134), 4));
-			IconUser.setIgnoreRepaint(true);
-			IconUser.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\icons\\chuu125.png"));
-			IconUser.setBounds(0, 0, 125, 125);
-			panel_1.add(IconUser);
-			
-			// Painel Simulados
-			
-			JPanel PainelSimulados = new JPanel();
-			PainelSimulados.setBackground(new Color(36, 44, 134));
-			PainelSimulados.setBounds(588, 115, 422, 594);
-			panel_2.add(PainelSimulados);
-			PainelSimulados.setLayout(null);
-			
-			JLabel lblPainelSimulados = new JLabel("Simulados");
-			lblPainelSimulados.setBounds(0, 0, 422, 40);
-			PainelSimulados.add(lblPainelSimulados);
-			lblPainelSimulados.setHorizontalAlignment(SwingConstants.CENTER);
-			lblPainelSimulados.setFont(new Font("Poppins", Font.PLAIN, 18));
-			lblPainelSimulados.setForeground(new Color(255, 255, 255));
-			
-			//SIMULADO TEMPLATE PANEL
-			
-			int SimuladosQuant = 8;
-			
-			int startY = 50;
-			int panelHeight = 56;
-			int verticalSpacing = -25;
-			
-			
-			for (int i = 0; i < SimuladosQuant; i++) {
-				
-		    JPanel SimuladoTemplate = new JPanel();
-			SimuladoTemplate.setBorder(new LineBorder(new Color(255, 255, 255)));
-			SimuladoTemplate.setBackground(new Color(36, 46, 134));
-			SimuladoTemplate.setBounds(8, startY + i * (panelHeight + verticalSpacing), 404, panelHeight);
-			PainelSimulados.add(SimuladoTemplate);
-			SimuladoTemplate.setLayout(null);
-
-			JLabel Nome_Simulado = new JLabel("Nome_Simulado");
-		    Nome_Simulado.setForeground(new Color(255, 255, 255));
-			Nome_Simulado.setFont(new Font("Poppins", Font.PLAIN, 14));
-			Nome_Simulado.setBounds(10, 15, 163, 14);
-			SimuladoTemplate.add(Nome_Simulado);
-			
-			JLabel Data_Simulado = new JLabel("13/06/2023");
-			Data_Simulado.setHorizontalAlignment(SwingConstants.CENTER);
-			Data_Simulado.setForeground(Color.WHITE);
-			Data_Simulado.setFont(new Font("Poppins", Font.PLAIN, 14));
-			Data_Simulado.setBounds(10, 30, 123, 14);
-			SimuladoTemplate.add(Data_Simulado);
-			
-			JButton btnNewButton = new JButton("Ver Gabarito");
-			btnNewButton.setForeground(new Color(255, 255, 255));
-			btnNewButton.setBorderPainted(false);
-			btnNewButton.setBackground(new Color(98, 106, 204));
-			btnNewButton.setBounds(154, 15, 110, 23);
-			SimuladoTemplate.add(btnNewButton);
-			
-			JLabel Questoes_Gabarito = new JLabel("25/40");
-			Questoes_Gabarito.setHorizontalAlignment(SwingConstants.CENTER);
-			Questoes_Gabarito.setForeground(Color.WHITE);
-			Questoes_Gabarito.setFont(new Font("Poppins", Font.PLAIN, 14));
-			Questoes_Gabarito.setBounds(281, 20, 73, 14);
-			SimuladoTemplate.add(Questoes_Gabarito);
-			
-			JLabel icon_Acertos = new JLabel("");
-			icon_Acertos.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\check.png"));
-			icon_Acertos.setBounds(364, 14, 28, 28);
-			SimuladoTemplate.add(icon_Acertos);
-			
-			startY += panelHeight + verticalSpacing;
-			}
-			
-			int panelHeightTotal = SimuladosQuant * (panelHeight + verticalSpacing) - verticalSpacing;
-			PainelSimulados.setPreferredSize(new Dimension(422, panelHeightTotal));
-			PainelSimulados.revalidate();
-
-			
-			JLabel lblDataDeNascimento = new JLabel("Idade:");
-			lblDataDeNascimento.setFont(new Font("Poppins", Font.PLAIN, 17));
-			lblDataDeNascimento.setBounds(145, 164, 56, 27);
-			panel_2.add(lblDataDeNascimento);
-			
-			JLabel idade_id = new JLabel("idade_id");
-			idade_id.setFont(new Font("Poppins", Font.PLAIN, 17));
-			idade_id.setBounds(205, 164, 104, 27);
-			panel_2.add(idade_id);
-			
-			JPanel panel_4 = new JPanel();
-			panel_4.setBackground(new Color(36, 44, 134));
-			panel_4.setBounds(10, 250, 568, 45);
-			panel_2.add(panel_4);
-			panel_4.setLayout(null);
-			
-			JButton btnAddBadge = new JButton("");
-			btnAddBadge.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					BadgeTrade b = new BadgeTrade();
-					removeAll();
-					add(b);
-					revalidate();
-					repaint();
-				}
-			});
-			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\add.png"));
-			btnAddBadge.setOpaque(false);
-			btnAddBadge.setHorizontalTextPosition(SwingConstants.CENTER);
-			btnAddBadge.setContentAreaFilled(false);
-			btnAddBadge.setBorderPainted(false);
-			btnAddBadge.setBounds(530, 8, 28, 28);
-			panel_4.add(btnAddBadge);
-			
-			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id3.png"));
-			lblNewLabel_1.setBounds(5, 10, 28, 28);
-			panel_4.add(lblNewLabel_1);
-			
-			JLabel lblGabaritouUmSimulado = new JLabel("badge_subtitle_id");
-			lblGabaritouUmSimulado.setFont(new Font("Poppins", Font.PLAIN, 17));
-			lblGabaritouUmSimulado.setForeground(new Color(255, 255, 255));
-			lblGabaritouUmSimulado.setBounds(40, 15, 460, 19);
-			panel_4.add(lblGabaritouUmSimulado);
-			
-			JPanel panel_5 = new JPanel();
-			panel_5.setBackground(new Color(255, 255, 255));
-			panel_5.setBorder(new LineBorder(new Color(36, 46, 134), 5));
-			panel_5.setBounds(10, 306, 568, 404);
-			panel_2.add(panel_5);
-			panel_5.setLayout(null);
-			
-			JPanel GraficoPainel = new JPanel();
-			GraficoPainel.setBackground(new Color(192, 192, 192));
-			GraficoPainel.setBounds(12, 117, 545, 276);
-			panel_5.add(GraficoPainel);
-			GraficoPainel.setLayout(null);
-			
-			JLabel lblResumoDoDesempenho = new JLabel("Resumo do Desempenho");
-			lblResumoDoDesempenho.setHorizontalAlignment(SwingConstants.CENTER);
-			lblResumoDoDesempenho.setBounds(191, 15, 201, 14);
-			panel_5.add(lblResumoDoDesempenho);
-			
-			JLabel lblSimuladosCompletos = new JLabel("Simulados Completos: ");
-			lblSimuladosCompletos.setBounds(16, 25, 134, 14);
-			panel_5.add(lblSimuladosCompletos);
-			
-			JLabel lblSimuladosPersonalizados = new JLabel("Simulados Personalizados: 0");
-			lblSimuladosPersonalizados.setBounds(16, 38, 173, 14);
-			panel_5.add(lblSimuladosPersonalizados);
-			
-			JLabel lblMelhorResultado = new JLabel("Melhor resultado:");
-			lblMelhorResultado.setBounds(16, 63, 173, 14);
-			panel_5.add(lblMelhorResultado);
-			
-			JLabel lblMediaAcertos = new JLabel("Média de acertos: ");
-			lblMediaAcertos.setBounds(16, 50, 160, 14);
-			panel_5.add(lblMediaAcertos);
-			
-			JLabel lblProgressoMeta = new JLabel("Progresso em Metas:");
-			lblProgressoMeta.setBounds(16, 75, 529, 14);
-			panel_5.add(lblProgressoMeta);
-			
-			JProgressBar progressBar = new JProgressBar();
-			progressBar.setStringPainted(true);
-			progressBar.setBounds(12, 92, 546, 14);
-			panel_5.add(progressBar);
-			progressBar.setForeground(new Color(36, 46, 134));
-			progressBar.setValue(50);
-			
-			JLabel lblQntSimulados = new JLabel(String.valueOf(SimuladosQuant));
-			lblQntSimulados.setBounds(160, 25, 64, 14);
-			panel_5.add(lblQntSimulados);
 			setBounds(0, 0, 1280, 720);
-	
-	
 
-		
+	}
+	
+	public static String[] DB(int id_user) {
+		String[] infouser = new String [5]; //Armazena os dados de login se um usuário em Array.
+
+		try {
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+
+			//Envia comandos para o DB.
+			String query = "select nome_user, sobrenome_user, badge_id, meta_id, birthdate_user from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			ResultSet rs = conn1.executeQuery(query,id_user); //Retornar os resultados da SQL
+
+			/*
+			 *Comando para guardar os dados dentro de uma variável;/
+			 */
+			if(rs.next()) {
+				infouser[0] = rs.getString("nome_user"); 
+				infouser[1] = rs.getString("sobrenome_user");
+				infouser[2] = rs.getString("badge_id");
+				infouser[3] = rs.getString("meta_id");
+				infouser[4] = rs.getString("birthdate_user");}
+			
+
+			rs.close();
+			conn1.closeConnection();
+		}
+		catch (SQLException e){e.printStackTrace();}
+		return infouser;
 	}
 }
