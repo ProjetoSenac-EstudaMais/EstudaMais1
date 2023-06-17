@@ -1,4 +1,4 @@
-package estuda;
+package telas;
 
 import javax.swing.JPanel;
 
@@ -7,6 +7,8 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,6 +43,15 @@ public class TelaInicial extends JPanel {
 	private final int MAX_CHECKBOXES = 8;
 	private JCheckBox[] checkboxes;
 	private JButton[] deleteButtons;
+	
+	private String[] nome_id;
+	private String[] sobrenome_id;
+	private String icon;
+	private String[] badge_id;
+	private String subtitle_badge;
+	private String[] meta_id;
+	private String m_title;
+	private String m_subtitle;
 
 	/**
 	 * Create the panel.
@@ -83,6 +94,12 @@ public class TelaInicial extends JPanel {
 	    btnIniciarGabaritos_1_2.setBackground(new Color(64, 74, 204));
 	    btnIniciarGabaritos_1_2.setBounds(51, 74, 180, 36);
 	    IntroPainel.add(btnIniciarGabaritos_1_2);
+	    
+	    //Painel metas
+	    	
+        ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
+        ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
+        ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");		
 	
 	    JPanel MetasPainel = new JPanel();
 	    MetasPainel.setLayout(null);
@@ -90,10 +107,10 @@ public class TelaInicial extends JPanel {
 	    MetasPainel.setBackground(new Color(36,44,134, 128)); // alpha
 		add(MetasPainel);
 		
-		JLabel badge_id_1 = new JLabel("");
-		badge_id_1.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id1.png"));
-		badge_id_1.setBounds(18, 34, 28, 28);
-		MetasPainel.add(badge_id_1);
+		JLabel m_badge_id = new JLabel("");
+		m_badge_id.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png"));
+		m_badge_id.setBounds(18, 34, 28, 28);
+		MetasPainel.add(m_badge_id);
 		
 		JLabel lbl_simulados_resolvidos_1_1 = new JLabel("Metas");
 		lbl_simulados_resolvidos_1_1.setHorizontalAlignment(SwingConstants.LEFT);
@@ -102,27 +119,43 @@ public class TelaInicial extends JPanel {
 		lbl_simulados_resolvidos_1_1.setBounds(8, 0, 80, 36);
 		MetasPainel.add(lbl_simulados_resolvidos_1_1);
 		
-		JLabel Meta1 = new JLabel("Complete um Simulado                  0/1");
-		Meta1.setBackground(new Color(64, 74, 204));
-		Meta1.setForeground(new Color(192, 192, 192));
-		Meta1.setBounds(55, 35, 219, 27);
-		MetasPainel.add(Meta1);
+		m_title = "teste";
+		m_subtitle = "teste";
 		
-		JLabel Meta3 = new JLabel("Faça seu primeiro simulado dentro da plataforma.");
-		Meta3.setHorizontalAlignment(SwingConstants.CENTER);
-		Meta3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-		Meta3.setForeground(Color.LIGHT_GRAY);
-		Meta3.setBackground(new Color(64, 74, 204));
-		Meta3.setBounds(14, 60, 256, 28);
-		MetasPainel.add(Meta3);
+		JLabel meta_title = new JLabel(m_title);
+		meta_title.setBackground(new Color(64, 74, 204));
+		meta_title.setForeground(new Color(192, 192, 192));
+		meta_title.setBounds(55, 35, 219, 27);
+		MetasPainel.add(meta_title);
 		
-		JButton btnIniciarGabaritos_1 = new JButton("INICIAR META");
-		btnIniciarGabaritos_1.setForeground(Color.WHITE);
-		btnIniciarGabaritos_1.setFont(new Font("Poppins", Font.PLAIN, 16));
-		btnIniciarGabaritos_1.setBorderPainted(false);
-		btnIniciarGabaritos_1.setBackground(new Color(64, 74, 204));
-		btnIniciarGabaritos_1.setBounds(50, 93, 180, 36);
-		MetasPainel.add(btnIniciarGabaritos_1);
+		JLabel meta_subtitle = new JLabel(m_subtitle);
+		meta_subtitle.setHorizontalAlignment(SwingConstants.CENTER);
+		meta_subtitle.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		meta_subtitle.setForeground(Color.LIGHT_GRAY);
+		meta_subtitle.setBackground(new Color(64, 74, 204));
+		meta_subtitle.setBounds(14, 60, 256, 28);
+		MetasPainel.add(meta_subtitle);
+		
+		JButton btnIniciarMeta = new JButton("INICIAR META");
+		btnIniciarMeta.setForeground(Color.WHITE);
+		btnIniciarMeta.setFont(new Font("Poppins", Font.PLAIN, 16));
+		btnIniciarMeta.setBorderPainted(false);
+		btnIniciarMeta.setBackground(new Color(64, 74, 204));
+		btnIniciarMeta.setBounds(50, 93, 180, 36);
+		MetasPainel.add(btnIniciarMeta);
+		
+		this.badge_id = DB(1);
+		
+		if(this.badge_id[2].equals("1")) {
+			m_badge_id.setIcon(badge_1);
+			m_title = "Complete um Simulado                  0/1";
+			m_subtitle = "Faça seu primeiro simulado dentro da plataforma.";
+			
+			meta_title.setText(m_title);
+		    meta_subtitle.setText(m_subtitle);
+		}
+		
+		// Painel metas ^=^
 		
 	    JButton btnHide = new JButton("");
 	    btnHide.addActionListener(new ActionListener() {
@@ -162,11 +195,17 @@ public class TelaInicial extends JPanel {
 		Perfil.setBounds(0, 0, 260, 100);
 		Sidebar.add(Perfil);
 		Perfil.setLayout(null);
-		
-		JLabel badge_id = new JLabel("");
-		badge_id.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id3.png"));
+
+		JLabel badge_id = new JLabel("");	
 		badge_id.setBounds(71, 55, 28, 28);
+		badge_id.setIcon(badge_3);
 		Perfil.add(badge_id);
+		
+		ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
+        ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
+        ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
+        ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");	
+       
 		
 		JLabel icon_user = new JLabel("");
 		icon_user.setInheritsPopupMenu(false);
@@ -174,17 +213,31 @@ public class TelaInicial extends JPanel {
 		icon_user.setIconTextGap(0);
 		icon_user.setBorder(null);
 		icon_user.setHorizontalAlignment(SwingConstants.CENTER);
-		icon_user.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\icons\\chuu.png"));
 		icon_user.setBounds(24, 15, 68, 68);
+		icon_user.setIcon(icon_1);
 		Perfil.add(icon_user);
 		
-		JLabel nome_id = new JLabel("nome_id");
+		this.nome_id = DB(1);
+		this.sobrenome_id = DB(1);
+		
+		JLabel nome_id = new JLabel("" + this.nome_id[0] + " " + this.sobrenome_id[1]);
 		nome_id.setForeground(new Color(255, 255, 255));
 		nome_id.setFont(new Font("Poppins", Font.PLAIN, 12));
-		nome_id.setBounds(100, 20, 150, 25);
+		nome_id.setBounds(100, 20, 150, 25);		
 		Perfil.add(nome_id);
 		
-		JLabel badge_subtitle_id = new JLabel("badge_subtitle_id");
+		if(this.badge_id[2].equals("1")){
+			subtitle_badge = "Novato";
+			badge_id.setIcon(badge_1);
+		}else if(this.badge_id[2].equals("2")) {
+			subtitle_badge = "Vagabundo";
+			badge_id.setIcon(badge_2);
+		}else if(this.badge_id[2].equals("3")) {
+			subtitle_badge = "Sem Alma";
+			badge_id.setIcon(badge_3);
+		}
+		
+		JLabel badge_subtitle_id = new JLabel(subtitle_badge);
 		badge_subtitle_id.setForeground(new Color(188, 188, 188));
 		badge_subtitle_id.setFont(new Font("Poppins", Font.PLAIN, 12));
 		badge_subtitle_id.setBounds(100, 35, 166, 25);
@@ -320,7 +373,7 @@ public class TelaInicial extends JPanel {
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\tela_inicial\\simulados.png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\img_telas\\tela_inicial\\simulados.png"));
 		lblNewLabel.setBounds(0, 0, 277, 125);
 		panel_1.add(lblNewLabel);
 		
@@ -360,10 +413,10 @@ public class TelaInicial extends JPanel {
 		lbl_simulados.setFont(new Font("Poppins", Font.PLAIN, 16));
 		lbl_simulados.setBounds(10, 165, 260, 36);
 		panel_1_1.add(lbl_simulados);
-		
+			
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\tela_inicial\\gabaritos.png"));
+		lblNewLabel_3.setIcon(new ImageIcon(icon));
 		lblNewLabel_3.setBounds(0, 0, 276, 126);
 		panel_1_1.add(lblNewLabel_3);
 		
@@ -405,7 +458,7 @@ public class TelaInicial extends JPanel {
 		panel_1_1_1.add(lbl_exercicios);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\tela_inicial\\exercicios.png"));
+		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\img_telas\\tela_inicial\\exercicios.png"));
 		lblNewLabel_4.setBounds(0, 0, 277, 125);
 		panel_1_1_1.add(lblNewLabel_4);
 		
@@ -424,7 +477,7 @@ public class TelaInicial extends JPanel {
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel_2.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\tela_inicial\\slider_banner.png"));
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\img_telas\\tela_inicial\\slider_banner.png"));
 		lblNewLabel_2.setBounds(260, 0, 1020, 319);
 		add(lblNewLabel_2);
 		
@@ -556,9 +609,38 @@ public class TelaInicial extends JPanel {
                     textField.setText("");
                 }
             }
-        });
-	  //-------------------------------------------				
-
-	}
+        });	
+            
+	}        
   }
-}
+	
+	public static String[] DB(int id_user) {
+		String[] infouser = new String [4]; //Armazena os dados de login se um usuário em Array.
+
+		try {
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+
+			//Envia comandos para o DB.
+			String query = "select nome_user, sobrenome_user, badge_id, meta_id from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			ResultSet rs = conn1.executeQuery(query,id_user); //Retornar os resultados da SQL
+
+			/*
+			 *Comando para guardar os dados dentro de uma variável;/
+			 */
+			if(rs.next()) {
+				infouser[0] = rs.getString("nome_user"); 
+				infouser[1] = rs.getString("sobrenome_user");
+				infouser[2] = rs.getString("badge_id");
+				infouser[3] = rs.getString("meta_id");}
+			
+
+			rs.close();
+			conn1.closeConnection();
+		}
+		catch (SQLException e){e.printStackTrace();}
+		return infouser;
+	}
+	
+	
+
+}		
