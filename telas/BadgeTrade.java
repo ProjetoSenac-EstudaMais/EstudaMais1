@@ -19,43 +19,74 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JProgressBar;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import java.awt.ComponentOrientation;
-import javax.swing.JToggleButton;
-import javax.swing.OverlayLayout;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.Period;
 
 public class BadgeTrade extends JPanel {
-
-	int simuladoEscolha;
+	
+	//VARIAVEIS PARA O TIPO DE SIMULADO (PARA SER USADO COM OS BOTOES)
+	 int simuladoEscolha;
+	 
+	//VARIAVEL PARA O ANO DO SIMULADO COMPLETO
 	String anoSC;
+	
+	//VARIAVEL PARA O TEMPO DO SIMULADO PERSONALIZADO
 	String anoSP;
+	
+	//VARIAVEL PARA O TEMPO DO SIMULADO PERSONALIZADO
 	String tempoSP;
 
 	private JTextField textField;
 
 	private JPanel SimuladosArrayPane;
+	
+	private String[] nome_id;
+	private String[] sobrenome_id;
+	private String[] id_icon;
+	private String icon;
+	private String[] badge_id;
+	private String subtitle_badge;
+	private String[] meta_id;
+	private String m_title;
+	private String m_subtitle;
+	private String[] birthdate_user;
+
+	
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
+    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
+    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
+    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");  
+    ImageIcon iconperfil_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu125.png");
+    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
+    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
+    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");	
 
 	public BadgeTrade() {
 		
 			setLayout(null);
-			setBounds(100,100,1280,720);			
+			setBounds(100,100,1280,720);
 			
-			JPanel panel_3 = new JPanel();
-			panel_3.setOpaque(false);
-			panel_3.setVerifyInputWhenFocusTarget(false);
-			panel_3.setBackground(new Color(0, 0, 0));
-			panel_3.setBounds(0, 0, 1280, 720);
-			add(panel_3);
-			panel_3.setLayout(null);
+
+			JPanel panel = new JPanel();
+			panel.setBounds(0, 0, 1280, 720);
+			panel.setBackground(new Color(128, 128, 128));
+			add(panel);
+			panel.setLayout(null);
 			
 			JPanel panel_6 = new JPanel();
 			panel_6.setBorder(new LineBorder(new Color(36, 46, 134), 5));
 			panel_6.setBackground(Color.WHITE);
 			panel_6.setBounds(587, 137, 296, 322);
-			panel_3.add(panel_6);
+			panel.add(panel_6);
 			panel_6.setLayout(null);
 			
 			JButton btnConfirmar = new JButton("CONFIRMAR");
@@ -87,135 +118,8 @@ public class BadgeTrade extends JPanel {
 			btnBadge_Id_4.setBounds(152, 128, 119, 106);
 			panel_6.add(btnBadge_Id_4);
 			
-			JPanel Sidebar = new JPanel();
-			Sidebar.setDoubleBuffered(false);
-			Sidebar.setEnabled(false);
-			Sidebar.setFocusable(false);
-			Sidebar.setFocusTraversalKeysEnabled(false);
-			Sidebar.setBackground(new Color(240, 240, 240));
-			Sidebar.setBounds(0, 0, 260, 720);
-			add(Sidebar);
-			Sidebar.setLayout(null);
-			
-			JPanel Perfil = new JPanel();
-			Perfil.setBorder(null);
-			Perfil.setBackground(new Color(36, 44, 134));
-			Perfil.setBounds(0, 0, 260, 100);
-			Sidebar.add(Perfil);
-			Perfil.setLayout(null);
-			
-			JLabel badge_id = new JLabel("");
-			badge_id.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id3.png"));
-			badge_id.setBounds(71, 55, 28, 28);
-			Perfil.add(badge_id);
-			
-			JLabel icon_user = new JLabel("");
-			icon_user.setInheritsPopupMenu(false);
-			icon_user.setRequestFocusEnabled(false);
-			icon_user.setIconTextGap(0);
-			icon_user.setBorder(null);
-			icon_user.setHorizontalAlignment(SwingConstants.CENTER);
-			icon_user.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\icons\\chuu.png"));
-			icon_user.setBounds(24, 15, 68, 68);
-			Perfil.add(icon_user);
-			
-			JLabel nome_id = new JLabel("nome_id");
-			nome_id.setForeground(new Color(255, 255, 255));
-			nome_id.setFont(new Font("Poppins", Font.PLAIN, 12));
-			nome_id.setBounds(100, 20, 150, 25);
-			Perfil.add(nome_id);
-			
-			JLabel badge_subtitle_id = new JLabel("badge_subtitle_id");
-			badge_subtitle_id.setForeground(new Color(188, 188, 188));
-			badge_subtitle_id.setFont(new Font("Poppins", Font.PLAIN, 12));
-			badge_subtitle_id.setBounds(100, 35, 166, 25);
-			Perfil.add(badge_subtitle_id);
-			
-			JPanel panel_3_2 = new JPanel();
-			panel_3_2.setBackground(new Color(36, 44, 134));
-			panel_3_2.setBounds(0, 0, 320, 10);
-			Perfil.add(panel_3_2);
-			
-			JButton btnPerfil = new JButton("Meu Perfil");
-			btnPerfil.setBackground(new Color(98, 106, 204));
-			btnPerfil.setMargin(new Insets(2, 22, 2, 14));
-			btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnPerfil.setHorizontalAlignment(SwingConstants.LEFT);
-			btnPerfil.setFocusPainted(false);
-			btnPerfil.setBorderPainted(false);
-			btnPerfil.setForeground(new Color(255, 255, 255));
-			btnPerfil.setFont(new Font("Poppins", Font.PLAIN, 16));
-			btnPerfil.setBounds(0, 140, 260, 19);
-			Sidebar.add(btnPerfil);
-			
-			JButton btnConfig = new JButton("Configurações");
-			btnConfig.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-				}
-			});
-			btnConfig.setMargin(new Insets(2, 22, 2, 14));
-			btnConfig.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnConfig.setHorizontalAlignment(SwingConstants.LEFT);
-			btnConfig.setOpaque(false);
-			btnConfig.setForeground(Color.BLACK);
-			btnConfig.setFont(new Font("Poppins", Font.PLAIN, 16));
-			btnConfig.setFocusPainted(false);
-			btnConfig.setContentAreaFilled(false);
-			btnConfig.setBorderPainted(false);
-			btnConfig.setBounds(0, 165, 260, 19);
-			Sidebar.add(btnConfig);
-			
-			JButton btnSair = new JButton("Sair");
-			btnSair.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			btnSair.setOpaque(false);
-			btnSair.setHorizontalAlignment(SwingConstants.LEFT);
-			btnSair.setForeground(Color.BLACK);
-			btnSair.setFont(new Font("Poppins", Font.PLAIN, 16));
-			btnSair.setFocusPainted(false);
-			btnSair.setContentAreaFilled(false);
-			btnSair.setBorderPainted(false);
-			btnSair.setBounds(10, 690, 132, 19);
-			Sidebar.add(btnSair);
-			
-			btnSair.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-				}
-			});
-			
-			JButton btnMenu = new JButton("Menu Principal");
-			btnMenu.setMargin(new Insets(2, 22, 2, 14));
-			btnMenu.setBackground(new Color(240, 240, 240));
-			btnMenu.setHorizontalAlignment(SwingConstants.LEFT);
-			btnMenu.setForeground(new Color(0, 0, 0));
-			btnMenu.setFont(new Font("Poppins", Font.PLAIN, 16));
-			btnMenu.setFocusPainted(false);
-			btnMenu.setBorderPainted(false);
-			btnMenu.setBounds(0, 115, 260, 19);
-			Sidebar.add(btnMenu);
-			
-			btnMenu.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					
-				}
-			});
-			
-
-			JPanel panel = new JPanel();
-			panel.setDoubleBuffered(false);
-			panel.setEnabled(false);
-			panel.setFocusable(false);
-			panel.setFocusTraversalKeysEnabled(false);
-			panel.setBounds(0, 0, 1280, 720);
-			panel.setBackground(new Color(128, 128, 128));
-			add(panel);
-			panel.setLayout(null);
-			
 			
 			JPanel panel_2 = new JPanel();
-			panel_2.setFocusable(false);
-			panel_2.setFocusTraversalKeysEnabled(false);
 			panel_2.setBackground(new Color(255, 255, 255));
 			panel_2.setBounds(260, 0, 1020, 720);
 			panel.add(panel_2);
@@ -238,12 +142,17 @@ public class BadgeTrade extends JPanel {
 			bg_header.setBounds(0, 0, 1020, 100);
 			panel_3_1.add(bg_header);
 			
+			this.nome_id = DB(1);
+			this.sobrenome_id = DB(1);
+			this.badge_id = DB(1);
+			this.birthdate_user = DB(1);
+			
 			JLabel lblNewLabel = new JLabel("Nome:");
 			lblNewLabel.setFont(new Font("Poppins", Font.PLAIN, 17));
 			lblNewLabel.setBounds(145, 115, 67, 27);
 			panel_2.add(lblNewLabel);
 			
-			JLabel primeironome = new JLabel("nome_id");
+			JLabel primeironome = new JLabel("" + this.nome_id[0]);
 			primeironome.setFont(new Font("Poppins", Font.PLAIN, 17));
 			primeironome.setBounds(210, 115, 172, 27);
 			panel_2.add(primeironome);
@@ -253,7 +162,7 @@ public class BadgeTrade extends JPanel {
 			lblSobrenome.setBounds(145, 139, 104, 27);
 			panel_2.add(lblSobrenome);
 			
-			JLabel lblSobrenome_1 = new JLabel("sobrenome_id");
+			JLabel lblSobrenome_1 = new JLabel("" + this.sobrenome_id[1]);
 			lblSobrenome_1.setFont(new Font("Poppins", Font.PLAIN, 17));
 			lblSobrenome_1.setBounds(259, 139, 135, 27);
 			panel_2.add(lblSobrenome_1);
@@ -267,7 +176,11 @@ public class BadgeTrade extends JPanel {
 			JButton btnAddIcon = new JButton("");
 			btnAddIcon.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
-			   	        
+			    	IconTrade a = new IconTrade();
+					removeAll();
+					add(a);
+					revalidate();
+					repaint();			        
 			    }
 			});
 
@@ -275,14 +188,14 @@ public class BadgeTrade extends JPanel {
 			btnAddIcon.setContentAreaFilled(false);
 			btnAddIcon.setBorderPainted(false);
 			btnAddIcon.setOpaque(false);
-			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\add.png"));
+			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\add.png"));
 			btnAddIcon.setBounds(97, 97, 28, 28);
 			panel_1.add(btnAddIcon);
 			
 			JLabel IconUser = new JLabel("");
 			IconUser.setBorder(new LineBorder(new Color(36, 46, 134), 4));
 			IconUser.setIgnoreRepaint(true);
-			IconUser.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\icons\\chuu125.png"));
+			IconUser.setIcon(iconperfil_1);
 			IconUser.setBounds(0, 0, 125, 125);
 			panel_1.add(IconUser);
 			
@@ -303,7 +216,7 @@ public class BadgeTrade extends JPanel {
 			
 			//SIMULADO TEMPLATE PANEL
 			
-			int SimuladosQuant = 8;
+			int SimuladosQuant = 3;
 			
 			int startY = 50;
 			int panelHeight = 56;
@@ -364,7 +277,22 @@ public class BadgeTrade extends JPanel {
 			lblDataDeNascimento.setBounds(145, 164, 56, 27);
 			panel_2.add(lblDataDeNascimento);
 			
-			JLabel idade_id = new JLabel("idade_id");
+			// Obtém a data de nascimento fornecida pelo usuário (supondo que esteja no formato "yyyy-MM-dd")
+			String dataNascimentoStr = this.birthdate_user[4];
+
+			// Converte a data de nascimento em um objeto LocalDate
+			LocalDate dataNascimento = LocalDate.parse(dataNascimentoStr);
+
+			// Obtém a data atual
+			LocalDate dataAtual = LocalDate.now();
+
+			// Calcula a diferença entre a data atual e a data de nascimento
+			Period periodo = Period.between(dataNascimento, dataAtual);
+
+			// Obtém a idade em anos
+			int idade = periodo.getYears();					
+			
+			JLabel idade_id = new JLabel(""+ idade + " anos.");
 			idade_id.setFont(new Font("Poppins", Font.PLAIN, 17));
 			idade_id.setBounds(205, 164, 104, 27);
 			panel_2.add(idade_id);
@@ -376,20 +304,40 @@ public class BadgeTrade extends JPanel {
 			panel_4.setLayout(null);
 			
 			JButton btnAddBadge = new JButton("");
-			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\add.png"));
+			btnAddBadge.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					BadgeTrade b = new BadgeTrade();
+					removeAll();
+					add(b);
+					revalidate();
+					repaint();
+				}
+			});
+			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\add.png"));
 			btnAddBadge.setOpaque(false);
 			btnAddBadge.setHorizontalTextPosition(SwingConstants.CENTER);
 			btnAddBadge.setContentAreaFilled(false);
 			btnAddBadge.setBorderPainted(false);
 			btnAddBadge.setBounds(530, 8, 28, 28);
 			panel_4.add(btnAddBadge);
+					
+			JLabel badge_trade_icon = new JLabel("");
+			badge_trade_icon.setIcon(badge_1);
+			badge_trade_icon.setBounds(5, 10, 28, 28);
+			panel_4.add(badge_trade_icon);		
 			
-			JLabel lblNewLabel_1 = new JLabel("");
-			lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id3.png"));
-			lblNewLabel_1.setBounds(5, 10, 28, 28);
-			panel_4.add(lblNewLabel_1);
+			if(this.badge_id[2].equals("1")){
+				subtitle_badge = "Novato";
+				badge_trade_icon.setIcon(badge_1);
+			}else if(this.badge_id[2].equals("2")) {
+				subtitle_badge = "Vagabundo";
+				badge_trade_icon.setIcon(badge_2);
+			}else if(this.badge_id[2].equals("3")) {
+				subtitle_badge = "Sem Alma";
+				badge_trade_icon.setIcon(badge_3);
+			}		
 			
-			JLabel lblGabaritouUmSimulado = new JLabel("badge_subtitle_id");
+			JLabel lblGabaritouUmSimulado = new JLabel(subtitle_badge);
 			lblGabaritouUmSimulado.setFont(new Font("Poppins", Font.PLAIN, 17));
 			lblGabaritouUmSimulado.setForeground(new Color(255, 255, 255));
 			lblGabaritouUmSimulado.setBounds(40, 15, 460, 19);
@@ -443,7 +391,183 @@ public class BadgeTrade extends JPanel {
 			JLabel lblQntSimulados = new JLabel(String.valueOf(SimuladosQuant));
 			lblQntSimulados.setBounds(160, 25, 64, 14);
 			panel_5.add(lblQntSimulados);
+			
+			JPanel Sidebar = new JPanel();
+			Sidebar.setBounds(0, 0, 260, 720);
+			panel.add(Sidebar);
+			Sidebar.setBackground(new Color(240, 240, 240));
+			Sidebar.setLayout(null);
+			
+			JPanel Perfil = new JPanel();
+			Perfil.setBorder(null);
+			Perfil.setBackground(new Color(36, 44, 134));
+			Perfil.setBounds(0, 0, 260, 100);
+			Sidebar.add(Perfil);
+			Perfil.setLayout(null);
+			
+			JLabel badge_id = new JLabel("");
+			badge_id.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id3.png"));
+			badge_id.setBounds(71, 55, 28, 28);
+			Perfil.add(badge_id);
+			
+			this.id_icon = DB(1);
+			
+			JLabel icon_user = new JLabel("");
+			icon_user.setInheritsPopupMenu(false);
+			icon_user.setRequestFocusEnabled(false);
+			icon_user.setIconTextGap(0);
+			icon_user.setBorder(null);
+			icon_user.setHorizontalAlignment(SwingConstants.CENTER);
+			icon_user.setBounds(24, 15, 68, 68);
+			Perfil.add(icon_user);				
+			
+			if(this.id_icon[5].equals("1")) {
+				icon_user.setIcon(icon_1);
+			}else if(this.id_icon[5].equals("2")){
+				icon_user.setIcon(icon_2);
+			}else if(this.id_icon[5].equals("3")){
+				icon_user.setIcon(icon_3);
+			}else if(this.id_icon[5].equals("4")){
+				icon_user.setIcon(icon_4);
+			}
+			
+			
+			
+			if(this.badge_id[2].equals("1")){
+				subtitle_badge = "Novato";
+				badge_id.setIcon(badge_1);
+			}else if(this.badge_id[2].equals("2")) {
+				subtitle_badge = "Vagabundo";
+				badge_id.setIcon(badge_2);
+			}else if(this.badge_id[2].equals("3")) {
+				subtitle_badge = "Sem Alma";
+				badge_id.setIcon(badge_3);
+			}
+			
+			
+			JLabel nome_id = new JLabel("" + this.nome_id[0] + " " + this.sobrenome_id[1]);
+			nome_id.setForeground(new Color(255, 255, 255));
+			nome_id.setFont(new Font("Poppins", Font.PLAIN, 12));
+			nome_id.setBounds(100, 20, 150, 25);
+			Perfil.add(nome_id);
+			
+			JLabel badge_subtitle_id = new JLabel(subtitle_badge);
+			badge_subtitle_id.setForeground(new Color(188, 188, 188));
+			badge_subtitle_id.setFont(new Font("Poppins", Font.PLAIN, 12));
+			badge_subtitle_id.setBounds(100, 35, 166, 25);
+			Perfil.add(badge_subtitle_id);			
+									
+			JPanel panel_3_2 = new JPanel();
+			panel_3_2.setBackground(new Color(36, 44, 134));
+			panel_3_2.setBounds(0, 0, 320, 10);
+			Perfil.add(panel_3_2);
+			
+			JButton btnPerfil = new JButton("Meu Perfil");
+			btnPerfil.setBackground(new Color(98, 106, 204));
+			btnPerfil.setMargin(new Insets(2, 22, 2, 14));
+			btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnPerfil.setHorizontalAlignment(SwingConstants.LEFT);
+			btnPerfil.setFocusPainted(false);
+			btnPerfil.setBorderPainted(false);
+			btnPerfil.setForeground(new Color(255, 255, 255));
+			btnPerfil.setFont(new Font("Poppins", Font.PLAIN, 16));
+			btnPerfil.setBounds(0, 140, 260, 19);
+			Sidebar.add(btnPerfil);
+			
+			JButton btnConfig = new JButton("Configurações");
+			btnConfig.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Config cf = new Config();
+					removeAll();
+					add(cf);
+					revalidate();
+					repaint();
+				}
+			});
+			btnConfig.setMargin(new Insets(2, 22, 2, 14));
+			btnConfig.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnConfig.setHorizontalAlignment(SwingConstants.LEFT);
+			btnConfig.setOpaque(false);
+			btnConfig.setForeground(Color.BLACK);
+			btnConfig.setFont(new Font("Poppins", Font.PLAIN, 16));
+			btnConfig.setFocusPainted(false);
+			btnConfig.setContentAreaFilled(false);
+			btnConfig.setBorderPainted(false);
+			btnConfig.setBounds(0, 165, 260, 19);
+			Sidebar.add(btnConfig);
+			
+			JButton btnSair = new JButton("Sair");
+			btnSair.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			btnSair.setOpaque(false);
+			btnSair.setHorizontalAlignment(SwingConstants.LEFT);
+			btnSair.setForeground(Color.BLACK);
+			btnSair.setFont(new Font("Poppins", Font.PLAIN, 16));
+			btnSair.setFocusPainted(false);
+			btnSair.setContentAreaFilled(false);
+			btnSair.setBorderPainted(false);
+			btnSair.setBounds(10, 690, 132, 19);
+			Sidebar.add(btnSair);
+			
+			btnSair.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					Login a = new Login();
+					removeAll();
+					add(a);
+					revalidate();
+					repaint();
+				}
+			});
+			
+			JButton btnMenu = new JButton("Menu Principal");
+			btnMenu.setMargin(new Insets(2, 22, 2, 14));
+			btnMenu.setBackground(new Color(240, 240, 240));
+			btnMenu.setHorizontalAlignment(SwingConstants.LEFT);
+			btnMenu.setForeground(new Color(0, 0, 0));
+			btnMenu.setFont(new Font("Poppins", Font.PLAIN, 16));
+			btnMenu.setFocusPainted(false);
+			btnMenu.setBorderPainted(false);
+			btnMenu.setBounds(0, 115, 260, 19);
+			Sidebar.add(btnMenu);
+			
+			btnMenu.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					TelaInicial a = new TelaInicial();
+					removeAll();
+					add(a);
+					revalidate();
+					repaint();
+				}
+			});
 			setBounds(0, 0, 1280, 720);
+
+	}
 	
+	public static String[] DB(int id_user) {
+		String[] infouser = new String [6]; //Armazena os dados de login se um usuário em Array.
+
+		try {
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+
+			//Envia comandos para o DB.
+			String query = "select nome_user, sobrenome_user, badge_id, meta_id, birthdate_user, id_icon from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			ResultSet rs = conn1.executeQuery(query,id_user); //Retornar os resultados da SQL
+
+			/*
+			 *Comando para guardar os dados dentro de uma variável;/
+			 */
+			if(rs.next()) {
+				infouser[0] = rs.getString("nome_user"); 
+				infouser[1] = rs.getString("sobrenome_user");
+				infouser[2] = rs.getString("badge_id");
+				infouser[3] = rs.getString("meta_id");
+				infouser[4] = rs.getString("birthdate_user");
+				infouser[5] = rs.getString("id_icon");}
+			
+
+			rs.close();
+			conn1.closeConnection();
+		}
+		catch (SQLException e){e.printStackTrace();}
+		return infouser;
 	}
 }
