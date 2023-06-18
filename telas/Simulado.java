@@ -1,6 +1,8 @@
-package Telas;
+package telas;
 
 import javax.swing.JPanel;
+
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.Color;
@@ -56,18 +58,76 @@ public class Simulado extends JPanel {
 	private JRadioButton rdbC ;
 	private JRadioButton rdbD;
 	private JRadioButton rdbE;
-	private String areaConhecimento;
+	private int areaConhecimento=1;
+	private int simu;
+	private String user="1";
+	private String id_simu;
+	private String id_user;
 
 	/**
 	 * Create the panel.
 	 */
-	public Simulado(String anoSC, String anoSP, int tipoSimu, String tempoSimu) {
+	public Simulado(String anoSC, String anoSP, int tipoSimu, String tempoSimu,String id_user) {
 		this.anoSC=anoSC;
 		this.anoSP=anoSP;
 		this.tipoSimu=tipoSimu;
 		this.tempoSimu=tempoSimu;
+		this.id_user=id_user;
 		// Início do período da prova
 		inicio = System.currentTimeMillis();
+		
+
+		//Condição para o valor do anoS
+		condicaoAnoS();
+
+		
+		String[] idSimu = nextRow(linhaAtual,anoS,areaConhecimento);
+		
+		
+		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
+		
+		
+		
+		String query1 = "INSERT INTO simu_resolvido (num_simu, id_user) VALUES (?,?);";
+		
+		try {
+			PreparedStatement pstmt = con.conn.prepareStatement(query1);
+			pstmt.setString(1,idSimu[9]);	
+			pstmt.setString(2,user);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		String query2 = "SELECT MAX(id_simu) as id_simu from simu_resolvido where id_user = ?";
+
+		
+		ResultSet rs2 = con.executeQuery(query2, user);
+
+		System.out.println(user);
+		
+		try {
+			if (rs2.next()) {
+
+				
+				simu = Integer.parseInt(rs2.getString("id_simu"));
+				
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		con.closeConnection();
+		
+		System.out.println(simu);
+		
+		
+
 
 		setBackground(new Color(255, 255, 255));
 		setBounds(0, 0, 1280, 720);
@@ -123,7 +183,7 @@ public class Simulado extends JPanel {
 		painelRespostas.setLayout(null);
 
 
-		rdbA = new JRadioButton("A)");
+		rdbA = new JRadioButton("A");
 		rdbA.setFocusPainted(false);
 		rdbA.setOpaque(false);
 		rdbA.setForeground(new Color(255, 255, 255));
@@ -132,7 +192,7 @@ public class Simulado extends JPanel {
 		painelRespostas.add(rdbA);
 
 
-		rdbB = new JRadioButton("B)");
+		rdbB = new JRadioButton("B");
 		rdbB.setOpaque(false);
 		rdbB.setForeground(Color.WHITE);
 		rdbB.setFont(new Font("Poppins Light", Font.PLAIN, 12));
@@ -140,7 +200,7 @@ public class Simulado extends JPanel {
 		rdbB.setBounds(6, 120, 39, 23);
 		painelRespostas.add(rdbB);
 
-		rdbC = new JRadioButton("C)");
+		rdbC = new JRadioButton("C");
 		rdbC.setOpaque(false);
 		rdbC.setForeground(Color.WHITE);
 		rdbC.setFont(new Font("Poppins Light", Font.PLAIN, 12));
@@ -148,7 +208,7 @@ public class Simulado extends JPanel {
 		rdbC.setBounds(6, 214, 39, 23);
 		painelRespostas.add(rdbC);
 
-		rdbD = new JRadioButton("D)");
+		rdbD = new JRadioButton("D");
 		rdbD.setOpaque(false);
 		rdbD.setForeground(Color.WHITE);
 		rdbD.setFont(new Font("Poppins Light", Font.PLAIN, 12));
@@ -156,7 +216,7 @@ public class Simulado extends JPanel {
 		rdbD.setBounds(6, 308, 39, 23);
 		painelRespostas.add(rdbD);
 
-		rdbE = new JRadioButton("E)");
+		rdbE = new JRadioButton("E");
 		rdbE.setOpaque(false);
 		rdbE.setForeground(Color.WHITE);
 		rdbE.setFont(new Font("Poppins Light", Font.PLAIN, 12));
@@ -250,11 +310,10 @@ public class Simulado extends JPanel {
 		//Countdown
 		temporizador();
 
-		//Condição para o valor do anoS
-		condicaoAnoS();
-
 		//Quantidade de opões na caixa choice
 		qntChoice();
+		
+		
 
 		//Define os primeiros dados puxados para os componentes
 		primeiraLinha();
@@ -309,20 +368,20 @@ public class Simulado extends JPanel {
 	}
 
 	// Faz um metódo para puxar a proxima linha de acordo com o id
-	public String[] nextRow(int id, int ano, String areaCon) {
-		String[] linha = new String[8];
+	public String[] nextRow(int id, int ano, int areaCon) {
+		String[] linha = new String[10];
+		
 
 		// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
 		// configurar o JDBC no computador para funcionar
-		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
+		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
+		
+		
+	
 
 		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
 		// definir ele fora do comando
-		String query = "SELECT q.questao, q.id_questoes, a.alt_A, a.alt_B, a.alt_C, a.alt_D, a.alt_E, q.gabarito FROM questoes_simu q JOIN altenativas_simu a ON q.id_questoes = a.id_questao WHERE q.ano_questao = ? AND q.id_questoes = ? AND q.id_area = ?;";
-				
-				
-
-
+		String query = "SELECT q.questao, q.id_quest, a.alt_A, a.alt_B, a.alt_C, a.alt_D, a.alt_E, q.gabarito, ac.area_conhecimento, s.id_simu, s.ano_simu FROM simu_questoes q JOIN simu_alternativas a join area_conhecimento ac join simulados s ON q.id_quest = a.id_quest WHERE q.id_quest = ? AND s.ano_simu = ? AND ac.id_area = ?;";
 
 		// Este comando retorna os valores solicitados, e primeiro vem o comando e
 		// depois o valor do '?'
@@ -334,14 +393,17 @@ public class Simulado extends JPanel {
 
 				// Armazenando em uma array posso livremente puxalos posteriormente no código e
 				// atualizalos conforme o id avança
-				linha[0] = rs.getString("q.questao");
-				linha[1] = rs.getString("a.alt_A");
-				linha[2] = rs.getString("a.alt_B");
-				linha[3] = rs.getString("a.alt_C");
-				linha[4] = rs.getString("a.alt_D");
-				linha[5] = rs.getString("a.alt_E");
-				linha[6] = rs.getString("q.id_questoes");
-				linha[7] = rs.getString("q.gabarito");
+				linha[0] = rs.getString("questao");
+				linha[1] = rs.getString("alt_A");
+				linha[2] = rs.getString("alt_B");
+				linha[3] = rs.getString("alt_C");
+				linha[4] = rs.getString("alt_D");
+				linha[5] = rs.getString("alt_E");
+				linha[6] = rs.getString("id_quest");
+				linha[7] = rs.getString("gabarito");
+				linha[8] = rs.getString("area_conhecimento");
+				linha[9] = rs.getString("id_simu");
+				
 
 			}
 
@@ -349,7 +411,10 @@ public class Simulado extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+	
 
+		
 		// sempre fechar a conexão após o uso necessário
 		con.closeConnection();
 		return linha;
@@ -378,7 +443,7 @@ public class Simulado extends JPanel {
 		if (opcao == JOptionPane.YES_OPTION) {
 
 			linhaAtual=1;
-			Resultados res = new Resultados(acertos, erros, segundos, minutos, horas);
+			Resultados res = new Resultados(acertos, erros, segundos, minutos, horas,simu,id_user);
 			removeAll();
 			add(res);
 			revalidate();
@@ -399,7 +464,7 @@ public class Simulado extends JPanel {
 				int horas = tempoInicialSegundos / 3600;
 				int minutos = (tempoInicialSegundos % 3600) / 60;
 				int segundos = tempoInicialSegundos % 60;
-				tempo.setText(horas + ": " + minutos + ": " + segundos);
+				tempo.setText(String.format("%02d:%02d:%02d", horas, minutos, segundos));
 
 				// Chegando a zero aparece uma mensagem de tempo esgotado
 			} else {
@@ -414,10 +479,17 @@ public class Simulado extends JPanel {
 	public void condicaoAnoS() {
 		// define o valor da variavel anoS que sera usada para substituir o valor de
 		// pesquisa do ano no banco de dados
+		
+		
+		
 		if (tipoSimu == 1) {
 			anoS = Integer.parseInt(anoSC);
+			
+			 System.out.println(anoS);
 		} else if (tipoSimu == 2) {
 			anoS = Integer.parseInt(anoSP);
+			
+			System.out.println(anoS);
 		}
 	}
 
@@ -427,8 +499,8 @@ public class Simulado extends JPanel {
 		//VALOR CERTO I<=90
 
 		if(tipoSimu==1) {
-			for(int i=0;i<4;i++) {
-				if(i==0) {
+			for(int i=1;i<5;i++) {
+				if(i==4) {
 					choice.add("-");
 				}else {
 					choice.add(""+i);}
@@ -484,6 +556,27 @@ public class Simulado extends JPanel {
 						|| (rdbE.isSelected() && novaLinha[7].equals("E"))) {
 					// Soma os pontos certos
 					if (!foiRespondida[linhaAtual]) {
+						
+						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
+						
+						
+						String query = "INSERT INTO estudamais.simu_questoes_resolv (id_simu, id_quest, gabarito_user, id_user, numero_quest) VALUES (?, ?, ?,?,?);";
+						
+						try {
+							PreparedStatement pstmt = con.conn.prepareStatement(query);
+							pstmt.setString(1,Integer.toString(simu));
+							pstmt.setString(2,novaLinha[6]);
+							pstmt.setString(3,gabarito());
+							pstmt.setString(4,"1");
+							pstmt.setString(5,novaLinha[0]);
+							
+							pstmt.executeUpdate();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						con.closeConnection();
+						
 						// Incrementar acertos ou erros
 						acertos++;
 						questaoRespondida++;
@@ -494,6 +587,28 @@ public class Simulado extends JPanel {
 					}
 				} else {
 					if (!foiRespondida[linhaAtual]) {
+
+						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
+		
+						
+						String query = "INSERT INTO estudamais.simu_questoes_resolv (id_simu, id_quest, gabarito_user, id_user, numero_quest) VALUES (?, ?, ?,?,?);";
+						
+						try {
+							PreparedStatement pstmt = con.conn.prepareStatement(query);
+							pstmt.setString(1,Integer.toString(simu));
+							pstmt.setString(2,novaLinha[6]);
+							pstmt.setString(3,gabarito());
+							pstmt.setString(4,"1");
+							pstmt.setString(5,novaLinha[0]);
+							
+							
+							pstmt.executeUpdate();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						con.closeConnection();
+						
 						// Incrementar acertos ou erros
 						erros++;
 						questaoRespondida++;
@@ -514,9 +629,32 @@ public class Simulado extends JPanel {
 				txtD.setText(proxLinha[4]);
 				txtE.setText(proxLinha[5]);
 				lblNumQuestao.setText(proxLinha[6]);
+				
+				System.out.println(simu);
+			
 				// Zera a seleção dos Radio Buttons
 				bg.clearSelection();
 			}}
+	}
+	
+	public String gabarito() {
+		
+		String gab="";
+		if(rdbA.isSelected()) {
+			gab = rdbA.getText();
+		} else if(rdbB.isSelected()) {
+			gab = rdbB.getText();
+		}else if(rdbC.isSelected()) {
+			gab = rdbC.getText();
+		} else if(rdbD.isSelected()) {
+			gab = rdbD.getText();
+		}else if(rdbE.isSelected()) {
+			gab = rdbE.getText();
+		}
+		
+		return gab;
+			
+		
 	}
 
 	public void condicaoEncerrar() {
@@ -541,7 +679,7 @@ public class Simulado extends JPanel {
 				minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
 				segundos = (tempoTotal % (60 * 1000)) / 1000;
 
-				Resultados res = new Resultados(acertos, erros, segundos, minutos, horas);
+				Resultados res = new Resultados(acertos, erros, segundos, minutos, horas,simu,id_user);
 
 				removeAll();
 				add(res);
@@ -592,7 +730,7 @@ public class Simulado extends JPanel {
 
 
 
-					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas);
+					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas, simu,id_user);
 
 					removeAll();
 					add(res);
@@ -637,7 +775,7 @@ public class Simulado extends JPanel {
 					minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
 					segundos = (tempoTotal % (60 * 1000)) / 1000;
 
-					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas);
+					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas,simu,id_user);
 
 					removeAll();
 					add(res);
