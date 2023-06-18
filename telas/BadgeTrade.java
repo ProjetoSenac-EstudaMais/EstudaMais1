@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -68,7 +69,8 @@ public class BadgeTrade extends JPanel {
     ImageIcon iconperfil_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu125.png");
     ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
     ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
-    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");	
+    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");
+    ImageIcon badge_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id4.png");
 
 	public BadgeTrade() {
 		
@@ -103,19 +105,107 @@ public class BadgeTrade extends JPanel {
 			panel_6.add(btnConfirmar);
 			
 			JButton btnBadge_Id_1 = new JButton("btnBadge_Id_1");
+			btnBadge_Id_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
+					
+					
+					
+					String query1 = "UPDATE user_dados SET badge_id =? WHERE id_user =? ;";
+					
+					try {
+						PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+						pstmt.setString(1,"1");	
+												
+						pstmt.executeUpdate();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				con.closeConnection();
+				}
+				
+			});
 			btnBadge_Id_1.setBounds(23, 11, 119, 106);
+			btnBadge_Id_1.setIcon(badge_1);
 			panel_6.add(btnBadge_Id_1);
 			
 			JButton btnBadge_Id_2 = new JButton("btnBadge_Id_2");
+			btnBadge_Id_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
+					
+					
+					
+					String query1 = "UPDATE user_dados SET badge_id =? WHERE id_user =? ;";
+					
+					try {
+						PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+						pstmt.setString(1,"2");	
+												
+						pstmt.executeUpdate();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				con.closeConnection();
+				
+				}
+			});
 			btnBadge_Id_2.setBounds(152, 11, 119, 106);
+			btnBadge_Id_2.setIcon(badge_2);
 			panel_6.add(btnBadge_Id_2);
 			
 			JButton btnBadge_Id_3 = new JButton("btnBadge_Id_3");
+			btnBadge_Id_3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
+								
+					String query1 = "UPDATE user_dados SET badge_id =? WHERE id_user =? ;";
+					
+					try {
+						PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+						pstmt.setString(1,"3");	
+												
+						pstmt.executeUpdate();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				con.closeConnection();
+				
+				}
+			});
 			btnBadge_Id_3.setBounds(23, 128, 119, 106);
+			btnBadge_Id_3.setIcon(badge_3);
 			panel_6.add(btnBadge_Id_3);
 			
 			JButton btnBadge_Id_4 = new JButton("btnBadge_Id_4");
+			btnBadge_Id_4.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
+					
+					String query1 = "UPDATE user_dados SET badge_id =? WHERE id_user =? ;";
+					
+					try {
+						PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+						pstmt.setString(1,"4");	
+												
+						pstmt.executeUpdate();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				con.closeConnection();
+					
+				}
+			});
 			btnBadge_Id_4.setBounds(152, 128, 119, 106);
+			btnBadge_Id_4.setIcon(badge_4);
 			panel_6.add(btnBadge_Id_4);
 			
 			
