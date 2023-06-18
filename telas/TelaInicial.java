@@ -46,12 +46,21 @@ public class TelaInicial extends JPanel {
 	
 	private String[] nome_id;
 	private String[] sobrenome_id;
+	private String[] id_icon;
 	private String icon;
 	private String[] badge_id;
 	private String subtitle_badge;
 	private String[] meta_id;
 	private String m_title;
 	private String m_subtitle;
+	
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
+    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
+    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
+    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");   
+    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
+    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
+    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");		
 
 	/**
 	 * Create the panel.
@@ -96,11 +105,7 @@ public class TelaInicial extends JPanel {
 	    IntroPainel.add(btnIniciarGabaritos_1_2);
 	    
 	    //Painel metas
-	    	
-        ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
-        ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
-        ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");		
-	
+
 	    JPanel MetasPainel = new JPanel();
 	    MetasPainel.setLayout(null);
 	    MetasPainel.setBounds(920, 15, 276, 140);
@@ -119,9 +124,6 @@ public class TelaInicial extends JPanel {
 		lbl_simulados_resolvidos_1_1.setBounds(8, 0, 80, 36);
 		MetasPainel.add(lbl_simulados_resolvidos_1_1);
 		
-		m_title = "teste";
-		m_subtitle = "teste";
-		
 		JLabel meta_title = new JLabel(m_title);
 		meta_title.setBackground(new Color(64, 74, 204));
 		meta_title.setForeground(new Color(192, 192, 192));
@@ -137,6 +139,11 @@ public class TelaInicial extends JPanel {
 		MetasPainel.add(meta_subtitle);
 		
 		JButton btnIniciarMeta = new JButton("INICIAR META");
+		btnIniciarMeta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btnIniciarMeta.setForeground(Color.WHITE);
 		btnIniciarMeta.setFont(new Font("Poppins", Font.PLAIN, 16));
 		btnIniciarMeta.setBorderPainted(false);
@@ -150,6 +157,47 @@ public class TelaInicial extends JPanel {
 			m_badge_id.setIcon(badge_1);
 			m_title = "Complete um Simulado                  0/1";
 			m_subtitle = "Faça seu primeiro simulado dentro da plataforma.";
+			btnIniciarMeta.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					EscolhaSimulado es = new EscolhaSimulado();
+					removeAll();
+					add(es);
+					revalidate();
+					repaint();
+				}
+			}); 
+			
+			meta_title.setText(m_title);
+		    meta_subtitle.setText(m_subtitle);
+		}else if(this.badge_id[2].equals("2")) {
+			m_badge_id.setIcon(badge_2);
+			m_title = "Veja seu Perfil!";
+			m_subtitle = "Confira seus resultados no seu Perfil!";
+			btnIniciarMeta.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					MeuPerfil mp = new MeuPerfil();
+					removeAll();
+					add(mp);
+					revalidate();
+					repaint();
+				}
+			}); 
+			
+			meta_title.setText(m_title);
+		    meta_subtitle.setText(m_subtitle);
+		}else if(this.badge_id[2].equals("3")) {
+			m_badge_id.setIcon(badge_3);
+			m_title = "Complete 3 Simulados no Total!";
+			m_subtitle = "Você completou: " + "(qntsimulados)" + "/3.";
+			btnIniciarMeta.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					EscolhaSimulado es = new EscolhaSimulado();
+					removeAll();
+					add(es);
+					revalidate();
+					repaint();
+				}
+			}); 
 			
 			meta_title.setText(m_title);
 		    meta_subtitle.setText(m_subtitle);
@@ -164,7 +212,7 @@ public class TelaInicial extends JPanel {
 	    		        if (IntroPainel.isVisible() || MetasPainel.isVisible()) {
 	    		            IntroPainel.setVisible(false);
 	    		            MetasPainel.setVisible(false);
-	    		            btnHide.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\hide.png"));
+	    		            btnHide.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\hide.png"));
 	    		        } else {
 	    		            IntroPainel.setVisible(true);
 	    		            MetasPainel.setVisible(true);
@@ -175,7 +223,7 @@ public class TelaInicial extends JPanel {
 
 	    btnHide.setContentAreaFilled(false);
 	    btnHide.setBorderPainted(false);
-	    btnHide.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\reveal.png"));
+	    btnHide.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\reveal.png"));
 	    btnHide.setBounds(1220, 15, 28, 28);
 	    add(btnHide);
 	 
@@ -201,11 +249,8 @@ public class TelaInicial extends JPanel {
 		badge_id.setIcon(badge_3);
 		Perfil.add(badge_id);
 		
-		ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
-        ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
-        ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
-        ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");	
-       
+		this.id_icon = DB(1);
+		System.out.println(this.id_icon[4]);
 		
 		JLabel icon_user = new JLabel("");
 		icon_user.setInheritsPopupMenu(false);
@@ -214,8 +259,19 @@ public class TelaInicial extends JPanel {
 		icon_user.setBorder(null);
 		icon_user.setHorizontalAlignment(SwingConstants.CENTER);
 		icon_user.setBounds(24, 15, 68, 68);
-		icon_user.setIcon(icon_1);
 		Perfil.add(icon_user);
+		
+		if(this.id_icon[4].equals("1")) {
+			icon_user.setIcon(icon_1);
+		}else if(this.id_icon[4].equals("2")){
+			icon_user.setIcon(icon_2);
+		}else if(this.id_icon[4].equals("3")){
+			icon_user.setIcon(icon_3);
+		}else if(this.id_icon[4].equals("4")){
+			icon_user.setIcon(icon_4);
+		}
+		
+		
 		
 		this.nome_id = DB(1);
 		this.sobrenome_id = DB(1);
@@ -416,7 +472,7 @@ public class TelaInicial extends JPanel {
 			
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setIcon(new ImageIcon(icon));
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\img_telas\\tela_inicial\\gabaritos.png"));
 		lblNewLabel_3.setBounds(0, 0, 276, 126);
 		panel_1_1.add(lblNewLabel_3);
 		
@@ -570,6 +626,7 @@ public class TelaInicial extends JPanel {
                         checkboxes[j].setVisible(false);
                         deleteButtons[j - 1].setVisible(deleteButtons[j].isVisible());
                         deleteButtons[j].setVisible(false);
+                        checkboxes[j - 1].setSelected(false);
                     }
                 }
             });       
@@ -615,13 +672,13 @@ public class TelaInicial extends JPanel {
   }
 	
 	public static String[] DB(int id_user) {
-		String[] infouser = new String [4]; //Armazena os dados de login se um usuário em Array.
+		String[] infouser = new String [5]; //Armazena os dados de login se um usuário em Array.
 
 		try {
 			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
-			String query = "select nome_user, sobrenome_user, badge_id, meta_id from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			String query = "select nome_user, sobrenome_user, badge_id, meta_id, id_icon from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
 			ResultSet rs = conn1.executeQuery(query,id_user); //Retornar os resultados da SQL
 
 			/*
@@ -631,16 +688,14 @@ public class TelaInicial extends JPanel {
 				infouser[0] = rs.getString("nome_user"); 
 				infouser[1] = rs.getString("sobrenome_user");
 				infouser[2] = rs.getString("badge_id");
-				infouser[3] = rs.getString("meta_id");}
-			
+				infouser[3] = rs.getString("meta_id");
+			    infouser[4] = rs.getString("id_icon");}
 
 			rs.close();
 			conn1.closeConnection();
 		}
 		catch (SQLException e){e.printStackTrace();}
 		return infouser;
-	}
-	
-	
+	}	
 
-}		
+}	
