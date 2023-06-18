@@ -15,7 +15,7 @@ import java.awt.event.ActionEvent;
 
 public class Resultados extends JPanel {
 	public String usuario;
-	public String[] infoUser = new String[2];
+	public String[] infoUser = new String[4];
 	int i;
 	String [] respostas = new String[i];
 	private int acertos;
@@ -26,11 +26,19 @@ public class Resultados extends JPanel {
 	private long minutos;
 	private int simu;
 	private String id_user;
-	/**
-	 * Create the panel.
-	 * 
-	 * 
-	 */
+	JLabel subtitle_badge;
+	JLabel nameUsuario;
+	JLabel badge_id;
+	JLabel icon_user;
+
+	
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
+    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
+    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
+    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");   
+    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
+    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
+    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");		
 
 	
 
@@ -74,21 +82,28 @@ public class Resultados extends JPanel {
 		panel_3.setBounds(0, 0, 320, 10);
 		painelIcone.add(panel_3);
 
-		JLabel fotoUsuario = new JLabel(""+infoUser[2]);
-		fotoUsuario.setBounds(22, 21, 68, 68);
-		painelIcone.add(fotoUsuario);
+		icon_user = new JLabel(""+infoUser[2]);
+		icon_user.setBounds(22, 21, 68, 68);
+		painelIcone.add(icon_user);
+		
+		badge_id = new JLabel("");	
+		badge_id.setBounds(62, 61, 28, 28);
+		badge_id.setIcon(badge_3);
+		painelIcone.add(badge_id);
 
-		JLabel nameUsuario = new JLabel("" + infoUser[0]);
+		nameUsuario = new JLabel("" + infoUser[0] + " " + infoUser[1]);
 		nameUsuario.setFont(new Font("Poppins Medium", Font.PLAIN, 14));
 		nameUsuario.setForeground(new Color(255, 255, 255));
 		nameUsuario.setBounds(100, 34, 195, 14);
 		painelIcone.add(nameUsuario);
 
-		JLabel tituloUsuario = new JLabel("" + infoUser[1]);
-		tituloUsuario.setForeground(Color.WHITE);
-		tituloUsuario.setFont(new Font("Poppins Light", Font.PLAIN, 12));
-		tituloUsuario.setBounds(100, 50, 195, 14);
-		painelIcone.add(tituloUsuario);
+		subtitle_badge = new JLabel("" + infoUser[1]);
+		subtitle_badge.setForeground(Color.WHITE);
+		subtitle_badge.setFont(new Font("Poppins Light", Font.PLAIN, 12));
+		subtitle_badge.setBounds(100, 50, 195, 14);
+		painelIcone.add(subtitle_badge);
+		
+		
 
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(null);
@@ -184,6 +199,8 @@ public class Resultados extends JPanel {
 		
 		tempoTotal.setText(String.format("%02d:%02d:%02d", horas, minutos, segundos));
 
+		condicaoInfoUsuario();
+		
 		// Enviar o usuario para a tela inicial
 		JButton btnFinalizar = new JButton("Finalizar");
 		btnFinalizar.addActionListener(new ActionListener() {
@@ -298,21 +315,22 @@ public class Resultados extends JPanel {
 	}
 	
 	public String[] informacoesUsuario(String usuario) {
-		String[] infoUser = new String[3];
+		String[] infoUser = new String[4];
 
 		// Conexão com o banco de dados para puxar as informações do usuario
 		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
 
 		// Comando para o banco de dados puxar as informações
-		String query = "SELECT p.titulo_perfil, p.foto_perfil, d.usuario_user FROM user_dados d JOIN user_perfil p ON d.id_user = p.id_perfil WHERE d.id_user = ?;";
+		String query = "select nome_user, sobrenome_user, badge_id, id_icon from user_dados where id_user =?;";
 		ResultSet rs = con.executeQuery(query, usuario);
 
 		// Comando para armazenar as informações no array
 		try {
 			if (rs.next()) {
-				infoUser[0] = rs.getString("usuario_user");
-				infoUser[1] = rs.getString("titulo_perfil");
-				infoUser[2] = rs.getString("foto_perfil");
+				infoUser[0] = rs.getString("nome_user"); 
+				infoUser[1] = rs.getString("sobrenome_user");
+				infoUser[2] = rs.getString("badge_id");
+			    infoUser[3] = rs.getString("id_icon");
 
 			}
 		} catch (SQLException e) {
@@ -322,6 +340,29 @@ public class Resultados extends JPanel {
 		return infoUser;
 	}
 
+	public void condicaoInfoUsuario() {
+		if(this.infoUser[3].equals("1")) {
+			icon_user.setIcon(icon_1);
+		}else if(this.infoUser[3].equals("2")){
+			icon_user.setIcon(icon_2);
+		}else if(this.infoUser[3].equals("3")){
+			icon_user.setIcon(icon_3);
+		}else if(this.infoUser[3].equals("4")){
+			icon_user.setIcon(icon_4);
+		}
+		
+		if(this.infoUser[2].equals("1")){
+			subtitle_badge.setText("Novato");
+			badge_id.setIcon(badge_1);
+		}else if(this.infoUser[2].equals("2")) {
+			subtitle_badge.setText("Vagabundo");
+			badge_id.setIcon(badge_2);
+		}else if(this.infoUser[2].equals("3")) {
+			subtitle_badge.setText("Sem Alma");
+			badge_id.setIcon(badge_3);
+		}
+	}
+	
 	public void condicaoDesempenho() {
 		// Altera o status de desempenho conforme a qntia de acertos
 
