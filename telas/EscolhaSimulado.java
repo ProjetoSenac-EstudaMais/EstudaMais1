@@ -23,6 +23,20 @@ public class EscolhaSimulado extends JPanel {
 	private Choice escolhaAnoSP;
 	private Choice escolhaTempoDuracao;
 	private String id_user;
+	public String[] nomeInfo = new String[4];
+	JLabel badge_id;
+	JLabel icon_user;
+	JLabel subtitle_badge;
+	JLabel lblNomeUsuario;
+	
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
+    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
+    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
+    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");   
+    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
+    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
+    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");		
+
 	
 	/**
 	 * Create the panel.
@@ -31,7 +45,7 @@ public class EscolhaSimulado extends JPanel {
 		
 		this.id_user=id_user;
 		
-		String [] nomeInfo = nextRow(id_user);
+		nomeInfo = informacoesUsuario(id_user);
 		
 		System.out.println(id_user+" "+this.id_user+""+nomeInfo[0]);
 
@@ -56,26 +70,34 @@ public class EscolhaSimulado extends JPanel {
 		panelLateral.add(panelUsuario);
 		panelUsuario.setLayout(null);
 
-		JLabel lblNomeUsuario = new JLabel("" + nomeInfo[0]);
+		lblNomeUsuario = new JLabel("" + this.nomeInfo[0] + " " + this.nomeInfo[1]);
 		lblNomeUsuario.setForeground(new Color(255, 255, 255));
 		lblNomeUsuario.setFont(new Font("Dialog", Font.PLAIN, 12));
 		lblNomeUsuario.setBackground(Color.WHITE);
 		lblNomeUsuario.setBounds(100, 20, 115, 20);
 		panelUsuario.add(lblNomeUsuario);
 
-		JLabel lblTituloUsuario = new JLabel("" + nomeInfo[1]);
-		lblTituloUsuario.setForeground(new Color(188, 188, 188));
-		lblTituloUsuario.setFont(new Font("Poppins", Font.PLAIN, 12));
-		lblTituloUsuario.setBackground(Color.WHITE);
-		lblTituloUsuario.setBounds(100, 35, 149, 20);
-		panelUsuario.add(lblTituloUsuario);
+		subtitle_badge = new JLabel("" + nomeInfo[1]);
+		subtitle_badge.setForeground(new Color(188, 188, 188));
+		subtitle_badge.setFont(new Font("Poppins", Font.PLAIN, 12));
+		subtitle_badge.setBackground(Color.WHITE);
+		subtitle_badge.setBounds(100, 35, 149, 20);
+		panelUsuario.add(subtitle_badge);
 
-		JLabel iconeUsuario = new JLabel(""+ nomeInfo[2]);
-		iconeUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		iconeUsuario.setRequestFocusEnabled(false);
-		iconeUsuario.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\icons\\icon_id2.png"));
-		iconeUsuario.setBounds(24, 15, 68, 68);
-		panelUsuario.add(iconeUsuario);
+		icon_user = new JLabel(""+ nomeInfo[2]);
+		icon_user.setHorizontalAlignment(SwingConstants.CENTER);
+		icon_user.setRequestFocusEnabled(false);
+		icon_user.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\icons\\icon_id2.png"));
+		icon_user.setBounds(24, 15, 68, 68);
+		panelUsuario.add(icon_user);
+		
+
+		badge_id = new JLabel("");	
+		badge_id.setBounds(2, 61, 28, 28);
+		badge_id.setIcon(badge_3);
+		panelUsuario.add(badge_id);
+		
+	
 
 		//ACAO DE VOLTAR PARA A TELA INICIAL NO BOTAO VOLTAR
 		JButton btnVoltar = new JButton("Voltar");
@@ -271,6 +293,8 @@ public class EscolhaSimulado extends JPanel {
 		escolhaAnoSP.add("---");
 		escolhaAnoSP.add("2011");
 		escolhaAnoSP.add("2012");
+		
+		condicaoInfoUsuario();
 
 		btnIniciarSP.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -298,41 +322,53 @@ public class EscolhaSimulado extends JPanel {
 	}
 
 	// Faz um metódo para puxar a proxima linha de acordo com o id
-	public String[] nextRow(String email) {
-		String[] linha = new String[3];
+	public String[] informacoesUsuario(String usuario) {
+		String[] infoUser = new String[4];
 
-		// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
-		// configurar o JDBC no computador para funcionar
+		// Conexão com o banco de dados para puxar as informações do usuario
 		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
 
-		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
-		// definir ele fora do comando
-		String query = "SELECT p.titulo_perfil, p.foto_perfil, d.usuario_user FROM user_dados d JOIN user_perfil p ON d.id_user = p.id_perfil WHERE d.id_user = ?;";
+		// Comando para o banco de dados puxar as informações
+		String query = "select nome_user, sobrenome_user, badge_id, id_icon from user_dados where id_user =?;";
+		ResultSet rs = con.executeQuery(query, usuario);
 
-		// Este comando retorna os valores solicitados, e primeiro vem o comando e
-		// depois o valor do '?'
-		ResultSet rs = con.executeQuery(query, email );
-
-		// Este comando armazena os valores recebidos em uma variavel
+		// Comando para armazenar as informações no array
 		try {
 			if (rs.next()) {
-
-				// Armazenando em uma array posso livremente puxalos posteriormente no código e
-				// atualizalos conforme o id avança
-				linha[0] = rs.getString("usuario_user");
-				linha[1] = rs.getString("titulo_perfil");
-				linha[2] = rs.getString("foto_perfil");
+				infoUser[0] = rs.getString("nome_user"); 
+				infoUser[1] = rs.getString("sobrenome_user");
+				infoUser[2] = rs.getString("badge_id");
+			    infoUser[3] = rs.getString("id_icon");
 
 			}
-
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// sempre fechar a conexão após o uso necessário
-		con.closeConnection();
-		return linha;
+		return infoUser;
+	}
+	
+	public void condicaoInfoUsuario() {
+		if(this.nomeInfo[3].equals("1")) {
+			icon_user.setIcon(icon_1);
+		}else if(this.nomeInfo[3].equals("2")){
+			icon_user.setIcon(icon_2);
+		}else if(this.nomeInfo[3].equals("3")){
+			icon_user.setIcon(icon_3);
+		}else if(this.nomeInfo[3].equals("4")){
+			icon_user.setIcon(icon_4);
+		}
+		
+		if(this.nomeInfo[2].equals("1")){
+			subtitle_badge.setText("Novato");
+			badge_id.setIcon(badge_1);
+		}else if(this.nomeInfo[2].equals("2")) {
+			subtitle_badge.setText("Vagabundo");
+			badge_id.setIcon(badge_2);
+		}else if(this.nomeInfo[2].equals("3")) {
+			subtitle_badge.setText("Sem Alma");
+			badge_id.setIcon(badge_3);
+		}
 	}
 
 	public void simuladoCompleto() {
