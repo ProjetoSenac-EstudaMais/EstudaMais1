@@ -60,7 +60,6 @@ public class Simulado extends JPanel {
 	private JRadioButton rdbE;
 	private int areaConhecimento=1;
 	private int simu;
-	private String user="1";
 	private String id_simu;
 	private String id_user;
 
@@ -76,59 +75,11 @@ public class Simulado extends JPanel {
 		// Início do período da prova
 		inicio = System.currentTimeMillis();
 		
-
 		//Condição para o valor do anoS
 		condicaoAnoS();
-
+		//Metodo para dar identificar o numero do simulado
+		idSimu();
 		
-		String[] idSimu = nextRow(linhaAtual,anoS,areaConhecimento);
-		
-		
-		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
-		
-		
-		
-		String query1 = "INSERT INTO simu_resolvido (num_simu, id_user) VALUES (?,?);";
-		
-		try {
-			PreparedStatement pstmt = con.conn.prepareStatement(query1);
-			pstmt.setString(1,idSimu[9]);	
-			pstmt.setString(2,user);
-			
-			pstmt.executeUpdate();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		
-		String query2 = "SELECT MAX(id_simu) as id_simu from simu_resolvido where id_user = ?";
-
-		
-		ResultSet rs2 = con.executeQuery(query2, user);
-
-		System.out.println(user);
-		
-		try {
-			if (rs2.next()) {
-
-				
-				simu = Integer.parseInt(rs2.getString("id_simu"));
-				
-
-			}
-
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		con.closeConnection();
-		
-		System.out.println(simu);
-		
-		
-
-
 		setBackground(new Color(255, 255, 255));
 		setBounds(0, 0, 1280, 720);
 		setLayout(null);
@@ -420,6 +371,50 @@ public class Simulado extends JPanel {
 		return linha;
 	}
 
+	public void idSimu() {
+		String[] idSimu = nextRow(linhaAtual,anoS,areaConhecimento);
+		
+		
+		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
+		
+		
+		
+		String query1 = "INSERT INTO simu_resolvido (num_simu, id_user) VALUES (?,?);";
+		
+		try {
+			PreparedStatement pstmt = con.conn.prepareStatement(query1);
+			pstmt.setString(1,idSimu[9]);	
+			pstmt.setString(2,id_user);
+			
+			pstmt.executeUpdate();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		
+		String query2 = "SELECT MAX(id_simu) as id_simu from simu_resolvido where id_user = ?";
+
+		
+		ResultSet rs2 = con.executeQuery(query2, id_user);
+
+		
+		try {
+			if (rs2.next()) {
+
+				
+				simu = Integer.parseInt(rs2.getString("id_simu"));
+				
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		con.closeConnection();
+	}
+	
 	public void finalizar() {
 
 		// Aqui cria um array para botar os textos sim e não no botao do painel de
