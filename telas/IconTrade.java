@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
@@ -104,23 +105,103 @@ public class IconTrade extends JPanel {
 				
 				JButton btnIcon_Id_1 = new JButton("btnIcon_Id_1");
 				btnIcon_Id_1.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {					
+					public void actionPerformed(ActionEvent e) {	
+						
+						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
+								
+						
+						String query1 = "UPDATE user_dados SET icon_id =? WHERE id_user =? ;";
+						
+						try {
+							PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+							pstmt.setString(1,"1");	
+													
+							pstmt.executeUpdate();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					con.closeConnection();
 						
 					}
 				});
 				btnIcon_Id_1.setBounds(23, 11, 119, 106);
+				btnIcon_Id_1.setIcon(icon_1);
 				panel_6.add(btnIcon_Id_1);
 				
 				JButton btnIcon_Id_2 = new JButton("btnIcon_Id_2");
+				btnIcon_Id_2.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
+								
+						
+						String query1 = "UPDATE user_dados SET icon_id =? WHERE id_user =? ;";
+						
+						try {
+							PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+							pstmt.setString(1,"2");	
+													
+							pstmt.executeUpdate();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					con.closeConnection();
+					}
+				});
 				btnIcon_Id_2.setBounds(152, 11, 119, 106);
+				btnIcon_Id_2.setIcon(icon_2);
 				panel_6.add(btnIcon_Id_2);
 				
 				JButton btnIcon_Id_3 = new JButton("btnIcon_Id_3");
+				btnIcon_Id_3.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
+								
+						
+						String query1 = "UPDATE user_dados SET icon_id =? WHERE id_user =? ;";
+						
+						try {
+							PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+							pstmt.setString(1,"3");	
+													
+							pstmt.executeUpdate();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					con.closeConnection();
+					}
+				});
 				btnIcon_Id_3.setBounds(23, 128, 119, 106);
+				btnIcon_Id_3.setIcon(icon_3);
 				panel_6.add(btnIcon_Id_3);
 				
 				JButton btnIcon_Id_4 = new JButton("btnIcon_Id_4");
+				btnIcon_Id_4.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
+								
+						
+						String query1 = "UPDATE user_dados SET icon_id =? WHERE id_user =? ;";
+						
+						try {
+							PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+							pstmt.setString(1,"4");	
+													
+							pstmt.executeUpdate();
+						} catch (SQLException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					con.closeConnection();
+					}
+				});
 				btnIcon_Id_4.setBounds(152, 128, 119, 106);
+				btnIcon_Id_4.setIcon(icon_4);
 				panel_6.add(btnIcon_Id_4);
 			
 			
