@@ -174,22 +174,22 @@ public class Login extends JPanel {
 	}
 
 	public static String[] DB(String email) {
-		String[] infouser = new String [2]; //Armazena os dados de login se um usuário em Array.
+		String[] infouser = new String [3]; //Armazena os dados de login se um usuário em Array.
 
 		try {
-			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
-			String query = "select senha, email from dados where email =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			String query = "select senha_user, email_user, id_user from user_dados where email_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
 			ResultSet rs = conn1.executeQuery(query,email); //Retornar os resultados da SQL
 
 			/*
 			 *Comando para guardar os dados dentro de uma variável;/
 			 */
 			if(rs.next()) {
-				infouser[0] = rs.getString("senha"); //Busca o vetor 1 das infos, equivalente à Senha
-				infouser[1] = rs.getString("email");} //Busca o vetor 1 das infos, equivalente ao Email
-
+				infouser[0] = rs.getString("senha_user"); //Busca o vetor 1 das infos, equivalente à Senha
+				infouser[1] = rs.getString("email_user"); //Busca o vetor 1 das infos, equivalente ao Email
+				infouser[2] = rs.getString("id_user");}
 
 			rs.close();
 			conn1.closeConnection();
@@ -221,8 +221,8 @@ public class Login extends JPanel {
 			}
 			else if(emailInfo[1].equals(login_emailField.getText())){
 				if ( emailInfo[0].equals(senha)) {
-
-					telaInicial();
+					
+					telaInicial(emailInfo[2]);
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "Senha inválida!");
@@ -231,8 +231,8 @@ public class Login extends JPanel {
 			}}
 	}
 
-	public void telaInicial() {
-		TelaInicial a = new TelaInicial();
+	public void telaInicial(String id_user) {
+		TelaInicial a = new TelaInicial(id_user);
 		removeAll();
 		add(a);
 		revalidate();
