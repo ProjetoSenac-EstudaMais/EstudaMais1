@@ -51,6 +51,7 @@ public class MeuPerfil extends JPanel {
 	
 	private String[] nome_id;
 	private String[] sobrenome_id;
+	private String[] id_icon;
 	private String icon;
 	private String[] badge_id;
 	private String subtitle_badge;
@@ -58,8 +59,9 @@ public class MeuPerfil extends JPanel {
 	private String m_title;
 	private String m_subtitle;
 	private String[] birthdate_user;
+
 	
-    ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
     ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
     ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
     ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");  
@@ -327,7 +329,7 @@ public class MeuPerfil extends JPanel {
 			lblSimuladosCompletos.setBounds(16, 25, 134, 14);
 			panel_5.add(lblSimuladosCompletos);
 			
-			JLabel lblSimuladosPersonalizados = new JLabel("Simulados Personalizados: 0");
+			JLabel lblSimuladosPersonalizados = new JLabel("Simulados Personalizados: ");
 			lblSimuladosPersonalizados.setBounds(16, 38, 173, 14);
 			panel_5.add(lblSimuladosPersonalizados);
 			
@@ -340,7 +342,7 @@ public class MeuPerfil extends JPanel {
 			panel_5.add(lblMediaAcertos);
 			
 			JLabel lblProgressoMeta = new JLabel("Progresso em Metas:");
-			lblProgressoMeta.setBounds(16, 75, 529, 14);
+			lblProgressoMeta.setBounds(16, 77, 529, 14);
 			panel_5.add(lblProgressoMeta);
 			
 			JProgressBar progressBar = new JProgressBar();
@@ -348,11 +350,33 @@ public class MeuPerfil extends JPanel {
 			progressBar.setBounds(12, 92, 546, 14);
 			panel_5.add(progressBar);
 			progressBar.setForeground(new Color(36, 46, 134));
-			progressBar.setValue(50);
+			progressBar.setValue(0);
+			
+			this.meta_id = DB(1);
+			
+			if(meta_id[3].equals("1")) {
+				progressBar.setValue(0);
+			}else if(meta_id[3].equals("2")) {
+				progressBar.setValue(50);
+			}else if(meta_id[3].equals("3")) {
+				progressBar.setValue(100);
+			}
 			
 			JLabel lblQntSimulados = new JLabel(String.valueOf(SimuladosQuant));
 			lblQntSimulados.setBounds(160, 25, 64, 14);
 			panel_5.add(lblQntSimulados);
+			
+			JLabel id_SimuladosPersonalizados = new JLabel("x");
+			id_SimuladosPersonalizados.setBounds(191, 38, 64, 14);
+			panel_5.add(id_SimuladosPersonalizados);
+			
+			JLabel id_MediaAcertos = new JLabel("x");
+			id_MediaAcertos.setBounds(170, 50, 64, 14);
+			panel_5.add(id_MediaAcertos);
+			
+			JLabel id_MelhorResultado = new JLabel("x");
+			id_MelhorResultado.setBounds(201, 63, 64, 14);
+			panel_5.add(id_MelhorResultado);
 			
 			JPanel Sidebar = new JPanel();
 			Sidebar.setBounds(0, 0, 260, 720);
@@ -372,15 +396,28 @@ public class MeuPerfil extends JPanel {
 			badge_id.setBounds(71, 55, 28, 28);
 			Perfil.add(badge_id);
 			
+			this.id_icon = DB(1);
+			
 			JLabel icon_user = new JLabel("");
 			icon_user.setInheritsPopupMenu(false);
 			icon_user.setRequestFocusEnabled(false);
 			icon_user.setIconTextGap(0);
 			icon_user.setBorder(null);
 			icon_user.setHorizontalAlignment(SwingConstants.CENTER);
-			icon_user.setIcon(icon_1);
 			icon_user.setBounds(24, 15, 68, 68);
-			Perfil.add(icon_user);		
+			Perfil.add(icon_user);				
+			
+			if(this.id_icon[5].equals("1")) {
+				icon_user.setIcon(icon_1);
+			}else if(this.id_icon[5].equals("2")){
+				icon_user.setIcon(icon_2);
+			}else if(this.id_icon[5].equals("3")){
+				icon_user.setIcon(icon_3);
+			}else if(this.id_icon[5].equals("4")){
+				icon_user.setIcon(icon_4);
+			}
+			
+			
 			
 			if(this.badge_id[2].equals("1")){
 				subtitle_badge = "Novato";
@@ -492,13 +529,13 @@ public class MeuPerfil extends JPanel {
 	}
 	
 	public static String[] DB(int id_user) {
-		String[] infouser = new String [5]; //Armazena os dados de login se um usuário em Array.
+		String[] infouser = new String [6]; //Armazena os dados de login se um usuário em Array.
 
 		try {
 			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
-			String query = "select nome_user, sobrenome_user, badge_id, meta_id, birthdate_user from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			String query = "select nome_user, sobrenome_user, badge_id, meta_id, birthdate_user, id_icon from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
 			ResultSet rs = conn1.executeQuery(query,id_user); //Retornar os resultados da SQL
 
 			/*
@@ -509,7 +546,8 @@ public class MeuPerfil extends JPanel {
 				infouser[1] = rs.getString("sobrenome_user");
 				infouser[2] = rs.getString("badge_id");
 				infouser[3] = rs.getString("meta_id");
-				infouser[4] = rs.getString("birthdate_user");}
+				infouser[4] = rs.getString("birthdate_user");
+				infouser[5] = rs.getString("id_icon");}
 			
 
 			rs.close();
