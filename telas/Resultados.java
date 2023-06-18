@@ -1,4 +1,4 @@
-package Telas;
+package telas;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -24,6 +24,8 @@ public class Resultados extends JPanel {
 	private long segundos;
 	private long horas;
 	private long minutos;
+	private int simu;
+	private String id_user;
 	/**
 	 * Create the panel.
 	 * 
@@ -32,15 +34,17 @@ public class Resultados extends JPanel {
 
 	
 
-	public Resultados(int acertos, int erros, long segundos, long minutos, long horas) {
+	public Resultados(int acertos, int erros, long segundos, long minutos, long horas, int simu,String id_user) {
 
 		this.acertos=acertos;
 		this.erros=erros;
 		this.segundos=segundos;
 		this.minutos=minutos;
 		this.horas=horas;
-
-		infoUser = informacoesUsuario(usuario);
+		this.simu=simu;
+		this.id_user=id_user;
+		
+		infoUser = informacoesUsuario(id_user);
 
 		setBackground(new Color(64, 74, 204));
 		setBounds(0, 0, 1280, 720);
@@ -171,12 +175,14 @@ public class Resultados extends JPanel {
 		add(clock);
 
 		// Configura o tempo total de prova
-		JLabel tempoTotal = new JLabel("" + horas + ":" + minutos + ":" + segundos);
+		JLabel tempoTotal = new JLabel();
 		tempoTotal.setForeground(new Color(255, 255, 255));
 		tempoTotal.setFont(new Font("Poppins Light", Font.PLAIN, 24));
 		tempoTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		tempoTotal.setBounds(757, 258, 134, 28);
 		add(tempoTotal);
+		
+		tempoTotal.setText(String.format("%02d:%02d:%02d", horas, minutos, segundos));
 
 		// Enviar o usuario para a tela inicial
 		JButton btnFinalizar = new JButton("Finalizar");
@@ -298,13 +304,13 @@ public class Resultados extends JPanel {
 		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
 
 		// Comando para o banco de dados puxar as informações
-		String query = "SELECT p.titulo_perfil, p.foto_perfil, d.usuario_user FROM dados_user d JOIN perfil_user p ON d.id_user = p.id_dados WHERE d.usuario_user = ?;";
+		String query = "SELECT p.titulo_perfil, p.foto_perfil, d.usuario_user FROM user_dados d JOIN user_perfil p ON d.id_user = p.id_perfil WHERE d.id_user = ?;";
 		ResultSet rs = con.executeQuery(query, usuario);
 
 		// Comando para armazenar as informações no array
 		try {
 			if (rs.next()) {
-				infoUser[0] = rs.getString("usuarip_user");
+				infoUser[0] = rs.getString("usuario_user");
 				infoUser[1] = rs.getString("titulo_perfil");
 				infoUser[2] = rs.getString("foto_perfil");
 
@@ -330,7 +336,7 @@ public class Resultados extends JPanel {
 	}
 
 	public void telaInicio() {
-		TelaInicial inicio = new TelaInicial();
+		TelaInicial inicio = new TelaInicial(id_user);
 		removeAll();
 		add(inicio);
 		revalidate();
@@ -338,7 +344,7 @@ public class Resultados extends JPanel {
 	}
 
 	public void telaEscolhaSimulado() {
-		EscolhaSimulado escSimu = new EscolhaSimulado();
+		EscolhaSimulado escSimu = new EscolhaSimulado(id_user);
 		removeAll();
 		add(escSimu);
 		revalidate();
@@ -346,7 +352,7 @@ public class Resultados extends JPanel {
 	}
 
 	public void telaGabarito() {
-		Gabarito gab = new Gabarito(acertos, erros, segundos, minutos, horas );
+		Gabarito gab = new Gabarito(acertos, erros, segundos, minutos, horas, simu,id_user );
 		removeAll();
 		add(gab);
 		revalidate();
@@ -362,7 +368,7 @@ public class Resultados extends JPanel {
 	}
 
 	public void telaConfiguracao() {
-		Config config = new Config();
+		Config config = new Config(id_user);
 		removeAll();
 		add(config);
 		revalidate();
@@ -370,7 +376,7 @@ public class Resultados extends JPanel {
 	}
 
 	public void telaMeuPerfil() {
-		MeuPerfil perfil = new MeuPerfil();
+		MeuPerfil perfil = new MeuPerfil(id_user);
 		removeAll();
 		add(perfil);
 		revalidate();
