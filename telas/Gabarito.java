@@ -1,4 +1,4 @@
-package Telas;
+package telas;
 
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -25,6 +25,9 @@ public class Gabarito extends JPanel {
 	private long segundos; 
 	private long minutos; 
 	private long horas;
+	private JLabel gabarito;
+	private int simu;
+	private String id_user;
 
 	/**
 	 * Create the panel.
@@ -32,12 +35,14 @@ public class Gabarito extends JPanel {
 
 
 
-	public Gabarito(int acertos, int erros, long segundos, long minutos, long horas) {
+	public Gabarito(int acertos, int erros, long segundos, long minutos, long horas, int simu,String id_user) {
 		this.acertos=acertos;
 		this.erros=erros;
 		this.segundos=segundos;
 		this.minutos=minutos;
 		this.horas=horas;
+		this.simu=simu;
+		this.id_user=id_user;
 
 		setBackground(new Color(64, 74, 204));
 		setLayout(null);
@@ -130,6 +135,8 @@ public class Gabarito extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				telaResultados();
+				
+				gabarito.setText("");
 
 			}
 		});
@@ -154,22 +161,22 @@ public class Gabarito extends JPanel {
 		posicaoInicial(1,0);
 	}
 	//Metodo para conectar com o banco de dados e armazenar os dados em uma array
-	public String[] nextLine(int id) {
+	public String[] nextLine(int id, int simu) {
 		String[] line = new String[3];
 
 		//estabelece conexão
 		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
 
 		//manda o comando para o banco de dados
-		String query = "SELECT qr.id_qresolv, qs.gabarito, qr.gabarito_user FROM questoes_resolv qr JOIN questoes_simu qs ON qr.id_questoes = qs.id_questoes WHERE qr.id_questoes = ?;";
-		ResultSet rs = con.executeQuery(query, id);
+		String query = "SELECT qr.numero_quest, qs.gabarito, qr.gabarito_user FROM simu_questoes_resolv qr JOIN simu_questoes qs ON qr.id_quest = qs.id_quest WHERE qr.id_quest = ? and qr.id_simu = ?;";
+		ResultSet rs = con.executeQuery(query, id, simu);
 
 		//recebe os dados solicitados
 		try {
 			if(rs.next()) {
-				line[0] = rs.getString("id_qresolv");
+				line[0] = rs.getString("numero_quest");
 				line[1] = rs.getString("gabarito");
-				line[2] = rs.getString("gabarito_user")
+				line[2] = rs.getString("gabarito_user");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -185,7 +192,7 @@ public class Gabarito extends JPanel {
 
 		for(i=0;i<=10;i++) {
 			//Variavel que contém os dados do banco de dados
-			String[] infoQuestao = nextLine(lines);
+			String[] infoQuestao = nextLine(lines,simu);
 
 			questoes = new JLabel("");
 			questoes.setHorizontalAlignment(SwingConstants.CENTER);
@@ -194,7 +201,7 @@ public class Gabarito extends JPanel {
 			questoes.setBounds(83, pos, 126, 32);
 			pnlQuestoes.add(questoes);
 
-			JLabel gabarito = new JLabel("a");
+			gabarito = new JLabel("");
 			gabarito.setHorizontalAlignment(SwingConstants.CENTER);
 			gabarito.setForeground(Color.WHITE);
 			gabarito.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
@@ -296,7 +303,7 @@ public class Gabarito extends JPanel {
 	}
 
 	public void telaResultados() {
-		Resultados res = new Resultados(acertos, erros, segundos, minutos, horas);
+		Resultados res = new Resultados(acertos, erros, segundos, minutos, horas, simu,id_user);
 		removeAll();
 		add(res);
 		revalidate();
@@ -304,4 +311,3 @@ public class Gabarito extends JPanel {
 	}
 
 }
-
