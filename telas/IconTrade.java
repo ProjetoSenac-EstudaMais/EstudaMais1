@@ -60,6 +60,7 @@ public class IconTrade extends JPanel {
 	private String m_title;
 	private String m_subtitle;
 	private String[] birthdate_user;
+	private String id_user;
 
 	
 	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
@@ -71,7 +72,7 @@ public class IconTrade extends JPanel {
     ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
     ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");	
 
-	public IconTrade() {
+	public IconTrade(String id_user) {
 		
 			setLayout(null);
 			setBounds(100,100,1280,720);
@@ -93,7 +94,7 @@ public class IconTrade extends JPanel {
 				JButton btnConfirmar = new JButton("CONFIRMAR");
 				btnConfirmar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						MeuPerfil mp = new MeuPerfil();
+						MeuPerfil mp = new MeuPerfil(id_user);
 						removeAll();
 						add(mp);
 						revalidate();
@@ -110,11 +111,12 @@ public class IconTrade extends JPanel {
 						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
 								
 						
-						String query1 = "UPDATE user_dados SET icon_id =? WHERE id_user =? ;";
+						String query1 = "UPDATE user_dados SET  id_icon =? WHERE id_user =? ;";
 						
 						try {
-							PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+							PreparedStatement pstmt = con.conn.prepareStatement(query1);
 							pstmt.setString(1,"1");	
+							pstmt.setString(2,id_user);
 													
 							pstmt.executeUpdate();
 						} catch (SQLException e1) {
@@ -136,11 +138,12 @@ public class IconTrade extends JPanel {
 						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
 								
 						
-						String query1 = "UPDATE user_dados SET icon_id =? WHERE id_user =? ;";
+						String query1 = "UPDATE user_dados SET  id_icon=? WHERE id_user =? ;";
 						
 						try {
-							PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+							PreparedStatement pstmt = con.conn.prepareStatement(query1);
 							pstmt.setString(1,"2");	
+							pstmt.setString(2,id_user);
 													
 							pstmt.executeUpdate();
 						} catch (SQLException e1) {
@@ -161,11 +164,12 @@ public class IconTrade extends JPanel {
 						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
 								
 						
-						String query1 = "UPDATE user_dados SET icon_id =? WHERE id_user =? ;";
+						String query1 = "UPDATE user_dados SET  id_icon =? WHERE id_user =? ;";
 						
 						try {
-							PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+							PreparedStatement pstmt = con.conn.prepareStatement(query1);
 							pstmt.setString(1,"3");	
+							pstmt.setString(2,id_user);
 													
 							pstmt.executeUpdate();
 						} catch (SQLException e1) {
@@ -186,11 +190,12 @@ public class IconTrade extends JPanel {
 						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
 								
 						
-						String query1 = "UPDATE user_dados SET icon_id =? WHERE id_user =? ;";
+						String query1 = "UPDATE user_dados SET id_icon =? WHERE id_user =? ;";
 						
 						try {
-							PreparedStatement pstmt = con.conn.prepareStatement(query1,id_user);
+							PreparedStatement pstmt = con.conn.prepareStatement(query1);
 							pstmt.setString(1,"4");	
+							pstmt.setString(2,id_user);
 													
 							pstmt.executeUpdate();
 						} catch (SQLException e1) {
@@ -262,7 +267,7 @@ public class IconTrade extends JPanel {
 			JButton btnAddIcon = new JButton("");
 			btnAddIcon.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
-			    	IconTrade a = new IconTrade();
+			    	IconTrade a = new IconTrade(id_user);
 					removeAll();
 					add(a);
 					revalidate();
@@ -392,7 +397,7 @@ public class IconTrade extends JPanel {
 			JButton btnAddBadge = new JButton("");
 			btnAddBadge.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					BadgeTrade b = new BadgeTrade();
+					BadgeTrade b = new BadgeTrade(id_user);
 					removeAll();
 					add(b);
 					revalidate();
@@ -563,7 +568,7 @@ public class IconTrade extends JPanel {
 			JButton btnConfig = new JButton("Configurações");
 			btnConfig.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Config cf = new Config();
+					Config cf = new Config(id_user);
 					removeAll();
 					add(cf);
 					revalidate();
@@ -617,7 +622,7 @@ public class IconTrade extends JPanel {
 			
 			btnMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					TelaInicial a = new TelaInicial();
+					TelaInicial a = new TelaInicial(id_user);
 					removeAll();
 					add(a);
 					revalidate();
@@ -632,7 +637,7 @@ public class IconTrade extends JPanel {
 		String[] infouser = new String [6]; //Armazena os dados de login se um usuário em Array.
 
 		try {
-			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
 			String query = "select nome_user, sobrenome_user, badge_id, meta_id, birthdate_user, id_icon from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
