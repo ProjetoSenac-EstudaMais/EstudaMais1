@@ -1,4 +1,4 @@
-package Telas;
+package telas;
 
 import java.awt.Choice;
 import java.awt.Color;
@@ -22,13 +22,18 @@ public class EscolhaSimulado extends JPanel {
 	private Choice escolhaAnoSC;
 	private Choice escolhaAnoSP;
 	private Choice escolhaTempoDuracao;
+	private String id_user;
 	
 	/**
 	 * Create the panel.
 	 */
-	public EscolhaSimulado() {
-
-		String [] nomeInfo = nextRow(email2);
+	public EscolhaSimulado(String id_user) {
+		
+		this.id_user=id_user;
+		
+		String [] nomeInfo = nextRow(id_user);
+		
+		System.out.println(id_user+" "+this.id_user+""+nomeInfo[0]);
 
 		setBounds(0, 0, 1280, 720);
 		setLayout(null);
@@ -294,7 +299,7 @@ public class EscolhaSimulado extends JPanel {
 
 	// Faz um metódo para puxar a proxima linha de acordo com o id
 	public String[] nextRow(String email) {
-		String[] linha = new String[2];
+		String[] linha = new String[3];
 
 		// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
 		// configurar o JDBC no computador para funcionar
@@ -302,7 +307,7 @@ public class EscolhaSimulado extends JPanel {
 
 		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
 		// definir ele fora do comando
-		String query = "SELECT p.titulo_perfil, p.foto_perfil, d.usuario_user FROM dados_user d JOIN perfil_user p ON d.id_user = p.id_dados WHERE d.usuario_user = ?;";
+		String query = "SELECT p.titulo_perfil, p.foto_perfil, d.usuario_user FROM user_dados d JOIN user_perfil p ON d.id_user = p.id_perfil WHERE d.id_user = ?;";
 
 		// Este comando retorna os valores solicitados, e primeiro vem o comando e
 		// depois o valor do '?'
@@ -335,7 +340,7 @@ public class EscolhaSimulado extends JPanel {
 		String anosc = escolhaAnoSC.getSelectedItem();
 		int tiposim = 1;
 
-		Simulado simu = new Simulado(anosc,"",tiposim,"");
+		Simulado simu = new Simulado(anosc,"",tiposim,"",id_user);
 
 		removeAll();
 		add(simu);
@@ -349,7 +354,7 @@ public class EscolhaSimulado extends JPanel {
 		String anoSP = escolhaAnoSP.getSelectedItem(); // TIPO ANO
 		String tempoSimu = escolhaTempoDuracao.getSelectedItem(); // TIPO TEMPO
 
-		Simulado simu = new Simulado("",anoSP,tipoSimu, tempoSimu);
+		Simulado simu = new Simulado("",anoSP,tipoSimu, tempoSimu,id_user);
 
 		removeAll();
 		add(simu);
@@ -358,7 +363,7 @@ public class EscolhaSimulado extends JPanel {
 	}
 
 	public void telaInicial() {
-		TelaInicial a = new TelaInicial();
+		TelaInicial a = new TelaInicial(id_user);
 		removeAll();
 		add(a);
 		revalidate();
