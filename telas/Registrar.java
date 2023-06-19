@@ -248,11 +248,11 @@ public class Registrar extends JPanel {
 		String[] infouser = new String [2]; //Armazena os dados de login se um usuário em Array.
 
 		try {
-			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
 
-			String query = "select email,Usuario from dados where email =? or Usuario =?";
+			String query = "select email_user,usuario_user from user_dados where email_user =? or usuario_user =?";
 			ResultSet rs = conn1.executeQuery(query,email,usuario);
 
 			/*
@@ -309,8 +309,8 @@ public class Registrar extends JPanel {
 				JOptionPane.showMessageDialog(null, "Respota incorreta para a soma"); //Pop-up de resposta incorreta.
 			}
 			else {if ((infos[0] == null) || (infos[0].isEmpty()) && (infos[1] == null) || (infos[1].isEmpty())){
-				ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
-				String query = "insert into dados (nome, sobrenome,Usuario,email,senha,birthdate) values (?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
+				ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
+				String query = "insert into user_dados (nome_user, sobrenome_user,usuario_user,email_user,senha_user,birthdate_user, badge_id,id_icon) values (?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
 				try {
 					PreparedStatement pstmt = conn1.conn.prepareStatement(query);
 					pstmt.setString(1,nameField.getText());
@@ -319,6 +319,8 @@ public class Registrar extends JPanel {
 					pstmt.setString(4,emailField.getText());
 					pstmt.setString(5,senha);
 					pstmt.setString(6,birthField.getText());
+					pstmt.setString(7,"1");
+					pstmt.setString(8,"1");
 					pstmt.executeUpdate();
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
