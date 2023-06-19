@@ -253,7 +253,7 @@ public class Registrar extends JPanel {
 		String[] infouser = new String [2]; //Armazena os dados de login se um usuário em Array.
 
 		try {
-			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
 
@@ -329,7 +329,7 @@ public class Registrar extends JPanel {
 
 					dataNascimento();
 
-					ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
+					ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 					String query = "insert into user_dados (nome_user, sobrenome_user,usuario_user,email_user,senha_user,birthdate_user, badge_id,id_icon) values (?,?,?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
 					try {
 						PreparedStatement pstmt = conn1.conn.prepareStatement(query);
