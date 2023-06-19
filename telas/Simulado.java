@@ -1,7 +1,8 @@
 package telas;
 
 import javax.swing.JPanel;
-
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,6 +63,8 @@ public class Simulado extends JPanel {
 	private int simu;
 	private String id_simu;
 	private String id_user;
+	private String dataFormatada;
+	private String tempoFormatado;
 
 	/**
 	 * Create the panel.
@@ -74,12 +77,16 @@ public class Simulado extends JPanel {
 		this.id_user=id_user;
 		// Início do período da prova
 		inicio = System.currentTimeMillis();
-		
+
+		Date dataAtual = new Date();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		dataFormatada = dateFormat.format(dataAtual);
+
 		//Condição para o valor do anoS
 		condicaoAnoS();
 		//Metodo para dar identificar o numero do simulado
 		idSimu();
-		
+
 		setBackground(new Color(255, 255, 255));
 		setBounds(0, 0, 1280, 720);
 		setLayout(null);
@@ -263,8 +270,8 @@ public class Simulado extends JPanel {
 
 		//Quantidade de opões na caixa choice
 		qntChoice();
-		
-		
+
+
 
 		//Define os primeiros dados puxados para os componentes
 		primeiraLinha();
@@ -321,14 +328,14 @@ public class Simulado extends JPanel {
 	// Faz um metódo para puxar a proxima linha de acordo com o id
 	public String[] nextRow(int id, int ano, int areaCon) {
 		String[] linha = new String[10];
-		
+
 
 		// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
 		// configurar o JDBC no computador para funcionar
 		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
-		
-		
-	
+
+
+
 
 		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
 		// definir ele fora do comando
@@ -354,7 +361,7 @@ public class Simulado extends JPanel {
 				linha[7] = rs.getString("gabarito");
 				linha[8] = rs.getString("area_conhecimento");
 				linha[9] = rs.getString("id_simu");
-				
+
 
 			}
 
@@ -362,10 +369,10 @@ public class Simulado extends JPanel {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	
 
-		
+
+
+
 		// sempre fechar a conexão após o uso necessário
 		con.closeConnection();
 		return linha;
@@ -373,38 +380,40 @@ public class Simulado extends JPanel {
 
 	public void idSimu() {
 		String[] idSimu = nextRow(linhaAtual,anoS,areaConhecimento);
-		
-		
+
+
 		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
-		
-		
-		
-		String query1 = "INSERT INTO simu_resolvido (num_simu, id_user) VALUES (?,?);";
-		
+
+
+
+		String query1 = "INSERT INTO simu_resolvido (num_simu, id_user,data_resolv) VALUES (?,?,?);";
+
 		try {
 			PreparedStatement pstmt = con.conn.prepareStatement(query1);
 			pstmt.setString(1,idSimu[9]);	
 			pstmt.setString(2,id_user);
-			
+			pstmt.setString(3,dataFormatada);
+
+
 			pstmt.executeUpdate();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		
+
+
 		String query2 = "SELECT MAX(id_simu) as id_simu from simu_resolvido where id_user = ?";
 
-		
+
 		ResultSet rs2 = con.executeQuery(query2, id_user);
 
-		
+
 		try {
 			if (rs2.next()) {
 
-				
+
 				simu = Integer.parseInt(rs2.getString("id_simu"));
-				
+
 
 			}
 
@@ -414,7 +423,25 @@ public class Simulado extends JPanel {
 		}
 		con.closeConnection();
 	}
-	
+
+	public void inserirTempo() {
+		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
+
+		String query = "UPDATE simu_resolvido SET tempo_resolv =? WHERE id_simu =?;";
+
+		try {
+			PreparedStatement pstmt = con.conn.prepareStatement(query);
+			pstmt.setString(1,tempoFormatado);	
+			pstmt.setString(2,Integer.toString(simu));	
+
+			pstmt.executeUpdate();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+	}
+
 	public void finalizar() {
 
 		// Aqui cria um array para botar os textos sim e não no botao do painel de
@@ -459,6 +486,8 @@ public class Simulado extends JPanel {
 				int horas = tempoInicialSegundos / 3600;
 				int minutos = (tempoInicialSegundos % 3600) / 60;
 				int segundos = tempoInicialSegundos % 60;
+
+
 				tempo.setText(String.format("%02d:%02d:%02d", horas, minutos, segundos));
 
 				// Chegando a zero aparece uma mensagem de tempo esgotado
@@ -474,16 +503,16 @@ public class Simulado extends JPanel {
 	public void condicaoAnoS() {
 		// define o valor da variavel anoS que sera usada para substituir o valor de
 		// pesquisa do ano no banco de dados
-		
-		
-		
+
+
+
 		if (tipoSimu == 1) {
 			anoS = Integer.parseInt(anoSC);
-			
-			 System.out.println(anoS);
+
+			System.out.println(anoS);
 		} else if (tipoSimu == 2) {
 			anoS = Integer.parseInt(anoSP);
-			
+
 			System.out.println(anoS);
 		}
 	}
@@ -551,12 +580,12 @@ public class Simulado extends JPanel {
 						|| (rdbE.isSelected() && novaLinha[7].equals("E"))) {
 					// Soma os pontos certos
 					if (!foiRespondida[linhaAtual]) {
-						
+
 						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
-						
-						
+
+
 						String query = "INSERT INTO estudamais.simu_questoes_resolv (id_simu, id_quest, gabarito_user, id_user, numero_quest) VALUES (?, ?, ?,?,?);";
-						
+
 						try {
 							PreparedStatement pstmt = con.conn.prepareStatement(query);
 							pstmt.setString(1,Integer.toString(simu));
@@ -564,14 +593,14 @@ public class Simulado extends JPanel {
 							pstmt.setString(3,gabarito());
 							pstmt.setString(4,"1");
 							pstmt.setString(5,novaLinha[0]);
-							
+
 							pstmt.executeUpdate();
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						con.closeConnection();
-						
+
 						// Incrementar acertos ou erros
 						acertos++;
 						questaoRespondida++;
@@ -584,10 +613,10 @@ public class Simulado extends JPanel {
 					if (!foiRespondida[linhaAtual]) {
 
 						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
-		
-						
+
+
 						String query = "INSERT INTO estudamais.simu_questoes_resolv (id_simu, id_quest, gabarito_user, id_user, numero_quest) VALUES (?, ?, ?,?,?);";
-						
+
 						try {
 							PreparedStatement pstmt = con.conn.prepareStatement(query);
 							pstmt.setString(1,Integer.toString(simu));
@@ -595,15 +624,14 @@ public class Simulado extends JPanel {
 							pstmt.setString(3,gabarito());
 							pstmt.setString(4,"1");
 							pstmt.setString(5,novaLinha[0]);
-							
-							
+
 							pstmt.executeUpdate();
 						} catch (SQLException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
 						con.closeConnection();
-						
+
 						// Incrementar acertos ou erros
 						erros++;
 						questaoRespondida++;
@@ -624,16 +652,16 @@ public class Simulado extends JPanel {
 				txtD.setText(proxLinha[4]);
 				txtE.setText(proxLinha[5]);
 				lblNumQuestao.setText(proxLinha[6]);
-				
+
 				System.out.println(simu);
-			
+
 				// Zera a seleção dos Radio Buttons
 				bg.clearSelection();
 			}}
 	}
-	
+
 	public String gabarito() {
-		
+
 		String gab="";
 		if(rdbA.isSelected()) {
 			gab = rdbA.getText();
@@ -646,10 +674,10 @@ public class Simulado extends JPanel {
 		}else if(rdbE.isSelected()) {
 			gab = rdbE.getText();
 		}
-		
+
 		return gab;
-			
-		
+
+
 	}
 
 	public void condicaoEncerrar() {
@@ -673,6 +701,10 @@ public class Simulado extends JPanel {
 				horas = tempoTotal / (60 * 60 * 1000);
 				minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
 				segundos = (tempoTotal % (60 * 1000)) / 1000;
+
+				tempoFormatado = String.format("%02d:%02d:%02d", horas, minutos, segundos);
+
+				inserirTempo();
 
 				Resultados res = new Resultados(acertos, erros, segundos, minutos, horas,simu,id_user);
 
@@ -723,7 +755,9 @@ public class Simulado extends JPanel {
 					minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
 					segundos = (tempoTotal % (60 * 1000)) / 1000;
 
+					tempoFormatado = String.format("%02d:%02d:%02d", horas, minutos, segundos);
 
+					inserirTempo();
 
 					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas, simu,id_user);
 
@@ -769,6 +803,10 @@ public class Simulado extends JPanel {
 					horas = tempoTotal / (60 * 60 * 1000);
 					minutos = (tempoTotal % (60 * 60 * 1000)) / (60 * 1000);
 					segundos = (tempoTotal % (60 * 1000)) / 1000;
+
+					tempoFormatado = String.format("%02d:%02d:%02d", horas, minutos, segundos);
+
+					inserirTempo();
 
 					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas,simu,id_user);
 
