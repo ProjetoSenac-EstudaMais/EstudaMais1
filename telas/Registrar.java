@@ -155,6 +155,8 @@ public class Registrar extends JPanel {
 		passwordField.setBackground(new Color(36, 44, 136));
 		passwordField.setBounds(121, 412, 300, 25);
 		panel.add(passwordField);
+		
+		
 
 		JLabel lblDataNascimento = new JLabel("Data de Nascimento:");
 		lblDataNascimento.setForeground(Color.WHITE);
@@ -262,8 +264,8 @@ public class Registrar extends JPanel {
 			 *Comando para guardar os dados dentro de uma variável;/
 			 */
 			if(rs.next()) {
-				infouser[0] = rs.getString("Usuario"); //Busca o vetor 0 das infos, equivalente ao Usuário
-				infouser[1] = rs.getString("email");} //Busca o vetor 1 das infos, equivalente ao E-mail
+				infouser[0] = rs.getString("usuario_user"); //Busca o vetor 0 das infos, equivalente ao Usuário
+				infouser[1] = rs.getString("email_user");} //Busca o vetor 1 das infos, equivalente ao E-mail
 
 			rs.close();
 			conn1.closeConnection();
@@ -307,7 +309,12 @@ public class Registrar extends JPanel {
 			birthField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));}
 
 		else {
-
+			
+			System.out.println(passChar.length);
+			
+			if (passChar.length <= 8 || passChar.length >= 20) {
+                JOptionPane.showMessageDialog(null, "A senha deve conter entre 8 a 20 caracteres!");
+            } else {
 			if(!resultstr.equals(ver)) {
 				JOptionPane.showMessageDialog(null, "Respota incorreta para a soma"); //Pop-up de resposta incorreta.
 			}
@@ -345,7 +352,7 @@ public class Registrar extends JPanel {
 				else if((infos[1] !=null )&&(infos[1].equals(emailField.getText()))){
 					JOptionPane.showMessageDialog(null, "E-mail já cadastrado.");}
 			}}
-		}
+		}}
 	}
 
 	/*
