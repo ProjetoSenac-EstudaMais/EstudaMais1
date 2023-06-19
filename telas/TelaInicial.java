@@ -53,6 +53,7 @@ public class TelaInicial extends JPanel {
 	private String[] meta_id;
 	private String m_title;
 	private String m_subtitle;
+	private String id_user;
 	
 	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
     ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
@@ -65,7 +66,8 @@ public class TelaInicial extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public TelaInicial() {
+	public TelaInicial(String id_user) {
+		this.id_user=id_user;
 		setBackground(new Color(250, 250, 250));
 		setLayout(null);
 		setBounds(0, 0, 1280, 720);
@@ -159,7 +161,7 @@ public class TelaInicial extends JPanel {
 			m_subtitle = "Faça seu primeiro simulado dentro da plataforma.";
 			btnIniciarMeta.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					EscolhaSimulado es = new EscolhaSimulado();
+					EscolhaSimulado es = new EscolhaSimulado(id_user);
 					removeAll();
 					add(es);
 					revalidate();
@@ -175,7 +177,7 @@ public class TelaInicial extends JPanel {
 			m_subtitle = "Confira seus resultados no seu Perfil!";
 			btnIniciarMeta.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					MeuPerfil mp = new MeuPerfil();
+					MeuPerfil mp = new MeuPerfil(id_user);
 					removeAll();
 					add(mp);
 					revalidate();
@@ -191,7 +193,7 @@ public class TelaInicial extends JPanel {
 			m_subtitle = "Você completou: " + "(qntsimulados)" + "/3.";
 			btnIniciarMeta.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					EscolhaSimulado es = new EscolhaSimulado();
+					EscolhaSimulado es = new EscolhaSimulado(id_user);
 					removeAll();
 					add(es);
 					revalidate();
@@ -307,7 +309,7 @@ public class TelaInicial extends JPanel {
 		JButton btnPerfil = new JButton("Meu Perfil");
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-						MeuPerfil mp = new MeuPerfil();
+						MeuPerfil mp = new MeuPerfil(id_user);
 						removeAll();
 						add(mp);
 						revalidate();
@@ -329,7 +331,7 @@ public class TelaInicial extends JPanel {
 		btnConfig.setMargin(new Insets(2, 12, 2, 14));
 		btnConfig.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Config cf = new Config();
+				Config cf = new Config(id_user);
 				removeAll();
 				add(cf);
 				revalidate();
@@ -361,7 +363,7 @@ public class TelaInicial extends JPanel {
 		
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login a = new Login();
+				Login a = new Login(id_user);
 				removeAll();
 				add(a);
 				revalidate();
@@ -382,7 +384,7 @@ public class TelaInicial extends JPanel {
 		
 		btnMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaInicial a = new TelaInicial();
+				TelaInicial a = new TelaInicial(id_user);
 				removeAll();
 				add(a);
 				revalidate();
@@ -409,7 +411,7 @@ public class TelaInicial extends JPanel {
 		btnIniciarSimulados.setBackground(new Color(64, 74, 204));
 		btnIniciarSimulados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				EscolhaSimulado es = new EscolhaSimulado();
+				EscolhaSimulado es = new EscolhaSimulado(id_user);
 				removeAll();
 				add(es);
 				revalidate();
@@ -454,7 +456,7 @@ public class TelaInicial extends JPanel {
 		
 		btnIniciarDesempenho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MeuPerfil mp = new MeuPerfil();
+				MeuPerfil mp = new MeuPerfil(id_user);
 				removeAll();
 				add(mp);
 				revalidate();
@@ -490,7 +492,7 @@ public class TelaInicial extends JPanel {
 		JButton btnIniciarAmigos = new JButton("INICIAR");
 		btnIniciarAmigos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Config c = new Config();
+				Config c = new Config(id_user);
 				removeAll();
 				add(c);
 				revalidate();
