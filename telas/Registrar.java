@@ -155,8 +155,8 @@ public class Registrar extends JPanel {
 		passwordField.setBackground(new Color(36, 44, 136));
 		passwordField.setBounds(121, 412, 300, 25);
 		panel.add(passwordField);
-		
-		
+
+
 
 		JLabel lblDataNascimento = new JLabel("Data de Nascimento:");
 		lblDataNascimento.setForeground(Color.WHITE);
@@ -309,50 +309,56 @@ public class Registrar extends JPanel {
 			birthField.setBorder(new MatteBorder(1, 1, 1, 1, (Color) Color.RED));}
 
 		else {
-			
-			System.out.println(passChar.length);
-			
+
+
+
 			if (passChar.length <= 8 || passChar.length >= 20) {
-                JOptionPane.showMessageDialog(null, "A senha deve conter entre 8 a 20 caracteres!");
-            } else {
-			if(!resultstr.equals(ver)) {
-				JOptionPane.showMessageDialog(null, "Respota incorreta para a soma"); //Pop-up de resposta incorreta.
-			}
-			else {if ((infos[0] == null) || (infos[0].isEmpty()) && (infos[1] == null) || (infos[1].isEmpty())){
-
-				dataNascimento();
-
-				System.out.println(mysqlDate);
-				ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
-				String query = "insert into user_dados (nome_user, sobrenome_user,usuario_user,email_user,senha_user,birthdate_user, badge_id,id_icon) values (?,?,?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
-				try {
-					PreparedStatement pstmt = conn1.conn.prepareStatement(query);
-					pstmt.setString(1,nameField.getText());
-					pstmt.setString(2,sobrenomeField.getText());
-					pstmt.setString(3,usernameField.getText());
-					pstmt.setString(4,emailField.getText());
-					pstmt.setString(5,senha);
-					pstmt.setString(6,mysqlDate);
-					pstmt.setString(7,"1");
-					pstmt.setString(8,"1");
-					pstmt.executeUpdate();
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "A senha deve conter entre 8 a 20 caracteres!");
+			} else if(!emailField.getText().contains("@")) {
+				JOptionPane.showMessageDialog(null, "Deve ser um e-mail real!");
+			} else if(!emailField.getText().contains("gmail.") 
+					&& !emailField.getText().contains("hotmail.")
+					&& !emailField.getText().contains("outlook.")
+					&& !emailField.getText().contains("yahoo.")) {
+				JOptionPane.showMessageDialog(null, "Deve ser um e-mail real!");
+			} else {
+				if(!resultstr.equals(ver)) {
+					JOptionPane.showMessageDialog(null, "Respota incorreta para a soma"); //Pop-up de resposta incorreta.
 				}
-				conn1.closeConnection();
-				JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso! Faça seu login.");
+				else {if ((infos[0] == null) || (infos[0].isEmpty()) && (infos[1] == null) || (infos[1].isEmpty())){
 
-				telaLogin();
+					dataNascimento();
 
-			}else{
-				if((infos[0] !=null )&&(infos[0].equals(usernameField.getText()) )){
-					System.out.println(infos[0]);
-					JOptionPane.showMessageDialog(null, "Usuário já existente.");}
-				else if((infos[1] !=null )&&(infos[1].equals(emailField.getText()))){
-					JOptionPane.showMessageDialog(null, "E-mail já cadastrado.");}
+					ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
+					String query = "insert into user_dados (nome_user, sobrenome_user,usuario_user,email_user,senha_user,birthdate_user, badge_id,id_icon) values (?,?,?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
+					try {
+						PreparedStatement pstmt = conn1.conn.prepareStatement(query);
+						pstmt.setString(1,nameField.getText());
+						pstmt.setString(2,sobrenomeField.getText());
+						pstmt.setString(3,usernameField.getText());
+						pstmt.setString(4,emailField.getText());
+						pstmt.setString(5,senha);
+						pstmt.setString(6,mysqlDate);
+						pstmt.setString(7,"1");
+						pstmt.setString(8,"1");
+						pstmt.executeUpdate();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					conn1.closeConnection();
+					JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso! Faça seu login.");
+
+					telaLogin();
+
+				}else{
+					if((infos[0] !=null )&&(infos[0].equals(usernameField.getText()) )){
+						System.out.println(infos[0]);
+						JOptionPane.showMessageDialog(null, "Usuário já existente.");}
+					else if((infos[1] !=null )&&(infos[1].equals(emailField.getText()))){
+						JOptionPane.showMessageDialog(null, "E-mail já cadastrado.");}
+				}}
 			}}
-		}}
 	}
 
 	/*
