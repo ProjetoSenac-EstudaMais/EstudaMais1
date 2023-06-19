@@ -326,7 +326,7 @@ public class EscolhaSimulado extends JPanel {
 		String[] infoUser = new String[4];
 
 		// Conexão com o banco de dados para puxar as informações do usuario
-		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root2606!");
+		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root");
 
 		// Comando para o banco de dados puxar as informações
 		String query = "select nome_user, sobrenome_user, badge_id, id_icon from user_dados where id_user =?;";
