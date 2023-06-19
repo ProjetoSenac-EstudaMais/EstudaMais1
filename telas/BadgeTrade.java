@@ -643,7 +643,7 @@ public class BadgeTrade extends JPanel {
 		String[] infouser = new String [6]; //Armazena os dados de login se um usuário em Array.
 
 		try {
-			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
 			String query = "select nome_user, sobrenome_user, badge_id, meta_id, birthdate_user, id_icon from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
