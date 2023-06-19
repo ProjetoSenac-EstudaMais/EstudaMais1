@@ -350,7 +350,7 @@ public class Simulado extends JPanel {
 
 		// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
 		// configurar o JDBC no computador para funcionar
-		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
+		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
 
 
 
@@ -399,7 +399,7 @@ public class Simulado extends JPanel {
 		String[] idSimu = nextRow(linhaAtual,anoS);
 
 
-		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
+		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
 
 
 
@@ -442,7 +442,7 @@ public class Simulado extends JPanel {
 	}
 
 	public void inserirTempo() {
-		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
+		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
 
 		String query = "UPDATE simu_resolvido SET tempo_resolv =? WHERE id_simu =?;";
 
@@ -613,7 +613,7 @@ public class Simulado extends JPanel {
 					// Soma os pontos certos
 					if (!foiRespondida[linhaAtual]) {
 
-						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
+						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
 
 
 						String query = "INSERT INTO estudamais.simu_questoes_resolv (id_simu, id_quest, gabarito_user, id_user, numero_quest) VALUES (?, ?, ?,?,?);";
@@ -644,7 +644,7 @@ public class Simulado extends JPanel {
 				} else {
 					if (!foiRespondida[linhaAtual]) {
 
-						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
+						ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
 
 
 						String query = "INSERT INTO estudamais.simu_questoes_resolv (id_simu, id_quest, gabarito_user, id_user, numero_quest) VALUES (?, ?, ?,?,?);";
