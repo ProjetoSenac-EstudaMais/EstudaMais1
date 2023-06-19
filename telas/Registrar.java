@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
@@ -25,7 +26,10 @@ import javax.swing.JFormattedTextField;
 import javax.swing.border.MatteBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-
+import javax.swing.text.MaskFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Registrar extends JPanel {
 	private JTextField emailField;
@@ -35,11 +39,13 @@ public class Registrar extends JPanel {
 	private String usuario;
 	private String email;
 	private JTextField sobrenomeField;
-	private JTextField birthField;
 	private JTextField nameField;
 	private JTextField verificationField;
 	private int result;	
-
+	private JFormattedTextField birthField;
+	private String mysqlDate;
+	private MaskFormatter formatter = null;
+	private JPanel panel;
 	/**
 	 * Create the panel.
 	 */
@@ -48,7 +54,8 @@ public class Registrar extends JPanel {
 		setBounds(0, 0, 1280, 720);
 		setLayout(null);
 
-		JPanel panel = new JPanel();
+
+		panel = new JPanel();
 		panel.setBackground(new Color(36, 44, 136));
 		panel.setBounds(654, 0, 550, 720);
 		add(panel);
@@ -155,14 +162,7 @@ public class Registrar extends JPanel {
 		lblDataNascimento.setBounds(121, 452, 121, 14);
 		panel.add(lblDataNascimento);
 
-		birthField = new JTextField();
-		birthField.setForeground(Color.WHITE);
-		birthField.setFont(new Font("Poppins", Font.PLAIN, 12));
-		birthField.setColumns(10);
-		birthField.setCaretColor(Color.WHITE);
-		birthField.setBackground(new Color(36, 44, 136));
-		birthField.setBounds(121, 472, 300, 25);
-		panel.add(birthField);
+
 
 		JLabel lblVerificacao = new JLabel("Resolva a equação:");
 		lblVerificacao.setForeground(Color.WHITE);
@@ -220,11 +220,14 @@ public class Registrar extends JPanel {
 		btnRegistrar.setBounds(226, 589, 89, 23);
 		panel.add(btnRegistrar);
 
+		formatoData();
 		textFieldMudancaCor(nameField);
 		textFieldMudancaCor(emailField);
 		textFieldMudancaCor(sobrenomeField);
 		passwordFieldMudancaCor();
 		textFieldMudancaCor(usernameField);
+
+
 		birthMudancaCor();
 
 		// Interação do botão "Faça Login" para voltar à "tela de Login"
@@ -309,8 +312,12 @@ public class Registrar extends JPanel {
 				JOptionPane.showMessageDialog(null, "Respota incorreta para a soma"); //Pop-up de resposta incorreta.
 			}
 			else {if ((infos[0] == null) || (infos[0].isEmpty()) && (infos[1] == null) || (infos[1].isEmpty())){
+
+				dataNascimento();
+
+				System.out.println(mysqlDate);
 				ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root2606!"); //Cria uma referência à Classe conexão
-				String query = "insert into user_dados (nome_user, sobrenome_user,usuario_user,email_user,senha_user,birthdate_user, badge_id,id_icon) values (?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
+				String query = "insert into user_dados (nome_user, sobrenome_user,usuario_user,email_user,senha_user,birthdate_user, badge_id,id_icon) values (?,?,?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
 				try {
 					PreparedStatement pstmt = conn1.conn.prepareStatement(query);
 					pstmt.setString(1,nameField.getText());
@@ -318,7 +325,7 @@ public class Registrar extends JPanel {
 					pstmt.setString(3,usernameField.getText());
 					pstmt.setString(4,emailField.getText());
 					pstmt.setString(5,senha);
-					pstmt.setString(6,birthField.getText());
+					pstmt.setString(6,mysqlDate);
 					pstmt.setString(7,"1");
 					pstmt.setString(8,"1");
 					pstmt.executeUpdate();
@@ -344,6 +351,41 @@ public class Registrar extends JPanel {
 	/*
 	 * Métodos 
 	 */
+	public void formatoData() {
+
+		try {
+			formatter = new MaskFormatter("##/##/####");
+			formatter.setPlaceholderCharacter('_');
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		// Cria o campo de texto formatado
+		birthField = new JFormattedTextField(formatter);
+		birthField.setForeground(new Color(255, 255, 255));
+		birthField.setOpaque(false);
+		birthField.setCaretColor(new Color(255, 255, 255));
+		birthField.setBounds(121, 472, 300, 25);
+		panel.add(birthField);
+	}
+
+	public void dataNascimento() {
+		try {
+			// Obtém a data digitada no campo de texto
+			String text = birthField.getText();
+
+			// Converte a data para o formato do MySQL
+			SimpleDateFormat inputFormat = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = inputFormat.parse(text);
+			mysqlDate = outputFormat.format(date);
+
+
+		} catch (ParseException ex) {
+			ex.printStackTrace();
+
+		}
+	}
+
 	public void telaLogin() {
 		Login a = new Login();
 		removeAll();
@@ -408,30 +450,5 @@ public class Registrar extends JPanel {
 
 
 	public void birthMudancaCor() {
-		birthField.getDocument().addDocumentListener(new DocumentListener() {
-			@Override
-			public void insertUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				updateBorder();
-			}
-
-			private void updateBorder() {
-				if (birthField.getText().isEmpty()) {
-					birthField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
-				} else {
-					birthField.setBorder(UIManager.getBorder("TextField.border"));
-				}
-			}
-		});
 	}
-
 }
