@@ -59,12 +59,13 @@ public class Simulado extends JPanel {
 	private JRadioButton rdbC ;
 	private JRadioButton rdbD;
 	private JRadioButton rdbE;
-	private int areaConhecimento=1;
+	private String areaConhecimento;
 	private int simu;
 	private String id_simu;
 	private String id_user;
 	private String dataFormatada;
 	private String tempoFormatado;
+	JLabel lblareaConhecimento;
 
 	/**
 	 * Create the panel.
@@ -77,6 +78,8 @@ public class Simulado extends JPanel {
 		this.id_user=id_user;
 		// Início do período da prova
 		inicio = System.currentTimeMillis();
+
+
 
 		Date dataAtual = new Date();
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -103,7 +106,7 @@ public class Simulado extends JPanel {
 
 		lblNumQuestao = new JLabel("01");
 		lblNumQuestao.setFont(new Font("Poppins Medium", Font.PLAIN, 24));
-		lblNumQuestao.setBounds(181, 80, 70, 49);
+		lblNumQuestao.setBounds(181, 80, 37, 49);
 		add(lblNumQuestao);
 
 		textPane = new JTextPane();
@@ -253,6 +256,12 @@ public class Simulado extends JPanel {
 		txtE.setBounds(63, 401, 268, 82);
 		painelRespostas.add(txtE);
 
+		lblareaConhecimento = new JLabel();
+		lblareaConhecimento.setHorizontalAlignment(SwingConstants.CENTER);
+		lblareaConhecimento.setFont(new Font("Poppins Medium", Font.PLAIN, 18));
+		lblareaConhecimento.setBounds(429, 59, 411, 49);
+		add(lblareaConhecimento);
+
 		choice = new Choice();
 		choice.setBounds(893, 59, 103, 20);
 		add(choice);
@@ -264,6 +273,9 @@ public class Simulado extends JPanel {
 		bg.add(rdbB);
 		bg.add(rdbC);
 		bg.add(rdbD);
+
+		//Metodo para trocar o texto da lblareaConhecimento
+		areaConhecimento();
 
 		//Countdown
 		temporizador();
@@ -302,6 +314,7 @@ public class Simulado extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				btnOkay();
+				areaConhecimento();
 
 			}
 		});
@@ -315,19 +328,24 @@ public class Simulado extends JPanel {
 
 
 
+
+
 		btnPrx.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				choice.select(linhaAtual);
 
 				questaoRespondida();
 				condicaoEncerrar();
+				areaConhecimento();
 			}});
 
 	}
 
 	// Faz um metódo para puxar a proxima linha de acordo com o id
-	public String[] nextRow(int id, int ano, int areaCon) {
-		String[] linha = new String[10];
+	public String[] nextRow(int id, int ano) {
+		String[] linha = new String[9];
+
 
 
 		// Chama a classe de Conexão com Mysql e estabelece a conexão -- Lembrar de
@@ -339,11 +357,11 @@ public class Simulado extends JPanel {
 
 		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
 		// definir ele fora do comando
-		String query = "SELECT q.questao, q.id_quest, a.alt_A, a.alt_B, a.alt_C, a.alt_D, a.alt_E, q.gabarito, ac.area_conhecimento, s.id_simu, s.ano_simu FROM simu_questoes q JOIN simu_alternativas a join area_conhecimento ac join simulados s ON q.id_quest = a.id_quest WHERE q.id_quest = ? AND s.ano_simu = ? AND ac.id_area = ?;";
+		String query = "SELECT q.questao, q.id_quest, a.alt_A, a.alt_B, a.alt_C, a.alt_D, a.alt_E, q.gabarito, s.id_simu, s.ano_simu FROM simu_questoes q JOIN simu_alternativas a join simulados s ON q.id_quest = a.id_quest WHERE q.id_quest = ? AND s.ano_simu = ?;";
 
 		// Este comando retorna os valores solicitados, e primeiro vem o comando e
 		// depois o valor do '?'
-		ResultSet rs = con.executeQuery(query, id,ano,areaCon);
+		ResultSet rs = con.executeQuery(query, id,ano);
 
 		// Este comando armazena os valores recebidos em uma variavel
 		try {
@@ -359,8 +377,7 @@ public class Simulado extends JPanel {
 				linha[5] = rs.getString("alt_E");
 				linha[6] = rs.getString("id_quest");
 				linha[7] = rs.getString("gabarito");
-				linha[8] = rs.getString("area_conhecimento");
-				linha[9] = rs.getString("id_simu");
+				linha[8] = rs.getString("id_simu");
 
 
 			}
@@ -379,7 +396,7 @@ public class Simulado extends JPanel {
 	}
 
 	public void idSimu() {
-		String[] idSimu = nextRow(linhaAtual,anoS,areaConhecimento);
+		String[] idSimu = nextRow(linhaAtual,anoS);
 
 
 		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root2606!");
@@ -390,7 +407,7 @@ public class Simulado extends JPanel {
 
 		try {
 			PreparedStatement pstmt = con.conn.prepareStatement(query1);
-			pstmt.setString(1,idSimu[9]);	
+			pstmt.setString(1,idSimu[8]);	
 			pstmt.setString(2,id_user);
 			pstmt.setString(3,dataFormatada);
 
@@ -440,6 +457,19 @@ public class Simulado extends JPanel {
 			e1.printStackTrace();
 		}
 
+	}
+
+	public void areaConhecimento() {
+		if(linhaAtual==1) {
+			areaConhecimento = "Ciências Humanas e suas Tecnologias";
+		} else if(linhaAtual==2) {
+			areaConhecimento = "Ciências da Natureza e suas Tecnologias";
+		}else if(linhaAtual==3) {
+			areaConhecimento = "Linguages, Códigos e suas Tecnologias";
+		}else if(linhaAtual==4) {
+			areaConhecimento = "Matemática e suas Tecnologias";
+		}
+		lblareaConhecimento.setText(areaConhecimento);
 	}
 
 	public void finalizar() {
@@ -551,7 +581,9 @@ public class Simulado extends JPanel {
 	public void btnOkay() {
 		linhaAtual = Integer.parseInt(choice.getSelectedItem());
 
-		String[] linhaSelecionada = nextRow(linhaAtual,anoS,areaConhecimento);
+
+
+		String[] linhaSelecionada = nextRow(linhaAtual,anoS);
 		//ID pega pega o valor da caixa de texto selecionada
 
 
@@ -570,7 +602,7 @@ public class Simulado extends JPanel {
 		if (rdbA.isSelected() || rdbB.isSelected() || rdbC.isSelected() || rdbD.isSelected() || rdbE.isSelected()) {
 
 			if (linhaAtual > 0) {
-				String[] novaLinha = nextRow(linhaAtual,anoS,areaConhecimento);
+				String[] novaLinha = nextRow(linhaAtual,anoS);
 				// Verifica se a opção está correta;
 
 				if ((rdbA.isSelected() && novaLinha[7].equals("A"))
@@ -643,7 +675,7 @@ public class Simulado extends JPanel {
 				// Atualiza o valor de linha atual, para ir para os próximos textos
 				linhaAtual++;
 
-				String[] proxLinha = nextRow(linhaAtual,anoS,areaConhecimento);
+				String[] proxLinha = nextRow(linhaAtual,anoS);
 
 				textPane.setText(proxLinha[0]);
 				txtA.setText(proxLinha[1]);
@@ -716,7 +748,7 @@ public class Simulado extends JPanel {
 
 				linhaAtual=3;
 
-				String[] linhaContinuo = nextRow(linhaAtual,anoS,areaConhecimento);
+				String[] linhaContinuo = nextRow(linhaAtual,anoS);
 
 				textPane.setText(linhaContinuo[0]);
 				txtA.setText(linhaContinuo[1]);
@@ -769,7 +801,7 @@ public class Simulado extends JPanel {
 
 					linhaAtual=1;
 
-					String[] linhaContinuo = nextRow(linhaAtual,anoS,areaConhecimento);
+					String[] linhaContinuo = nextRow(linhaAtual,anoS);
 
 					textPane.setText(linhaContinuo[0]);
 					txtA.setText(linhaContinuo[1]);
@@ -819,7 +851,7 @@ public class Simulado extends JPanel {
 
 					linhaAtual=3;
 
-					String[] linhaContinuo = nextRow(linhaAtual,anoS,areaConhecimento);
+					String[] linhaContinuo = nextRow(linhaAtual,anoS);
 
 					textPane.setText(linhaContinuo[0]);
 					txtA.setText(linhaContinuo[1]);
@@ -836,7 +868,7 @@ public class Simulado extends JPanel {
 
 	public void primeiraLinha() {
 
-		String[] primeiraLinha = nextRow(linhaAtual, anoS,areaConhecimento);
+		String[] primeiraLinha = nextRow(linhaAtual, anoS);
 		textPane.setText(primeiraLinha[0]);
 		txtA.setText(primeiraLinha[1]);
 		txtB.setText(primeiraLinha[2]);
@@ -845,5 +877,4 @@ public class Simulado extends JPanel {
 		txtE.setText(primeiraLinha[5]);
 		lblNumQuestao.setText(primeiraLinha[6]);
 	}
-
 }
