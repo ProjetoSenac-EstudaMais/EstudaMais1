@@ -59,6 +59,7 @@ public class MeuPerfil extends JPanel {
 	private String m_title;
 	private String m_subtitle;
 	private String[] birthdate_user;
+	private String id_user;
 
 	
 	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
@@ -70,8 +71,8 @@ public class MeuPerfil extends JPanel {
     ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
     ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");	
 
-	public MeuPerfil() {
-		
+	public MeuPerfil(String id_user) {
+			this.id_user=id_user;
 			setLayout(null);
 			setBounds(100,100,1280,720);
 			
@@ -140,7 +141,7 @@ public class MeuPerfil extends JPanel {
 			JButton btnAddIcon = new JButton("");
 			btnAddIcon.addActionListener(new ActionListener() {
 			    public void actionPerformed(ActionEvent e) {
-			    	IconTrade a = new IconTrade();
+			    	IconTrade a = new IconTrade(id_user);
 					removeAll();
 					add(a);
 					revalidate();
@@ -270,7 +271,7 @@ public class MeuPerfil extends JPanel {
 			JButton btnAddBadge = new JButton("");
 			btnAddBadge.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					BadgeTrade b = new BadgeTrade();
+					BadgeTrade b = new BadgeTrade(id_user);
 					removeAll();
 					add(b);
 					revalidate();
@@ -463,7 +464,7 @@ public class MeuPerfil extends JPanel {
 			JButton btnConfig = new JButton("Configurações");
 			btnConfig.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Config cf = new Config();
+					Config cf = new Config(id_user);
 					removeAll();
 					add(cf);
 					revalidate();
@@ -496,7 +497,7 @@ public class MeuPerfil extends JPanel {
 			
 			btnSair.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Login a = new Login();
+					Login a = new Login(id_user);
 					removeAll();
 					add(a);
 					revalidate();
@@ -517,7 +518,7 @@ public class MeuPerfil extends JPanel {
 			
 			btnMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					TelaInicial a = new TelaInicial();
+					TelaInicial a = new TelaInicial(id_user);
 					removeAll();
 					add(a);
 					revalidate();
