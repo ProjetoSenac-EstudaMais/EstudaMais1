@@ -560,16 +560,16 @@ public class Simulado extends JPanel {
 					choice.add(""+i);}
 			}} else if(tipoSimu==2) {
 				if(tempoSimu == "Curto") {
-					for(int i=0;i<2;i++) {
-						if(i==0) {
+					for(int i=1;i<3;i++) {
+						if(i==2) {
 							choice.add("-");
 						}else {
 							choice.add(""+i);}
 					} 
 
 				}else if(tempoSimu == "Medio") {
-					for(int i=0;i<3;i++) {
-						if(i==0) {
+					for(int i=1;i<4;i++) {
+						if(i==3) {
 							choice.add("-");
 						}else {
 							choice.add(""+i);}
@@ -849,7 +849,7 @@ public class Simulado extends JPanel {
 
 				} else if(linhaAtual >2 && questaoRespondida!=2) {
 
-					linhaAtual=3;
+					linhaAtual=2;
 
 					String[] linhaContinuo = nextRow(linhaAtual,anoS);
 
