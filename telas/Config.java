@@ -30,13 +30,14 @@ public class Config extends JPanel {
 	//VARIAVEL PARA O TEMPO DO SIMULADO PERSONALIZADO
 	String tempoSP;
 	
+	private String id_user;
 
 
 	/**
 	 * Create the panel.
 	 */
-	public Config() {
-		
+	public Config(String id_user) {
+			this.id_user=id_user;
 			setLayout(null);
 			setBounds(100,100,1280,720);
 			
@@ -89,7 +90,7 @@ public class Config extends JPanel {
 			JButton btnPerfil = new JButton("Meu Perfil");
 			btnPerfil.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					MeuPerfil mp = new MeuPerfil();
+					MeuPerfil mp = new MeuPerfil(id_user);
 					removeAll();
 					add(mp);
 					revalidate();
@@ -139,7 +140,7 @@ public class Config extends JPanel {
 			
 			btnSair.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Login a = new Login();
+					Login a = new Login(id_user);
 					removeAll();
 					add(a);
 					revalidate();
@@ -160,7 +161,7 @@ public class Config extends JPanel {
 			
 			btnMenu.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					TelaInicial a = new TelaInicial();
+					TelaInicial a = new TelaInicial(id_user);
 					removeAll();
 					add(a);
 					revalidate();
