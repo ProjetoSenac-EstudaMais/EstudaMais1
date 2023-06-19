@@ -168,8 +168,8 @@ public class Gabarito extends JPanel {
 		ConexãoMysql con = new ConexãoMysql("localhost", "3306", "estudamais", "root", "root");
 
 		//manda o comando para o banco de dados
-		String query = "SELECT qr.numero_quest, qs.gabarito, qr.gabarito_user FROM simu_questoes_resolv qr JOIN simu_questoes qs ON qr.id_quest = qs.id_quest WHERE qr.id_quest = ? and qr.id_simu = ?;";
-		ResultSet rs = con.executeQuery(query, id, simu);
+		String query = "SELECT qr.numero_quest, qs.gabarito, qr.gabarito_user FROM simu_questoes_resolv qr JOIN simu_questoes qs join user_dados us ON qr.id_quest = qs.id_quest WHERE qr.id_quest =? and qr.id_simu = ? and us.id_user = ?;";
+		ResultSet rs = con.executeQuery(query, id, simu, id_user);
 
 		//recebe os dados solicitados
 		try {
