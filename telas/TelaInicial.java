@@ -1,4 +1,4 @@
-package telas;
+package estuda;
 
 import javax.swing.JPanel;
 
@@ -55,13 +55,13 @@ public class TelaInicial extends JPanel {
 	private String m_subtitle;
 	private String id_user;
 	
-	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
-    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
-    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
-    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");   
-    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
-    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
-    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");		
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\chuu.png");
+    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id1.png");
+    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id2.png");	
+    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id3.png");   
+    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id1.png");
+    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id2.png");
+    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id3.png");		
 
 	/**
 	 * Create the panel.
@@ -214,18 +214,18 @@ public class TelaInicial extends JPanel {
 	    		        if (IntroPainel.isVisible() || MetasPainel.isVisible()) {
 	    		            IntroPainel.setVisible(false);
 	    		            MetasPainel.setVisible(false);
-	    		            btnHide.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\hide.png"));
+	    		            btnHide.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\assets\\hide.png"));
 	    		        } else {
 	    		            IntroPainel.setVisible(true);
 	    		            MetasPainel.setVisible(true);
-	    		            btnHide.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\reveal.png"));
+	    		            btnHide.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\assets\\reveal.png"));
 	    		        }
 	    		    }
 	    		});	    		
 
 	    btnHide.setContentAreaFilled(false);
 	    btnHide.setBorderPainted(false);
-	    btnHide.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\reveal.png"));
+	    btnHide.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\assets\\reveal.png"));
 	    btnHide.setBounds(1220, 15, 28, 28);
 	    add(btnHide);
 	 
@@ -432,7 +432,7 @@ public class TelaInicial extends JPanel {
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\img_telas\\tela_inicial\\simulados.png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\img_telas\\tela_inicial\\simulados.png"));
 		lblNewLabel.setBounds(0, 0, 277, 125);
 		panel_1.add(lblNewLabel);
 		
@@ -475,7 +475,7 @@ public class TelaInicial extends JPanel {
 			
 		JLabel lblNewLabel_3 = new JLabel("");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\img_telas\\tela_inicial\\gabaritos.png"));
+		lblNewLabel_3.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\img_telas\\tela_inicial\\gabaritos.png"));
 		lblNewLabel_3.setBounds(0, 0, 276, 126);
 		panel_1_1.add(lblNewLabel_3);
 		
@@ -517,7 +517,7 @@ public class TelaInicial extends JPanel {
 		panel_1_1_1.add(lbl_exercicios);
 		
 		JLabel lblNewLabel_4 = new JLabel("");
-		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\img_telas\\tela_inicial\\exercicios.png"));
+		lblNewLabel_4.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\img_telas\\tela_inicial\\exercicios.png"));
 		lblNewLabel_4.setBounds(0, 0, 277, 125);
 		panel_1_1_1.add(lblNewLabel_4);
 		
@@ -536,7 +536,7 @@ public class TelaInicial extends JPanel {
 		JLabel lblNewLabel_2 = new JLabel("");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblNewLabel_2.setHorizontalTextPosition(SwingConstants.LEADING);
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\img_telas\\tela_inicial\\slider_banner.png"));
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\img_telas\\tela_inicial\\slider_banner.png"));
 		lblNewLabel_2.setBounds(260, 0, 1020, 319);
 		add(lblNewLabel_2);
 		
