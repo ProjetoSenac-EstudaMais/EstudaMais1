@@ -1,4 +1,4 @@
-package telas;
+package estuda;
 
 import java.awt.Choice;
 import java.awt.Color;
@@ -63,21 +63,29 @@ public class BadgeTrade extends JPanel {
 	private String id_user;
 
 	
-	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
-    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
-    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
-    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");  
-    ImageIcon iconperfil_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu125.png");
-    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
-    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
-    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");
-    ImageIcon badge_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id4.png");
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\chuu.png");
+    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id1.png");
+    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id2.png");	
+    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id3.png");   
+    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id1.png");
+    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id2.png");
+    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id3.png");		  
+    ImageIcon iconperfil_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\chuu125.png");
+    ImageIcon iconperfil_2 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\id1_125.png");
+    ImageIcon iconperfil_3 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\id2_125.png");
+    ImageIcon iconperfil_4 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\id3_125.png");
+    ImageIcon badge_4 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id4.png");
 
 	public BadgeTrade(String id_user) {
 		this.id_user=id_user;
 		
 			setLayout(null);
 			setBounds(100,100,1280,720);
+			
+			this.nome_id = DB(id_user);
+			this.sobrenome_id = DB(id_user);
+			this.badge_id = DB(id_user);
+			this.birthdate_user = DB(id_user);
 			
 
 			JPanel panel = new JPanel();
@@ -106,7 +114,7 @@ public class BadgeTrade extends JPanel {
 			btnConfirmar.setBounds(152, 263, 119, 48);
 			panel_6.add(btnConfirmar);
 			
-			JButton btnBadge_Id_1 = new JButton("btnBadge_Id_1");
+			JButton btnBadge_Id_1 = new JButton("");
 			btnBadge_Id_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
@@ -135,7 +143,7 @@ public class BadgeTrade extends JPanel {
 			btnBadge_Id_1.setIcon(badge_1);
 			panel_6.add(btnBadge_Id_1);
 			
-			JButton btnBadge_Id_2 = new JButton("btnBadge_Id_2");
+			JButton btnBadge_Id_2 = new JButton("");
 			btnBadge_Id_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
@@ -163,7 +171,7 @@ public class BadgeTrade extends JPanel {
 			btnBadge_Id_2.setIcon(badge_2);
 			panel_6.add(btnBadge_Id_2);
 			
-			JButton btnBadge_Id_3 = new JButton("btnBadge_Id_3");
+			JButton btnBadge_Id_3 = new JButton("");
 			btnBadge_Id_3.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
@@ -189,7 +197,7 @@ public class BadgeTrade extends JPanel {
 			btnBadge_Id_3.setIcon(badge_3);
 			panel_6.add(btnBadge_Id_3);
 			
-			JButton btnBadge_Id_4 = new JButton("btnBadge_Id_4");
+			JButton btnBadge_Id_4 = new JButton("");
 			btnBadge_Id_4.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
@@ -215,6 +223,33 @@ public class BadgeTrade extends JPanel {
 			btnBadge_Id_4.setIcon(badge_4);
 			panel_6.add(btnBadge_Id_4);
 			
+			this.meta_id = DB(id_user);
+			
+			System.out.println(this.meta_id);
+			
+			if(this.meta_id[3].equals("1")){
+				btnBadge_Id_1.setVisible(true);
+				btnBadge_Id_2.setVisible(false);
+				btnBadge_Id_3.setVisible(false);
+				btnBadge_Id_4.setVisible(false);
+			}else if(this.meta_id[3].equals("2")) {
+				btnBadge_Id_1.setVisible(true);
+				btnBadge_Id_2.setVisible(true);
+				btnBadge_Id_3.setVisible(false);;
+				btnBadge_Id_4.setVisible(false);
+			}else if(this.meta_id[3].equals("3")) {
+				btnBadge_Id_1.setVisible(true);
+				btnBadge_Id_2.setVisible(true);
+				btnBadge_Id_3.setVisible(true);
+				btnBadge_Id_4.setVisible(false);
+			}else if(this.meta_id[3].equals("4")) {
+				btnBadge_Id_1.setVisible(true);
+				btnBadge_Id_2.setVisible(true);
+				btnBadge_Id_3.setVisible(true);
+				btnBadge_Id_4.setVisible(true);
+			}		
+					
+			
 			
 			JPanel panel_2 = new JPanel();
 			panel_2.setBackground(new Color(255, 255, 255));
@@ -239,10 +274,6 @@ public class BadgeTrade extends JPanel {
 			bg_header.setBounds(0, 0, 1020, 100);
 			panel_3_1.add(bg_header);
 			
-			this.nome_id = DB(1);
-			this.sobrenome_id = DB(1);
-			this.badge_id = DB(1);
-			this.birthdate_user = DB(1);
 			
 			JLabel lblNewLabel = new JLabel("Nome:");
 			lblNewLabel.setFont(new Font("Poppins", Font.PLAIN, 17));
@@ -285,16 +316,27 @@ public class BadgeTrade extends JPanel {
 			btnAddIcon.setContentAreaFilled(false);
 			btnAddIcon.setBorderPainted(false);
 			btnAddIcon.setOpaque(false);
-			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\add.png"));
+			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\assets\\add.png"));
 			btnAddIcon.setBounds(97, 97, 28, 28);
-			panel_1.add(btnAddIcon);
+			panel_1.add(btnAddIcon);		
+			
+			this.id_icon = DB(id_user);
 			
 			JLabel IconUser = new JLabel("");
 			IconUser.setBorder(new LineBorder(new Color(36, 46, 134), 4));
 			IconUser.setIgnoreRepaint(true);
-			IconUser.setIcon(iconperfil_1);
 			IconUser.setBounds(0, 0, 125, 125);
 			panel_1.add(IconUser);
+			
+			if(this.id_icon[5].equals("1")) {
+				IconUser.setIcon(iconperfil_1);
+			}else if(this.id_icon[5].equals("2")){
+				IconUser.setIcon(iconperfil_2);
+			}else if(this.id_icon[5].equals("3")){
+				IconUser.setIcon(iconperfil_3);
+			}else if(this.id_icon[5].equals("4")){
+				IconUser.setIcon(iconperfil_4);
+			}
 			
 			// Painel Simulados
 			
@@ -399,24 +441,6 @@ public class BadgeTrade extends JPanel {
 			panel_4.setBounds(10, 250, 568, 45);
 			panel_2.add(panel_4);
 			panel_4.setLayout(null);
-			
-			JButton btnAddBadge = new JButton("");
-			btnAddBadge.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					BadgeTrade b = new BadgeTrade(id_user);
-					removeAll();
-					add(b);
-					revalidate();
-					repaint();
-				}
-			});
-			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\add.png"));
-			btnAddBadge.setOpaque(false);
-			btnAddBadge.setHorizontalTextPosition(SwingConstants.CENTER);
-			btnAddBadge.setContentAreaFilled(false);
-			btnAddBadge.setBorderPainted(false);
-			btnAddBadge.setBounds(530, 8, 28, 28);
-			panel_4.add(btnAddBadge);
 					
 			JLabel badge_trade_icon = new JLabel("");
 			badge_trade_icon.setIcon(badge_1);
@@ -483,7 +507,17 @@ public class BadgeTrade extends JPanel {
 			progressBar.setBounds(12, 92, 546, 14);
 			panel_5.add(progressBar);
 			progressBar.setForeground(new Color(36, 46, 134));
-			progressBar.setValue(50);
+			progressBar.setValue(0);
+			
+			this.meta_id = DB(id_user);
+			
+			if(meta_id[3].equals("1")) {
+				progressBar.setValue(0);
+			}else if(meta_id[3].equals("2")) {
+				progressBar.setValue(50);
+			}else if(meta_id[3].equals("3")) {
+				progressBar.setValue(100);
+			}
 			
 			JLabel lblQntSimulados = new JLabel(String.valueOf(SimuladosQuant));
 			lblQntSimulados.setBounds(160, 25, 64, 14);
@@ -507,8 +541,6 @@ public class BadgeTrade extends JPanel {
 			badge_id.setBounds(71, 55, 28, 28);
 			Perfil.add(badge_id);
 			
-			this.id_icon = DB(1);
-			
 			JLabel icon_user = new JLabel("");
 			icon_user.setInheritsPopupMenu(false);
 			icon_user.setRequestFocusEnabled(false);
@@ -527,7 +559,6 @@ public class BadgeTrade extends JPanel {
 			}else if(this.id_icon[5].equals("4")){
 				icon_user.setIcon(icon_4);
 			}
-			
 			
 			
 			if(this.badge_id[2].equals("1")){
@@ -639,7 +670,7 @@ public class BadgeTrade extends JPanel {
 
 	}
 	
-	public static String[] DB(int id_user) {
+	public static String[] DB(String id_user) {
 		String[] infouser = new String [6]; //Armazena os dados de login se um usuário em Array.
 
 		try {
