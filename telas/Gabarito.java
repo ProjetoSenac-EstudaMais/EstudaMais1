@@ -28,6 +28,8 @@ public class Gabarito extends JPanel {
 	private JLabel gabarito;
 	private int simu;
 	private String id_user;
+	private String tempoSimu;
+	private int tipoSimu;
 
 	/**
 	 * Create the panel.
@@ -35,7 +37,7 @@ public class Gabarito extends JPanel {
 
 
 
-	public Gabarito(int acertos, int erros, long segundos, long minutos, long horas, int simu,String id_user) {
+	public Gabarito(int acertos, int erros, long segundos, long minutos, long horas, int simu,String id_user,String tempoSimu, int tipoSimu) {
 		this.acertos=acertos;
 		this.erros=erros;
 		this.segundos=segundos;
@@ -303,7 +305,7 @@ public class Gabarito extends JPanel {
 	}
 
 	public void telaResultados() {
-		Resultados res = new Resultados(acertos, erros, segundos, minutos, horas, simu,id_user);
+		Resultados res = new Resultados(acertos, erros, segundos, minutos, horas, simu,id_user,tipoSimu,tempoSimu);
 		removeAll();
 		add(res);
 		revalidate();
