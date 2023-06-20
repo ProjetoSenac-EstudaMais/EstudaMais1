@@ -107,10 +107,10 @@ public class MeuPerfil extends JPanel {
 			bg_header.setBounds(0, 0, 1020, 100);
 			panel_3_1.add(bg_header);
 			
-			this.nome_id = DB(1);
-			this.sobrenome_id = DB(1);
-			this.badge_id = DB(1);
-			this.birthdate_user = DB(1);
+			this.nome_id = DB(id_user);
+			this.sobrenome_id = DB(id_user);
+			this.badge_id = DB(id_user);
+			this.birthdate_user = DB(id_user);
 			
 			JLabel lblNewLabel = new JLabel("Nome:");
 			lblNewLabel.setFont(new Font("Poppins", Font.PLAIN, 17));
@@ -353,7 +353,7 @@ public class MeuPerfil extends JPanel {
 			progressBar.setForeground(new Color(36, 46, 134));
 			progressBar.setValue(0);
 			
-			this.meta_id = DB(1);
+			this.meta_id = DB(id_user);
 			
 			if(meta_id[3].equals("1")) {
 				progressBar.setValue(0);
@@ -397,7 +397,7 @@ public class MeuPerfil extends JPanel {
 			badge_id.setBounds(71, 55, 28, 28);
 			Perfil.add(badge_id);
 			
-			this.id_icon = DB(1);
+			this.id_icon = DB(id_user);
 			
 			JLabel icon_user = new JLabel("");
 			icon_user.setInheritsPopupMenu(false);
@@ -497,7 +497,7 @@ public class MeuPerfil extends JPanel {
 			
 			btnSair.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Login a = new Login(id_user);
+					Login a = new Login();
 					removeAll();
 					add(a);
 					revalidate();
@@ -529,7 +529,7 @@ public class MeuPerfil extends JPanel {
 
 	}
 	
-	public static String[] DB(int id_user) {
+	public static String[] DB(String id_user) {
 		String[] infouser = new String [6]; //Armazena os dados de login se um usuário em Array.
 
 		try {
