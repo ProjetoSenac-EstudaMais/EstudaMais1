@@ -312,7 +312,7 @@ public class Registrar extends JPanel {
 
 
 
-			if (passChar.length <= 8 || passChar.length >= 20) {
+			if (passChar.length < 8 || passChar.length > 20) {
 				JOptionPane.showMessageDialog(null, "A senha deve conter entre 8 a 20 caracteres!");
 			} else if(!emailField.getText().contains("@")) {
 				JOptionPane.showMessageDialog(null, "Deve ser um e-mail real!");
@@ -330,7 +330,7 @@ public class Registrar extends JPanel {
 					dataNascimento();
 
 					ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
-					String query = "insert into user_dados (nome_user, sobrenome_user,usuario_user,email_user,senha_user,birthdate_user, badge_id,id_icon) values (?,?,?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
+					String query = "insert into user_dados (nome_user, sobrenome_user,usuario_user,email_user,senha_user,birthdate_user, badge_id,id_icon,meta_id) values (?,?,?,?,?,?,?,?,?);"; //SQL de inserção de dados (registro);
 					try {
 						PreparedStatement pstmt = conn1.conn.prepareStatement(query);
 						pstmt.setString(1,nameField.getText());
@@ -341,6 +341,8 @@ public class Registrar extends JPanel {
 						pstmt.setString(6,mysqlDate);
 						pstmt.setString(7,"1");
 						pstmt.setString(8,"1");
+						pstmt.setString(9,"1");
+
 						pstmt.executeUpdate();
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
