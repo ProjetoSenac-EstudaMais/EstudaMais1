@@ -153,7 +153,7 @@ public class TelaInicial extends JPanel {
 		btnIniciarMeta.setBounds(50, 93, 180, 36);
 		MetasPainel.add(btnIniciarMeta);
 		
-		this.badge_id = DB(1);
+		this.badge_id = DB(id_user);
 		
 		if(this.badge_id[2].equals("1")) {
 			m_badge_id.setIcon(badge_1);
@@ -251,7 +251,7 @@ public class TelaInicial extends JPanel {
 		badge_id.setIcon(badge_3);
 		Perfil.add(badge_id);
 		
-		this.id_icon = DB(1);
+		this.id_icon = DB(id_user);
 		System.out.println(this.id_icon[4]);
 		
 		JLabel icon_user = new JLabel("");
@@ -275,8 +275,8 @@ public class TelaInicial extends JPanel {
 		
 		
 		
-		this.nome_id = DB(1);
-		this.sobrenome_id = DB(1);
+		this.nome_id = DB(id_user);
+		this.sobrenome_id = DB(id_user);
 		
 		JLabel nome_id = new JLabel("" + this.nome_id[0] + " " + this.sobrenome_id[1]);
 		nome_id.setForeground(new Color(255, 255, 255));
@@ -363,11 +363,12 @@ public class TelaInicial extends JPanel {
 		
 		btnSair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Login a = new Login(id_user);
+				Login a = new Login();
 				removeAll();
 				add(a);
 				revalidate();
 				repaint();
+				
 			}
 		});
 		
@@ -673,7 +674,7 @@ public class TelaInicial extends JPanel {
 	}        
   }
 	
-	public static String[] DB(int id_user) {
+	public static String[] DB(String id_user) {
 		String[] infouser = new String [5]; //Armazena os dados de login se um usuário em Array.
 
 		try {
