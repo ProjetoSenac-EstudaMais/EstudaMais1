@@ -1,4 +1,4 @@
-package estuda;
+package telas;
 
 import java.awt.Choice;
 import java.awt.Color;
@@ -21,6 +21,7 @@ import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 import javax.swing.JProgressBar;
 import javax.swing.border.SoftBevelBorder;
@@ -29,6 +30,7 @@ import java.awt.ComponentOrientation;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.time.Period;
 
 public class MeuPerfil extends JPanel {
@@ -60,6 +62,14 @@ public class MeuPerfil extends JPanel {
 	private String m_subtitle;
 	private String[] birthdate_user;
 	private String id_user;
+	
+	private int anoSimu;
+
+	private String dataNormal;
+
+	private String[] id_simu;
+	private static int Simu;
+	private Date data;
 
 	
 	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\chuu.png");
@@ -76,6 +86,11 @@ public class MeuPerfil extends JPanel {
 
 	public MeuPerfil(String id_user) {
 			this.id_user=id_user;
+			
+			this.id_simu = DBSimu2(id_user);
+
+			Simu = Integer.parseInt(id_simu[0]);
+			
 			setLayout(null);
 			setBounds(100,100,1280,720);
 			
@@ -196,55 +211,87 @@ public class MeuPerfil extends JPanel {
 			
 			//SIMULADO TEMPLATE PANEL
 			
-			int SimuladosQuant = 3;
-			
+			int SimuladosQuant = 8;
+
 			int startY = 50;
 			int panelHeight = 56;
 			int verticalSpacing = -25;
-			
-			
-			for (int i = 0; i < SimuladosQuant; i++) {
-				
-		    JPanel SimuladoTemplate = new JPanel();
-			SimuladoTemplate.setBorder(new LineBorder(new Color(255, 255, 255)));
-			SimuladoTemplate.setBackground(new Color(36, 46, 134));
-			SimuladoTemplate.setBounds(8, startY + i * (panelHeight + verticalSpacing), 404, panelHeight);
-			PainelSimulados.add(SimuladoTemplate);
-			SimuladoTemplate.setLayout(null);
 
-			JLabel Nome_Simulado = new JLabel("Nome_Simulado");
-		    Nome_Simulado.setForeground(new Color(255, 255, 255));
-			Nome_Simulado.setFont(new Font("Poppins", Font.PLAIN, 14));
-			Nome_Simulado.setBounds(10, 15, 163, 14);
-			SimuladoTemplate.add(Nome_Simulado);
-			
-			JLabel Data_Simulado = new JLabel("13/06/2023");
-			Data_Simulado.setHorizontalAlignment(SwingConstants.CENTER);
-			Data_Simulado.setForeground(Color.WHITE);
-			Data_Simulado.setFont(new Font("Poppins", Font.PLAIN, 14));
-			Data_Simulado.setBounds(10, 30, 123, 14);
-			SimuladoTemplate.add(Data_Simulado);
-			
-			JButton btnNewButton = new JButton("Ver Gabarito");
-			btnNewButton.setForeground(new Color(255, 255, 255));
-			btnNewButton.setBorderPainted(false);
-			btnNewButton.setBackground(new Color(98, 106, 204));
-			btnNewButton.setBounds(154, 15, 110, 23);
-			SimuladoTemplate.add(btnNewButton);
-			
-			JLabel Questoes_Gabarito = new JLabel("25/40");
-			Questoes_Gabarito.setHorizontalAlignment(SwingConstants.CENTER);
-			Questoes_Gabarito.setForeground(Color.WHITE);
-			Questoes_Gabarito.setFont(new Font("Poppins", Font.PLAIN, 14));
-			Questoes_Gabarito.setBounds(281, 20, 73, 14);
-			SimuladoTemplate.add(Questoes_Gabarito);
-			
-			JLabel icon_Acertos = new JLabel("");
-			icon_Acertos.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\check.png"));
-			icon_Acertos.setBounds(364, 14, 28, 28);
-			SimuladoTemplate.add(icon_Acertos);
-			
-			startY += panelHeight + verticalSpacing;
+			for (int i = 0; i < SimuladosQuant; i++) {
+
+				String[] idSimu = DBSimu(this.id_user);
+				 
+
+				JPanel SimuladoTemplate = new JPanel();
+				SimuladoTemplate.setBorder(new LineBorder(new Color(255, 255, 255)));
+				SimuladoTemplate.setBackground(new Color(36, 46, 134));
+				SimuladoTemplate.setBounds(8, startY + i * (panelHeight + verticalSpacing), 404, panelHeight);
+				PainelSimulados.add(SimuladoTemplate);
+				SimuladoTemplate.setLayout(null);
+
+				JLabel Nome_Simulado = new JLabel();
+				Nome_Simulado.setForeground(new Color(255, 255, 255));
+				Nome_Simulado.setFont(new Font("Poppins", Font.PLAIN, 14));
+				Nome_Simulado.setBounds(10, 15, 163, 14);
+				SimuladoTemplate.add(Nome_Simulado);
+
+				JLabel Data_Simulado = new JLabel();
+				Data_Simulado.setHorizontalAlignment(SwingConstants.CENTER);
+				Data_Simulado.setForeground(Color.WHITE);
+				Data_Simulado.setFont(new Font("Poppins", Font.PLAIN, 14));
+				Data_Simulado.setBounds(10, 30, 123, 14);
+				SimuladoTemplate.add(Data_Simulado);
+
+				JButton btnNewButton = new JButton("Ver Gabarito");
+				btnNewButton.setForeground(new Color(255, 255, 255));
+				btnNewButton.setBorderPainted(false);
+				btnNewButton.setBackground(new Color(98, 106, 204));
+				btnNewButton.setBounds(154, 15, 110, 23);
+				SimuladoTemplate.add(btnNewButton);
+
+				JLabel Questoes_Gabarito = new JLabel();
+				Questoes_Gabarito.setHorizontalAlignment(SwingConstants.CENTER);
+				Questoes_Gabarito.setForeground(Color.WHITE);
+				Questoes_Gabarito.setFont(new Font("Poppins", Font.PLAIN, 14));
+				Questoes_Gabarito.setBounds(281, 20, 73, 14);
+				SimuladoTemplate.add(Questoes_Gabarito);
+
+				JLabel icon_Acertos = new JLabel("");
+				icon_Acertos.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\check.png"));
+				icon_Acertos.setBounds(364, 14, 28, 28);
+				SimuladoTemplate.add(icon_Acertos);
+				
+				if(idSimu[0] == null && idSimu[1] == null && idSimu[2] == null && idSimu[3] == null) {
+					do{Simu--;} while(idSimu[0] == null && idSimu[1] == null && idSimu[2] == null && idSimu[3] == null);
+					
+				}else {
+					
+					if (idSimu[3].equals("1")) {
+						anoSimu = 2021;
+					} else if (idSimu[3].equals("2")) {
+						anoSimu = 2022;
+					}
+				
+				String dataDoBanco =idSimu[0]; // Data obtida do banco de dados
+		        SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd");
+		        SimpleDateFormat formatoNormal = new SimpleDateFormat("dd/MM/yyyy");
+				
+				try {
+			            data = formatoBanco.parse(dataDoBanco);
+			            dataNormal = formatoNormal.format(data);
+			           
+			            
+			        } catch (Exception e) {
+			            e.printStackTrace();
+			        }
+				
+				Nome_Simulado.setText("Simulado: "+anoSimu);
+				Data_Simulado.setText(dataNormal);
+				Questoes_Gabarito.setText(idSimu[2] + "/8");
+
+				startY += panelHeight + verticalSpacing;
+
+				Simu--;}
 			}
 			
 			int panelHeightTotal = SimuladosQuant * (panelHeight + verticalSpacing) - verticalSpacing;
@@ -569,5 +616,59 @@ public class MeuPerfil extends JPanel {
 		}
 		catch (SQLException e){e.printStackTrace();}
 		return infouser;
+	}
+	
+	public static String[] DBSimu(String id_user) {
+		String[] infousimu = new String[4]; // Armazena os dados de login se um usuário em Array.
+
+		try {
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root"); // Cria uma
+																										
+			// Envia comandos para o DB.
+			String query = "select data_resolv, tempo_resolv,quest_certas,num_simu from simu_resolvido where id_user = ? and id_simu = ? order by id_simu desc limit 8;"; // SQL
+																																										
+			ResultSet rs = conn1.executeQuery(query, id_user, Simu); // Retornar os resultados da SQL
+
+			/*
+			 * Comando para guardar os dados dentro de uma variável;/
+			 */
+			if (rs.next()) {
+				infousimu[0] = rs.getString("data_resolv");
+				infousimu[1] = rs.getString("tempo_resolv");
+				infousimu[2] = rs.getString("quest_certas");
+				infousimu[3] = rs.getString("num_simu");
+			}
+
+			rs.close();
+			conn1.closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return infousimu;
+	}
+
+	public static String[] DBSimu2(String id_user) {
+		String[] infousimu2 = new String[1]; // Armazena os dados de login se um usuário em Array.
+
+		try {
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root"); // Cria uma
+																										
+			// Envia comandos para o DB.
+			String query = "select max(id_simu) as id_simu from simu_resolvido where id_user =? ;"; // SQL que busca o
+																								
+			ResultSet rs = conn1.executeQuery(query, id_user); // Retornar os resultados da SQL
+
+			/*
+			 * Comando para guardar os dados dentro de uma variável;/
+			 */
+			if (rs.next()) {
+				infousimu2[0] = rs.getString("id_simu");
+			}
+			rs.close();
+			conn1.closeConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return infousimu2;
 	}
 }
