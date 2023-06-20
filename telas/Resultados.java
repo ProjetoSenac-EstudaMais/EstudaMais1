@@ -30,7 +30,8 @@ public class Resultados extends JPanel {
 	JLabel nameUsuario;
 	JLabel badge_id;
 	JLabel icon_user;
-
+	private int tipoSimu;
+	private String tempoSimu;
 	
 	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
     ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
@@ -42,7 +43,7 @@ public class Resultados extends JPanel {
 
 	
 
-	public Resultados(int acertos, int erros, long segundos, long minutos, long horas, int simu,String id_user) {
+	public Resultados(int acertos, int erros, long segundos, long minutos, long horas, int simu,String id_user, int tipoSimu,String tempoSimu) {
 
 		this.acertos=acertos;
 		this.erros=erros;
@@ -51,6 +52,8 @@ public class Resultados extends JPanel {
 		this.horas=horas;
 		this.simu=simu;
 		this.id_user=id_user;
+		this.tipoSimu=tipoSimu;
+		this.tempoSimu=tempoSimu;
 		
 		infoUser = informacoesUsuario(id_user);
 
@@ -365,14 +368,34 @@ public class Resultados extends JPanel {
 	
 	public void condicaoDesempenho() {
 		// Altera o status de desempenho conforme a qntia de acertos
-
+		System.out.println(tipoSimu + tempoSimu);
 		// VALORES RAIS 75, 50, E ABAIXO
-		if (acertos > 3) {
+		if(tipoSimu==1) {
+		if (acertos > 7) {
 			outDesempenho.setText("Bom");
-		} else if (acertos > 2) {
+		} else if (acertos > 4) {
 			outDesempenho.setText("Médio");
 		} else {
 			outDesempenho.setText("Ruim");
+		}} else if(tipoSimu==2) {
+			if(tempoSimu=="Curto") {
+				if (acertos > 3) {
+					outDesempenho.setText("Bom");
+				} else if (acertos > 2) {
+					outDesempenho.setText("Médio");
+				} else {
+					outDesempenho.setText("Ruim");
+				}
+			} else if(tempoSimu=="Medio") {
+				if (acertos > 5) {
+					outDesempenho.setText("Bom");
+				} else if (acertos > 3) {
+					outDesempenho.setText("Médio");
+				} else {
+					outDesempenho.setText("Ruim");
+				}
+			}
+				
 		}
 	}
 
@@ -393,7 +416,7 @@ public class Resultados extends JPanel {
 	}
 
 	public void telaGabarito() {
-		Gabarito gab = new Gabarito(acertos, erros, segundos, minutos, horas, simu,id_user );
+		Gabarito gab = new Gabarito(acertos, erros, segundos, minutos, horas, simu,id_user, tempoSimu, tipoSimu );
 		removeAll();
 		add(gab);
 		revalidate();
