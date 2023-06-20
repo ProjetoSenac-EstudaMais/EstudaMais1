@@ -140,7 +140,7 @@ public class Config extends JPanel {
 			
 			btnSair.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Login a = new Login(id_user);
+					Login a = new Login();
 					removeAll();
 					add(a);
 					revalidate();
