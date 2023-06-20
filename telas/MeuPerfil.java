@@ -1,4 +1,4 @@
-package telas;
+package estuda;
 
 import java.awt.Choice;
 import java.awt.Color;
@@ -62,14 +62,17 @@ public class MeuPerfil extends JPanel {
 	private String id_user;
 
 	
-	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
-    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
-    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
-    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");  
-    ImageIcon iconperfil_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu125.png");
-    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
-    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
-    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");	
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\chuu.png");
+    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id1.png");
+    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id2.png");	
+    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id3.png");   
+    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id1.png");
+    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id2.png");
+    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id3.png");		  
+    ImageIcon iconperfil_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\chuu125.png");
+    ImageIcon iconperfil_2 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\id1_125.png");
+    ImageIcon iconperfil_3 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\id2_125.png");
+    ImageIcon iconperfil_4 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\id3_125.png");
 
 	public MeuPerfil(String id_user) {
 			this.id_user=id_user;
@@ -153,16 +156,28 @@ public class MeuPerfil extends JPanel {
 			btnAddIcon.setContentAreaFilled(false);
 			btnAddIcon.setBorderPainted(false);
 			btnAddIcon.setOpaque(false);
-			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\add.png"));
+			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\assets\\add.png"));
 			btnAddIcon.setBounds(97, 97, 28, 28);
 			panel_1.add(btnAddIcon);
+			
+			this.id_icon = DB(id_user);
 			
 			JLabel IconUser = new JLabel("");
 			IconUser.setBorder(new LineBorder(new Color(36, 46, 134), 4));
 			IconUser.setIgnoreRepaint(true);
-			IconUser.setIcon(iconperfil_1);
 			IconUser.setBounds(0, 0, 125, 125);
 			panel_1.add(IconUser);
+			
+			if(this.id_icon[5].equals("1")) {
+				IconUser.setIcon(iconperfil_1);
+			}else if(this.id_icon[5].equals("2")){
+				IconUser.setIcon(iconperfil_2);
+			}else if(this.id_icon[5].equals("3")){
+				IconUser.setIcon(iconperfil_3);
+			}else if(this.id_icon[5].equals("4")){
+				IconUser.setIcon(iconperfil_4);
+			}
+			
 			
 			// Painel Simulados
 			
@@ -278,7 +293,7 @@ public class MeuPerfil extends JPanel {
 					repaint();
 				}
 			});
-			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\assets\\add.png"));
+			btnAddBadge.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\assets\\add.png"));
 			btnAddBadge.setOpaque(false);
 			btnAddBadge.setHorizontalTextPosition(SwingConstants.CENTER);
 			btnAddBadge.setContentAreaFilled(false);
@@ -395,9 +410,7 @@ public class MeuPerfil extends JPanel {
 			JLabel badge_id = new JLabel("");
 			badge_id.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id3.png"));
 			badge_id.setBounds(71, 55, 28, 28);
-			Perfil.add(badge_id);
-			
-			this.id_icon = DB(id_user);
+			Perfil.add(badge_id);			
 			
 			JLabel icon_user = new JLabel("");
 			icon_user.setInheritsPopupMenu(false);
