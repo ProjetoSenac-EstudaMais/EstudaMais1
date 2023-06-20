@@ -203,8 +203,8 @@ public class EscolhaSimulado extends JPanel {
 		escolhaAnoSC.setBounds(145, 347, 150, 18);
 		panelSC.add(escolhaAnoSC);
 		escolhaAnoSC.add("---");
-		escolhaAnoSC.add("2011");
-		escolhaAnoSC.add("2012");
+		escolhaAnoSC.add("2021");
+		escolhaAnoSC.add("2022");
 
 		//PAINEL DE FUNDO DO SIMULADO PERSONALIZADO
 		JPanel panelSP = new JPanel();
@@ -291,8 +291,8 @@ public class EscolhaSimulado extends JPanel {
 		escolhaAnoSP.setBounds(126, 340, 150, 18);
 		panelSP.add(escolhaAnoSP);
 		escolhaAnoSP.add("---");
-		escolhaAnoSP.add("2011");
-		escolhaAnoSP.add("2012");
+		escolhaAnoSP.add("2021");
+		escolhaAnoSP.add("2022");
 		
 		condicaoInfoUsuario();
 
