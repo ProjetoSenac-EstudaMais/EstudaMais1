@@ -40,7 +40,7 @@ public class Simulado extends JPanel {
 	private long minutos;
 	private long segundos;
 	private int questaoRespondida=0;
-	private boolean[] foiRespondida = new boolean[4];
+	private boolean[] foiRespondida = new boolean[9];
 	private JLabel tempo;
 	private Choice choice;
 	private String anoSC;
@@ -273,6 +273,7 @@ public class Simulado extends JPanel {
 		bg.add(rdbB);
 		bg.add(rdbC);
 		bg.add(rdbD);
+		bg.add(rdbE);
 
 		//Metodo para trocar o texto da lblareaConhecimento
 		areaConhecimento();
@@ -344,7 +345,7 @@ public class Simulado extends JPanel {
 
 	// Faz um metódo para puxar a proxima linha de acordo com o id
 	public String[] nextRow(int id, int ano) {
-		String[] linha = new String[9];
+		String[] linha = new String[11];
 
 
 
@@ -357,7 +358,7 @@ public class Simulado extends JPanel {
 
 		// Da o comando para o banco de dados -- o id recebe um '?' quando você vai
 		// definir ele fora do comando
-		String query = "SELECT q.questao, q.id_quest, a.alt_A, a.alt_B, a.alt_C, a.alt_D, a.alt_E, q.gabarito, s.id_simu, s.ano_simu FROM simu_questoes q JOIN simu_alternativas a join simulados s ON q.id_quest = a.id_quest WHERE q.id_quest = ? AND s.ano_simu = ?;";
+		String query = "SELECT q.questao, q.id_quest, a.alt_A, a.alt_B, a.alt_C, a.alt_D, a.alt_E, q.gabarito, s.id_simu, s.ano_simu, q.num_quest, q.id_area FROM simu_questoes q JOIN simu_alternativas a join simulados s ON q.id_quest = a.id_quest WHERE q.num_quest = ? AND s.ano_simu = ?;";
 
 		// Este comando retorna os valores solicitados, e primeiro vem o comando e
 		// depois o valor do '?'
@@ -375,9 +376,11 @@ public class Simulado extends JPanel {
 				linha[3] = rs.getString("alt_C");
 				linha[4] = rs.getString("alt_D");
 				linha[5] = rs.getString("alt_E");
-				linha[6] = rs.getString("id_quest");
+				linha[6] = rs.getString("num_quest");
 				linha[7] = rs.getString("gabarito");
 				linha[8] = rs.getString("id_simu");
+				linha[9] = rs.getString("id_quest");
+				linha[10] = rs.getString("id_area");
 
 
 			}
@@ -460,13 +463,17 @@ public class Simulado extends JPanel {
 	}
 
 	public void areaConhecimento() {
-		if(linhaAtual==1) {
+		String[] idArea = nextRow(linhaAtual, anoS);
+		
+		System.out.println(idArea[10]);
+		
+		if(idArea[10].equals("1")) {
 			areaConhecimento = "Ciências Humanas e suas Tecnologias";
-		} else if(linhaAtual==2) {
+		} else if(idArea[10].equals("2")) {
 			areaConhecimento = "Ciências da Natureza e suas Tecnologias";
-		}else if(linhaAtual==3) {
-			areaConhecimento = "Linguages, Códigos e suas Tecnologias";
-		}else if(linhaAtual==4) {
+		}else if(idArea[10].equals("3")) {
+			areaConhecimento = "Linguagens, Códigos e suas Tecnologias";
+		}else if(idArea[10].equals("4")) {
 			areaConhecimento = "Matemática e suas Tecnologias";
 		}
 		lblareaConhecimento.setText(areaConhecimento);
@@ -495,7 +502,7 @@ public class Simulado extends JPanel {
 		if (opcao == JOptionPane.YES_OPTION) {
 
 			linhaAtual=1;
-			Resultados res = new Resultados(acertos, erros, segundos, minutos, horas,simu,id_user);
+			Resultados res = new Resultados(acertos, erros, segundos, minutos, horas,simu,id_user,tipoSimu,tempoSimu);
 			removeAll();
 			add(res);
 			revalidate();
@@ -553,23 +560,23 @@ public class Simulado extends JPanel {
 		//VALOR CERTO I<=90
 
 		if(tipoSimu==1) {
-			for(int i=1;i<5;i++) {
-				if(i==4) {
+			for(int i=1;i<10;i++) {
+				if(i==9) {
 					choice.add("-");
 				}else {
 					choice.add(""+i);}
 			}} else if(tipoSimu==2) {
 				if(tempoSimu == "Curto") {
-					for(int i=1;i<3;i++) {
-						if(i==2) {
+					for(int i=1;i<6;i++) {
+						if(i==5) {
 							choice.add("-");
 						}else {
 							choice.add(""+i);}
 					} 
 
 				}else if(tempoSimu == "Medio") {
-					for(int i=1;i<4;i++) {
-						if(i==3) {
+					for(int i=1;i<8;i++) {
+						if(i==7) {
 							choice.add("-");
 						}else {
 							choice.add(""+i);}
@@ -621,10 +628,10 @@ public class Simulado extends JPanel {
 						try {
 							PreparedStatement pstmt = con.conn.prepareStatement(query);
 							pstmt.setString(1,Integer.toString(simu));
-							pstmt.setString(2,novaLinha[6]);
+							pstmt.setString(2,novaLinha[9]);
 							pstmt.setString(3,gabarito());
-							pstmt.setString(4,"1");
-							pstmt.setString(5,novaLinha[0]);
+							pstmt.setString(4,id_user);
+							pstmt.setString(5,novaLinha[6]);
 
 							pstmt.executeUpdate();
 						} catch (SQLException e1) {
@@ -652,10 +659,10 @@ public class Simulado extends JPanel {
 						try {
 							PreparedStatement pstmt = con.conn.prepareStatement(query);
 							pstmt.setString(1,Integer.toString(simu));
-							pstmt.setString(2,novaLinha[6]);
+							pstmt.setString(2,novaLinha[9]);
 							pstmt.setString(3,gabarito());
-							pstmt.setString(4,"1");
-							pstmt.setString(5,novaLinha[0]);
+							pstmt.setString(4,id_user);
+							pstmt.setString(5,novaLinha[6]);
 
 							pstmt.executeUpdate();
 						} catch (SQLException e1) {
@@ -719,7 +726,7 @@ public class Simulado extends JPanel {
 			// Fecha o Quiz; Depois mudamos esta parte para passar pra tela de resultado
 
 			//VALOR CORRETO LINHA ATUAL > 90
-			if (linhaAtual > 3 && questaoRespondida==3 ) {
+			if (linhaAtual > 8 && questaoRespondida==8 ) {
 				JOptionPane.showMessageDialog(null,
 						"Prova finalizada");
 
@@ -738,15 +745,15 @@ public class Simulado extends JPanel {
 
 				inserirTempo();
 
-				Resultados res = new Resultados(acertos, erros, segundos, minutos, horas,simu,id_user);
+				Resultados res = new Resultados(acertos, erros, segundos, minutos, horas,simu,id_user,tipoSimu,tempoSimu);
 
 				removeAll();
 				add(res);
 				revalidate();
 				repaint();
-			}else if(linhaAtual >3 && questaoRespondida<3) {
+			}else if(linhaAtual >8 && questaoRespondida<8) {
 
-				linhaAtual=3;
+				linhaAtual=8;
 
 				String[] linhaContinuo = nextRow(linhaAtual,anoS);
 
@@ -767,7 +774,7 @@ public class Simulado extends JPanel {
 				System.out.println("Entrou no m=if");
 
 				//VALOR CERTO LINHA ATUAL > 30
-				if (linhaAtual > 1 && questaoRespondida==1) {
+				if (linhaAtual > 4 && questaoRespondida==4) {
 					JOptionPane.showMessageDialog(null,
 							"Prova finalizada");
 
@@ -791,15 +798,15 @@ public class Simulado extends JPanel {
 
 					inserirTempo();
 
-					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas, simu,id_user);
+					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas, simu,id_user,tipoSimu,tempoSimu);
 
 					removeAll();
 					add(res);
 					revalidate();
 					repaint();
-				}else if(linhaAtual >1 && questaoRespondida!=1) {
+				}else if(linhaAtual >4 && questaoRespondida!=4) {
 
-					linhaAtual=1;
+					linhaAtual=4;
 
 					String[] linhaContinuo = nextRow(linhaAtual,anoS);
 
@@ -818,7 +825,7 @@ public class Simulado extends JPanel {
 				System.out.println("Entrou no if do médio");
 
 				//VALO0R CERTO LINHA ATUAL > 60
-				if (linhaAtual > 2 && questaoRespondida==2) {
+				if (linhaAtual > 6 && questaoRespondida==6) {
 					JOptionPane.showMessageDialog(null,
 							"Prova finalizada");
 
@@ -840,16 +847,16 @@ public class Simulado extends JPanel {
 
 					inserirTempo();
 
-					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas,simu,id_user);
+					Resultados res = new Resultados(acertos, erros, segundos, minutos, horas,simu,id_user,tipoSimu,tempoSimu);
 
 					removeAll();
 					add(res);
 					revalidate();
 					repaint();
 
-				} else if(linhaAtual >2 && questaoRespondida!=2) {
+				} else if(linhaAtual >6 && questaoRespondida!=6) {
 
-					linhaAtual=2;
+					linhaAtual=6;
 
 					String[] linhaContinuo = nextRow(linhaAtual,anoS);
 
