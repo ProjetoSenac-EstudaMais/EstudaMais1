@@ -10,11 +10,17 @@ import java.awt.Rectangle;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 public class Config extends JPanel {
 	
@@ -31,6 +37,8 @@ public class Config extends JPanel {
 	String tempoSP;
 	
 	private String id_user;
+	private JPasswordField passwordField;
+	private JPasswordField passwordField_2;
 
 
 	/**
@@ -200,10 +208,162 @@ public class Config extends JPanel {
 			bg_header.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\escolha_simulado\\bg_header.png"));
 			bg_header.setBounds(0, 0, 1020, 100);
 			panel_3_1.add(bg_header);
-			setBounds(0, 0, 1280, 720);
-	
-	
-
-		
+			
+			JLabel lblAtualizarDados = new JLabel("Atualizar Dados Cadastrados");
+			lblAtualizarDados.setForeground(Color.BLACK);
+			lblAtualizarDados.setFont(new Font("Poppins", Font.PLAIN, 24));
+			lblAtualizarDados.setBounds(527, 150, 373, 25);
+			panel_2.add(lblAtualizarDados);
+			
+			JLabel lblPassword = new JLabel("Senha:");
+			lblPassword.setForeground(Color.BLACK);
+			lblPassword.setFont(new Font("Poppins", Font.PLAIN, 14));
+			lblPassword.setBounds(560, 235, 78, 14);
+			panel_2.add(lblPassword);
+			
+			passwordField = new JPasswordField();
+			passwordField.setFont(new Font("Poppins", Font.PLAIN, 14));
+			passwordField.setForeground(Color.BLACK);
+			passwordField.setBounds(560, 255, 300, 36);
+			panel_2.add(passwordField);
+			
+			JLabel lblPassword_2 = new JLabel("Repita a Senha:");
+			lblPassword_2.setForeground(Color.BLACK);
+			lblPassword_2.setFont(new Font("Poppins", Font.PLAIN, 14));
+			lblPassword_2.setBounds(560, 302, 129, 14);
+			panel_2.add(lblPassword_2);
+			
+			passwordField_2 = new JPasswordField();
+			passwordField_2.setFont(new Font("Poppins", Font.PLAIN, 14));
+			passwordField_2.setForeground(Color.BLACK);
+			passwordField_2.setBounds(560, 321, 300, 36);
+			panel_2.add(passwordField_2);
+			setBounds(0, 0, 1280, 720);	
+			
+			JLabel lblDadosAtuais = new JLabel("Dados Atuais");
+			lblDadosAtuais.setForeground(Color.BLACK);
+			lblDadosAtuais.setFont(new Font("Poppins", Font.PLAIN, 24));
+			lblDadosAtuais.setBounds(149, 150, 183, 25);
+			panel_2.add(lblDadosAtuais);
+			
+			String [] infouser = DB(id_user);
+			
+			JLabel lblNome_1 = new JLabel("Nome:");
+			lblNome_1.setForeground(Color.BLACK);
+			lblNome_1.setFont(new Font("Poppins", Font.PLAIN, 14));
+			lblNome_1.setBounds(123, 235, 78, 14);
+			panel_2.add(lblNome_1);
+			
+			JLabel lblNomeAtual = new JLabel(infouser[0]);
+			lblNomeAtual.setForeground(Color.DARK_GRAY);
+			lblNomeAtual.setFont(new Font("Poppins", Font.PLAIN, 13));
+			lblNomeAtual.setBounds(123, 248, 300, 36);
+			lblNomeAtual.setBackground(Color.WHITE);
+			panel_2.add(lblNomeAtual);
+			
+			JLabel lblSobrenome_1 = new JLabel("Sobrenome:");
+			lblSobrenome_1.setForeground(Color.BLACK);
+			lblSobrenome_1.setFont(new Font("Poppins", Font.PLAIN, 14));
+			lblSobrenome_1.setBounds(123, 302, 105, 14);
+			panel_2.add(lblSobrenome_1);
+			
+			JLabel lblSobrenomeAtual = new JLabel(infouser[1]);
+			lblSobrenomeAtual.setForeground(Color.DARK_GRAY);
+			lblSobrenomeAtual.setFont(new Font("Poppins", Font.PLAIN, 13));
+			lblSobrenomeAtual.setBackground(Color.WHITE);
+			lblSobrenomeAtual.setBounds(123, 321, 300, 36);
+			panel_2.add(lblSobrenomeAtual);
+			
+			JLabel lblEmail_1 = new JLabel("E-mail:");
+			lblEmail_1.setForeground(Color.BLACK);
+			lblEmail_1.setFont(new Font("Poppins", Font.PLAIN, 14));
+			lblEmail_1.setBounds(123, 368, 78, 14);
+			panel_2.add(lblEmail_1);
+			
+			JLabel lblEmailAtual = new JLabel(infouser[2]);
+			lblEmailAtual.setForeground(Color.DARK_GRAY);
+			lblEmailAtual.setFont(new Font("Poppins", Font.PLAIN, 13));
+			lblEmailAtual.setBackground(Color.WHITE);
+			lblEmailAtual.setBounds(123, 389, 300, 36);
+			panel_2.add(lblEmailAtual);
+			
+			JLabel lblUsuario_1 = new JLabel("Usuário:");
+			lblUsuario_1.setForeground(Color.BLACK);
+			lblUsuario_1.setFont(new Font("Poppins", Font.PLAIN, 14));
+			lblUsuario_1.setBounds(123, 436, 78, 14);
+			panel_2.add(lblUsuario_1);
+			
+			JLabel lblUsuarioAtual = new JLabel(infouser[3]);
+			lblUsuarioAtual.setForeground(Color.DARK_GRAY);
+			lblUsuarioAtual.setFont(new Font("Poppins", Font.PLAIN, 13));
+			lblUsuarioAtual.setBackground(Color.WHITE);
+			lblUsuarioAtual.setBounds(123, 456, 300, 36);
+			panel_2.add(lblUsuarioAtual);
+			
+			char[] passChar = passwordField.getPassword();
+			char[] passChar2 = passwordField_2.getPassword();
+			String senha = new String(passChar);
+			String senha2 = new String(passChar2);
+			
+			JButton btnSalvar = new JButton("Salvar");
+			btnSalvar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if ((senha.equals(senha2))) {
+					ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+					String query = "update user_dados set senha =? where id_user =?;"; //SQL de substituição (registro);
+					try {
+					PreparedStatement pstmt = conn1.conn.prepareStatement(query);
+					pstmt.setString(1,senha);
+					pstmt.setString(2,id_user);
+					pstmt.executeUpdate();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					conn1.closeConnection();
+					
+					JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!");
+				}}
+			});
+			btnSalvar.setForeground(Color.WHITE);
+			btnSalvar.setFont(new Font("Poppins", Font.PLAIN, 13));
+			btnSalvar.setFocusPainted(false);
+			btnSalvar.setBorderPainted(false);
+			btnSalvar.setBackground(new Color(64, 74, 204));
+			btnSalvar.setBounds(655, 389, 105, 25);
+			panel_2.add(btnSalvar);
+			
+			JLabel lblAviso = new JLabel("Para atualizar outros dados, entre em contato com a equipe de Suporte.");
+			lblAviso.setForeground(Color.DARK_GRAY);
+			lblAviso.setFont(new Font("Poppins", Font.PLAIN, 10));
+			lblAviso.setBounds(527, 436, 373, 25);
+			panel_2.add(lblAviso);
+								
 	}
+
+	public static String[] DB(String id_user) {
+		String[] infouser = new String [4]; //Armazena os dados de login se um usuário em Array.
+
+		try {
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+
+			//Envia comandos para o DB.
+			String query = "select nome_user, sobrenome_user, email_user, usuario_user from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			ResultSet rs = conn1.executeQuery(query,id_user); //Retornar os resultados da SQL
+
+			/*
+			 *Comando para guardar os dados dentro de uma variável;/
+			 */
+			if(rs.next()) {
+				infouser[0] = rs.getString("nome_user"); 
+				infouser[1] = rs.getString("sobrenome_user");
+				infouser[2] = rs.getString("email_user");
+				infouser[3] = rs.getString("usuario_user");}
+
+			rs.close();
+			conn1.closeConnection();
+		}
+		catch (SQLException e){e.printStackTrace();}
+		return infouser;
+	}	
 }

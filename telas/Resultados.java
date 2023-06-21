@@ -57,12 +57,12 @@ public class Resultados extends JPanel {
 		
 		infoUser = informacoesUsuario(id_user);
 
-		setBackground(new Color(64, 74, 204));
+		setBackground(new Color(255, 255, 255));
 		setBounds(0, 0, 1280, 720);
 		setLayout(null);
 
 		JPanel painelLateral = new JPanel();
-		painelLateral.setBackground(new Color(33, 44, 136));
+		painelLateral.setBackground(new Color(240, 240, 240));
 		painelLateral.setBounds(0, 0, 320, 720);
 		add(painelLateral);
 		painelLateral.setLayout(null);
@@ -163,7 +163,7 @@ public class Resultados extends JPanel {
 
 		JPanel panel_2_1_1 = new JPanel();
 		panel_2_1_1.setBorder(null);
-		panel_2_1_1.setBackground(new Color(98, 106, 204));
+		panel_2_1_1.setBackground(new Color(36, 44, 136));
 		panel_2_1_1.setBounds(319, 525, 961, 10);
 		add(panel_2_1_1);
 
@@ -175,14 +175,14 @@ public class Resultados extends JPanel {
 
 		JLabel lblDesempenho = new JLabel("Desempenho:");
 		lblDesempenho.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDesempenho.setForeground(Color.WHITE);
+		lblDesempenho.setForeground(Color.DARK_GRAY);
 		lblDesempenho.setFont(new Font("Poppins Light", Font.PLAIN, 26));
 		lblDesempenho.setBounds(694, 395, 257, 58);
 		add(lblDesempenho);
 
 		outDesempenho = new JLabel("");
 		outDesempenho.setHorizontalAlignment(SwingConstants.CENTER);
-		outDesempenho.setForeground(Color.WHITE);
+		outDesempenho.setForeground(Color.DARK_GRAY);
 		outDesempenho.setFont(new Font("Poppins Light", Font.PLAIN, 26));
 		outDesempenho.setBounds(694, 439, 257, 58);
 		add(outDesempenho);
@@ -194,7 +194,8 @@ public class Resultados extends JPanel {
 
 		// Configura o tempo total de prova
 		JLabel tempoTotal = new JLabel();
-		tempoTotal.setForeground(new Color(255, 255, 255));
+		tempoTotal.setBackground(Color.WHITE);
+		tempoTotal.setForeground(Color.DARK_GRAY);
 		tempoTotal.setFont(new Font("Poppins Light", Font.PLAIN, 24));
 		tempoTotal.setHorizontalAlignment(SwingConstants.CENTER);
 		tempoTotal.setBounds(757, 258, 134, 28);
@@ -257,8 +258,8 @@ public class Resultados extends JPanel {
 			}
 		});
 		btnSair.setHorizontalAlignment(SwingConstants.LEADING);
-		btnSair.setForeground(Color.WHITE);
-		btnSair.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
+		btnSair.setForeground(new Color(0, 0, 0));
+		btnSair.setFont(new Font("Poppins", Font.PLAIN, 16));
 		btnSair.setFocusPainted(false);
 		btnSair.setContentAreaFilled(false);
 		btnSair.setBorderPainted(false);
@@ -275,8 +276,8 @@ public class Resultados extends JPanel {
 		configuracoes.setFocusPainted(false);
 		configuracoes.setBorderPainted(false);
 		configuracoes.setContentAreaFilled(false);
-		configuracoes.setForeground(new Color(255, 255, 255));
-		configuracoes.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
+		configuracoes.setForeground(new Color(0, 0, 0));
+		configuracoes.setFont(new Font("Poppins", Font.PLAIN, 16));
 		configuracoes.setHorizontalAlignment(SwingConstants.LEADING);
 		configuracoes.setBounds(10, 185, 186, 23);
 		painelLateral.add(configuracoes);
@@ -291,8 +292,8 @@ public class Resultados extends JPanel {
 		meuPerfil.setFocusPainted(false);
 		meuPerfil.setBorderPainted(false);
 		meuPerfil.setContentAreaFilled(false);
-		meuPerfil.setForeground(new Color(255, 255, 255));
-		meuPerfil.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
+		meuPerfil.setForeground(new Color(0, 0, 0));
+		meuPerfil.setFont(new Font("Poppins", Font.PLAIN, 16));
 		meuPerfil.setHorizontalAlignment(SwingConstants.LEADING);
 		meuPerfil.setBounds(10, 160, 186, 23);
 		painelLateral.add(meuPerfil);
@@ -307,8 +308,8 @@ public class Resultados extends JPanel {
 		menuPrincipal.setFocusPainted(false);
 		menuPrincipal.setBorderPainted(false);
 		menuPrincipal.setContentAreaFilled(false);
-		menuPrincipal.setForeground(new Color(255, 255, 255));
-		menuPrincipal.setFont(new Font("Poppins Medium", Font.PLAIN, 13));
+		menuPrincipal.setForeground(new Color(0, 0, 0));
+		menuPrincipal.setFont(new Font("Poppins", Font.PLAIN, 16));
 		menuPrincipal.setHorizontalAlignment(SwingConstants.LEADING);
 		menuPrincipal.setBounds(10, 135, 186, 23);
 		painelLateral.add(menuPrincipal);

@@ -142,7 +142,7 @@ public class EsqueciSenha extends JPanel {
 
 							if ((senha.equals(senha2))) {
 								ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
-								String query = "update dados set senha =? where email =?;"; //SQL de substituição (registro);
+								String query = "update user_dados set senha =? where email =?;"; //SQL de substituição (registro);
 								try {System.out.println("Entrou no try");
 								PreparedStatement pstmt = conn1.conn.prepareStatement(query);
 								pstmt.setString(1,senha);
