@@ -1,4 +1,4 @@
-package estuda;
+package telas;
 
 import java.awt.Choice;
 import java.awt.Color;
@@ -63,18 +63,18 @@ public class BadgeTrade extends JPanel {
 	private String id_user;
 
 	
-	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\chuu.png");
-    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id1.png");
-    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id2.png");	
-    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\icon_id3.png");   
-    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id1.png");
-    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id2.png");
-    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id3.png");		  
-    ImageIcon iconperfil_1 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\chuu125.png");
-    ImageIcon iconperfil_2 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\id1_125.png");
-    ImageIcon iconperfil_3 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\id2_125.png");
-    ImageIcon iconperfil_4 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\icons\\id3_125.png");
-    ImageIcon badge_4 = new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\badge\\badge_id4.png");
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\chuu.png");
+    ImageIcon icon_2 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id1.png");
+    ImageIcon icon_3 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id2.png");	
+    ImageIcon icon_4 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id3.png");   
+    ImageIcon badge_1 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id1.png");
+    ImageIcon badge_2 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id2.png");
+    ImageIcon badge_3 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id3.png");		  
+    ImageIcon iconperfil_1 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\chuu125.png");
+    ImageIcon iconperfil_2 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\id1_125.png");
+    ImageIcon iconperfil_3 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\id2_125.png");
+    ImageIcon iconperfil_4 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\id3_125.png");
+    ImageIcon badge_4 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id4.png");
 
 	public BadgeTrade(String id_user) {
 		this.id_user=id_user;
@@ -270,7 +270,7 @@ public class BadgeTrade extends JPanel {
 			panel_3_1.add(lblSimulados);
 			
 			JLabel bg_header = new JLabel("");
-			bg_header.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\escolha_simulado\\bg_header.png"));
+			bg_header.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\bg_header.png"));
 			bg_header.setBounds(0, 0, 1020, 100);
 			panel_3_1.add(bg_header);
 			
@@ -316,7 +316,7 @@ public class BadgeTrade extends JPanel {
 			btnAddIcon.setContentAreaFilled(false);
 			btnAddIcon.setBorderPainted(false);
 			btnAddIcon.setOpaque(false);
-			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Downloads\\EstudaMais1-main (2)\\EstudaMais1-main\\img\\assets\\add.png"));
+			btnAddIcon.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\assets\\add.png"));
 			btnAddIcon.setBounds(97, 97, 28, 28);
 			panel_1.add(btnAddIcon);		
 			
@@ -399,7 +399,7 @@ public class BadgeTrade extends JPanel {
 			SimuladoTemplate.add(Questoes_Gabarito);
 			
 			JLabel icon_Acertos = new JLabel("");
-			icon_Acertos.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\assets\\check.png"));
+			icon_Acertos.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\assets\\check.png"));
 			icon_Acertos.setBounds(364, 14, 28, 28);
 			SimuladoTemplate.add(icon_Acertos);
 			
@@ -537,7 +537,7 @@ public class BadgeTrade extends JPanel {
 			Perfil.setLayout(null);
 			
 			JLabel badge_id = new JLabel("");
-			badge_id.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\badge\\badge_id3.png"));
+			badge_id.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id3.png"));
 			badge_id.setBounds(71, 55, 28, 28);
 			Perfil.add(badge_id);
 			

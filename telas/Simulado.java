@@ -186,7 +186,7 @@ public class Simulado extends JPanel {
 		painelRespostas.add(rdbE);
 
 		JLabel imgTempo = new JLabel("");
-		imgTempo.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\clock.png"));
+		imgTempo.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\clock.png"));
 		imgTempo.setFont(new Font("Poppins Medium", Font.PLAIN, 24));
 		imgTempo.setBounds(1184, 11, 44, 49);
 		add(imgTempo);

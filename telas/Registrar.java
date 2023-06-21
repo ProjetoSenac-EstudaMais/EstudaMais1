@@ -63,7 +63,7 @@ public class Registrar extends JPanel {
 
 		//Label da tela de fundo
 		JLabel lblFundo = new JLabel("");
-		lblFundo.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\OneDrive - SENAC-SC\\Programas\\ProjetoSenac-main\\EstudaMais1-main\\img\\img_telas\\bg_login.png"));
+		lblFundo.setIcon(new ImageIcon("C:\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\bg_login.png"));
 		lblFundo.setBounds(0, 0, 1235, 720);
 		add(lblFundo);
 

@@ -64,7 +64,7 @@ public class Config extends JPanel {
 			Perfil.setLayout(null);
 			
 			JLabel badge_id = new JLabel("");
-			badge_id.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\badge\\badge_id1.png"));
+			badge_id.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id1.png"));
 			badge_id.setBounds(71, 55, 28, 28);
 			Perfil.add(badge_id);
 			
@@ -74,7 +74,7 @@ public class Config extends JPanel {
 			icon_user.setIconTextGap(0);
 			icon_user.setBorder(null);
 			icon_user.setHorizontalAlignment(SwingConstants.CENTER);
-			icon_user.setIcon(new ImageIcon("C:\\Users\\henrique.silveira1\\Documents\\EstudaMais1-main\\img\\icons\\icon_id2.png"));
+			icon_user.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id2.png"));
 			icon_user.setBounds(24, 15, 68, 68);
 			Perfil.add(icon_user);
 			
@@ -205,7 +205,7 @@ public class Config extends JPanel {
 			panel_3_1.add(lblConfiguracoes);
 			
 			JLabel bg_header = new JLabel("");
-			bg_header.setIcon(new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\img\\img_telas\\escolha_simulado\\bg_header.png"));
+			bg_header.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\bg_header.png"));
 			bg_header.setBounds(0, 0, 1020, 100);
 			panel_3_1.add(bg_header);
 			

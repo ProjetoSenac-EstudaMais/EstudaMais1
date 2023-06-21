@@ -95,28 +95,28 @@ public class Gabarito extends JPanel {
 		btnVoltar.setBounds(27, 18, 158, 36);
 		pnlBottom.add(btnVoltar);
 
-		//Botão que atualiza os valores das questoes, gabaritos e resposta de acordo com o id do banco de dados
-		JButton setaProximo = new JButton("");
-		setaProximo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		setaProximo.setFocusPainted(false);
-		setaProximo.setContentAreaFilled(false);
-		setaProximo.setBorderPainted(false);
-		setaProximo.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\arrowb_rotated_resized.png"));
-		setaProximo.setBounds(714, 25, 31, 29);
-		pnlBottom.add(setaProximo);
-
-		//Mesma função da setaProximo, porem quando acionado retorna os valores da pagina anterior
-		JButton setaAnterior = new JButton("");
-		setaAnterior.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		setaAnterior.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\arrowb_resized.png"));
-		setaAnterior.setFocusPainted(false);
-		setaAnterior.setContentAreaFilled(false);
-		setaAnterior.setBorderPainted(false);
-		setaAnterior.setBounds(534, 25, 31, 29);
-		pnlBottom.add(setaAnterior);
+//		//Botão que atualiza os valores das questoes, gabaritos e resposta de acordo com o id do banco de dados
+//		JButton setaProximo = new JButton("");
+//		setaProximo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+//		setaProximo.setFocusPainted(false);
+//		setaProximo.setContentAreaFilled(false);
+//		setaProximo.setBorderPainted(false);
+//		setaProximo.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\arrowb_rotated_resized.png"));
+//		setaProximo.setBounds(714, 25, 31, 29);
+//		pnlBottom.add(setaProximo);
+//
+//		//Mesma função da setaProximo, porem quando acionado retorna os valores da pagina anterior
+//		JButton setaAnterior = new JButton("");
+//		setaAnterior.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+//		setaAnterior.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\arrowb_resized.png"));
+//		setaAnterior.setFocusPainted(false);
+//		setaAnterior.setContentAreaFilled(false);
+//		setaAnterior.setBorderPainted(false);
+//		setaAnterior.setBounds(534, 25, 31, 29);
+//		pnlBottom.add(setaAnterior);
 
 		JLabel lblHeader = new JLabel("");
-		lblHeader.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\header.png"));
+		lblHeader.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\gabarito\\header.png"));
 		lblHeader.setBounds(0, 0, 1280, 72);
 		add(lblHeader);
 
@@ -143,21 +143,21 @@ public class Gabarito extends JPanel {
 			}
 		});
 
-		setaProximo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				setaProximo();
-
-			}
-		});
-
-		setaAnterior.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				setaAnterior();
-
-			}
-		});
+//		setaProximo.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//
+//				setaProximo();
+//
+//			}
+//		});
+//
+//		setaAnterior.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//
+//				setaAnterior();
+//
+//			}
+//		});
 
 		//Imprime os componentes na tela quando inicia o painel com o valor do id 1
 		posicaoInicial(1,0);

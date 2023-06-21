@@ -29,13 +29,13 @@ public class EscolhaSimulado extends JPanel {
 	JLabel subtitle_badge;
 	JLabel lblNomeUsuario;
 	
-	ImageIcon icon_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\chuu.png");
-    ImageIcon icon_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id1.png");
-    ImageIcon icon_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id2.png");	
-    ImageIcon icon_4 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\icons\\icon_id3.png");   
-    ImageIcon badge_1 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id1.png");
-    ImageIcon badge_2 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id2.png");
-    ImageIcon badge_3 = new ImageIcon("C:\\Users\\henri\\OneDrive\\Área de Trabalho\\Dev\\img\\badge\\badge_id3.png");		
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\chuu.png");
+    ImageIcon icon_2 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id1.png");
+    ImageIcon icon_3 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id2.png");	
+    ImageIcon icon_4 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id3.png");   
+    ImageIcon badge_1 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id1.png");
+    ImageIcon badge_2 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id2.png");
+    ImageIcon badge_3 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id3.png");		
 
 	
 	/**
@@ -87,7 +87,7 @@ public class EscolhaSimulado extends JPanel {
 		icon_user = new JLabel(""+ nomeInfo[2]);
 		icon_user.setHorizontalAlignment(SwingConstants.CENTER);
 		icon_user.setRequestFocusEnabled(false);
-		icon_user.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\icons\\icon_id2.png"));
+		icon_user.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id2.png"));
 		icon_user.setBounds(24, 15, 68, 68);
 		panelUsuario.add(icon_user);
 		
@@ -156,7 +156,7 @@ public class EscolhaSimulado extends JPanel {
 
 		//LABEL PARA INSERIR ICONE DO RELOGIO NO SIMULADO COMPLETO
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\clock.png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\clock.png"));
 		lblNewLabel.setBounds(74, 185, 50, 50);
 		panelSC.add(lblNewLabel);
 
@@ -170,7 +170,7 @@ public class EscolhaSimulado extends JPanel {
 
 		//LABEL PARA INSERIR ICONE DO PAPEL NO SIMULADO COMPLETO
 		JLabel lblNewLabel_1 = new JLabel("");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\paper.png"));
+		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\paper.png"));
 		lblNewLabel_1.setBounds(74, 242, 50, 50);
 		panelSC.add(lblNewLabel_1);
 
@@ -184,7 +184,7 @@ public class EscolhaSimulado extends JPanel {
 
 		//LABEL PARA INSERIR ICONE DO CALENDARIO NO SIMULADO COMPLETO
 		JLabel lblNewLabel_1_1 = new JLabel("");
-		lblNewLabel_1_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\calendar.png"));
+		lblNewLabel_1_1.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\calendar.png"));
 		lblNewLabel_1_1.setBounds(74, 302, 50, 50);
 		panelSC.add(lblNewLabel_1_1);
 
@@ -234,7 +234,7 @@ public class EscolhaSimulado extends JPanel {
 
 		//LABEL PARA O ICONE DE RELOGIO NO SIMULADO PERSONALIZADO
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\clock.png"));
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\clock.png"));
 		lblNewLabel_2.setBounds(60, 182, 50, 50);
 		panelSP.add(lblNewLabel_2);
 
@@ -258,7 +258,7 @@ public class EscolhaSimulado extends JPanel {
 
 		//LABEL PARA O ICONE DE PAPEL NO SIMULADO PERSONALIZADO
 		JLabel lblNewLabel_1_2 = new JLabel("");
-		lblNewLabel_1_2.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\paper.png"));
+		lblNewLabel_1_2.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\paper.png"));
 		lblNewLabel_1_2.setBounds(60, 248, 50, 50);
 		panelSP.add(lblNewLabel_1_2);
 
@@ -272,7 +272,7 @@ public class EscolhaSimulado extends JPanel {
 
 		//LABEL PARA O ICONE DE CALENDARIO NO SIMULADO PERSONALIZADO
 		JLabel lblNewLabel_1_1_1 = new JLabel("");
-		lblNewLabel_1_1_1.setIcon(new ImageIcon("C:\\Users\\bruna.rescigno\\eclipse-workspace\\img\\img_telas\\escolha_simulado\\calendar.png"));
+		lblNewLabel_1_1_1.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\calendar.png"));
 		lblNewLabel_1_1_1.setBounds(60, 307, 50, 50);
 		panelSP.add(lblNewLabel_1_1_1);
 
