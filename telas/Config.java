@@ -39,13 +39,28 @@ public class Config extends JPanel {
 	private String id_user;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_2;
+	private String subtitle_badge;
 
+	ImageIcon icon_1 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\chuu.png");
+	ImageIcon icon_2 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id1.png");
+	ImageIcon icon_3 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id2.png");	
+	ImageIcon icon_4 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id3.png");   
+	ImageIcon badge_1 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id1.png");
+	ImageIcon badge_2 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id2.png");
+	ImageIcon badge_3 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\badge\\badge_id3.png");		  
+	ImageIcon iconperfil_1 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\chuu125.png");
+	ImageIcon iconperfil_2 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\id1_125.png");
+	ImageIcon iconperfil_3 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\id2_125.png");
+	ImageIcon iconperfil_4 = new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\id3_125.png");
 
 	/**
 	 * Create the panel.
 	 */
 	public Config(String id_user) {
 		this.id_user=id_user;
+		
+		String [] infouser = DB(id_user);
+		
 		setLayout(null);
 		setBounds(100,100,1280,720);
 
@@ -77,18 +92,42 @@ public class Config extends JPanel {
 		icon_user.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id2.png"));
 		icon_user.setBounds(24, 15, 68, 68);
 		Perfil.add(icon_user);
+		
+		if(infouser[6].equals("1")) {
+			icon_user.setIcon(icon_1);
+		}else if(infouser[6].equals("2")){
+			icon_user.setIcon(icon_2);
+		}else if(infouser[6].equals("3")){
+			icon_user.setIcon(icon_3);
+		}else if(infouser[6].equals("4")){
+			icon_user.setIcon(icon_4);
+		}
 
-		JLabel nome_id = new JLabel("Henrique Silveira");
+
+		if(infouser[5].equals("1")){
+			subtitle_badge = "Novato";
+			badge_id.setIcon(badge_1);
+		}else if(infouser[5].equals("2")) {
+			subtitle_badge = "Vagabundo";
+			badge_id.setIcon(badge_2);
+		}else if(infouser[5].equals("3")) {
+			subtitle_badge = "Sem Alma";
+			badge_id.setIcon(badge_3);}
+
+		JLabel nome_id = new JLabel(infouser[0]+" "+infouser[1]);
 		nome_id.setForeground(new Color(255, 255, 255));
 		nome_id.setFont(new Font("Poppins", Font.PLAIN, 12));
 		nome_id.setBounds(100, 20, 150, 25);
 		Perfil.add(nome_id);
 
-		JLabel badge_subtitle_id = new JLabel("Primeiro Simulado");
+		JLabel badge_subtitle_id = new JLabel(subtitle_badge);
 		badge_subtitle_id.setForeground(new Color(188, 188, 188));
 		badge_subtitle_id.setFont(new Font("Poppins", Font.PLAIN, 12));
 		badge_subtitle_id.setBounds(100, 35, 166, 25);
 		Perfil.add(badge_subtitle_id);
+		
+		
+		
 
 		JPanel panel_3_2 = new JPanel();
 		panel_3_2.setBackground(new Color(36, 44, 134));
@@ -295,7 +334,7 @@ public class Config extends JPanel {
 		lblDadosAtuais.setBounds(149, 150, 183, 25);
 		panel_2.add(lblDadosAtuais);
 
-		String [] infouser = DB(id_user);
+		
 
 		JLabel lblNome_1 = new JLabel("Nome:");
 		lblNome_1.setForeground(Color.BLACK);
@@ -353,13 +392,13 @@ public class Config extends JPanel {
 	}
 
 	public static String[] DB(String id_user) {
-		String[] infouser = new String [4]; //Armazena os dados de login se um usuário em Array.
+		String[] infouser = new String [7]; //Armazena os dados de login se um usuário em Array.
 
 		try {
 			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
 
 			//Envia comandos para o DB.
-			String query = "select nome_user, sobrenome_user, email_user, usuario_user from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			String query = "select nome_user, sobrenome_user, email_user, usuario_user, badge_id, meta_id, id_icon from user_dados where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
 			ResultSet rs = conn1.executeQuery(query,id_user); //Retornar os resultados da SQL
 
 			/*
@@ -369,7 +408,11 @@ public class Config extends JPanel {
 				infouser[0] = rs.getString("nome_user"); 
 				infouser[1] = rs.getString("sobrenome_user");
 				infouser[2] = rs.getString("email_user");
-				infouser[3] = rs.getString("usuario_user");}
+				infouser[3] = rs.getString("usuario_user");
+				infouser[4] = rs.getString("meta_id");
+				infouser[5] = rs.getString("badge_id");
+				infouser[6] = rs.getString("id_icon");
+				}
 
 			rs.close();
 			conn1.closeConnection();

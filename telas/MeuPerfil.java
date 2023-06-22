@@ -63,6 +63,8 @@ public class MeuPerfil extends JPanel {
 	private String m_subtitle;
 	private String[] birthdate_user;
 	private String id_user;
+	static String ii;
+	
 
 	private int anoSimu;
 
@@ -212,7 +214,7 @@ public class MeuPerfil extends JPanel {
 		lblPainelSimulados.setForeground(new Color(255, 255, 255));
 
 		//SIMULADO TEMPLATE PANEL
-
+		
 		int SimuladosQuant = 8;
 
 		int startY = 50;
@@ -222,7 +224,7 @@ public class MeuPerfil extends JPanel {
 		ArrayList<String[][]> idSimu = DBSimu(this.id_user);
 
 
-		for (int i = 0; i < SimuladosQuant; i++) {
+		for (int i = 0; i < Integer.parseInt(ii); i++) {
 			System.out.println( idSimu.get(i)[i][0] ); 
 
 			String dataDoBanco = idSimu.get(i)[i][0]; // Data obtida do banco de dados
@@ -629,34 +631,52 @@ public class MeuPerfil extends JPanel {
 		ArrayList<String[][]> infousimu = null;
 		try {
 			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root"); // Cria uma
+			
+			String query1 = "select count(*) as qntd from simu_resolvido where id_user=?";
+			
+			ResultSet rs1 = conn1.executeQuery(query1, id_user);
+			
+			
 
+			if(rs1.next()) {
+				ii = rs1.getString("qntd");
+			}
+			
+			if(Integer.parseInt(ii) >=8) {
+				ii="8";
+			}
+			
 			// Envia comandos para o DB.
-			String query = "select data_resolv, tempo_resolv,quest_certas,num_simu from simu_resolvido where id_user = ?  order by id_simu desc limit 8;"; // SQL
+			String query2 = "select data_resolv, tempo_resolv,quest_certas,num_simu from simu_resolvido where id_user = ?  order by id_simu desc limit ?;"; // SQL
 
-			ResultSet rs = conn1.executeQuery(query, id_user ); // Retornar os resultados da SQL
+			ResultSet rs = conn1.executeQuery(query2, id_user,Integer.parseInt(ii) ); // Retornar os resultados da SQL
 
-			/*
-			 * Comando para guardar os dados dentro de uma variável;/
-			 * 
-			 * 
-			 */
+			
 			System.out.println("aqui");
 
 
 			infousimu = new ArrayList();
 
-			String[][] dados = new String[8][4]; // Armazena os dados de login se um usuário em Array.
+			String[][] dados = new String[Integer.parseInt(ii)][4]; // Armazena os dados de login se um usuário em Array.
 			int i=0;
+			
 			while (rs.next()) {
+				System.out.println(ii);
 				dados[i][0] = rs.getString("data_resolv");
 				dados[i][1] = rs.getString("tempo_resolv");
 				dados[i][2] = rs.getString("quest_certas");
 				dados[i][3] = rs.getString("num_simu");
 
 				infousimu.add(dados);
-				i++;
-
+				if(i < Integer.parseInt(ii)) {
+					i++;
+				} else {
+					break;
+				}
+				
 			}
+
+			
 
 			rs.close();
 			conn1.closeConnection();
@@ -714,5 +734,7 @@ public class MeuPerfil extends JPanel {
 		}
 		return infosimu;
 	}
+	
+	
 	
 }
