@@ -374,6 +374,7 @@ public class TelaInicial extends JPanel {
 		});
 		
 		JButton btnMenu = new JButton("Menu Principal");
+		btnMenu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnMenu.setMargin(new Insets(2, 22, 2, 14));
 		btnMenu.setBackground(new Color(98, 106, 204));
 		btnMenu.setHorizontalAlignment(SwingConstants.LEFT);
@@ -433,7 +434,7 @@ public class TelaInicial extends JPanel {
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon("C:\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\tela_inicial\\simulados.png"));
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\tela_inicial\\simulados.png"));
 		lblNewLabel.setBounds(0, 0, 277, 125);
 		panel_1.add(lblNewLabel);
 		

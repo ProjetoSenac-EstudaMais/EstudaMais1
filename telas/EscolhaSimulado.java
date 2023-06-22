@@ -83,19 +83,19 @@ public class EscolhaSimulado extends JPanel {
 		subtitle_badge.setBackground(Color.WHITE);
 		subtitle_badge.setBounds(100, 35, 149, 20);
 		panelUsuario.add(subtitle_badge);
-
-		icon_user = new JLabel(""+ nomeInfo[2]);
-		icon_user.setHorizontalAlignment(SwingConstants.CENTER);
-		icon_user.setRequestFocusEnabled(false);
-		icon_user.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id2.png"));
-		icon_user.setBounds(24, 15, 68, 68);
-		panelUsuario.add(icon_user);
 		
 
 		badge_id = new JLabel("");	
-		badge_id.setBounds(2, 61, 28, 28);
+		badge_id.setBounds(64, 61, 28, 28);
 		badge_id.setIcon(badge_3);
 		panelUsuario.add(badge_id);
+		
+				icon_user = new JLabel(""+ nomeInfo[2]);
+				icon_user.setHorizontalAlignment(SwingConstants.CENTER);
+				icon_user.setRequestFocusEnabled(false);
+				icon_user.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\icons\\icon_id2.png"));
+				icon_user.setBounds(24, 15, 68, 68);
+				panelUsuario.add(icon_user);
 		
 	
 
@@ -171,11 +171,11 @@ public class EscolhaSimulado extends JPanel {
 		//LABEL PARA INSERIR ICONE DO PAPEL NO SIMULADO COMPLETO
 		JLabel lblNewLabel_1 = new JLabel("");
 		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\paper.png"));
-		lblNewLabel_1.setBounds(74, 242, 50, 50);
+		lblNewLabel_1.setBounds(74, 239, 50, 50);
 		panelSC.add(lblNewLabel_1);
 
 		//LABEL QUESTOES NO SIMULADO COMPLETO
-		JLabel lblQuestoesSC = new JLabel("180 Questoes");
+		JLabel lblQuestoesSC = new JLabel("8 Questões");
 		lblQuestoesSC.setForeground(Color.BLACK);
 		lblQuestoesSC.setFont(new Font("Poppins", Font.PLAIN, 23));
 		lblQuestoesSC.setBackground(Color.WHITE);
@@ -193,7 +193,7 @@ public class EscolhaSimulado extends JPanel {
 		lblEscolhaOAnoSC.setForeground(Color.BLACK);
 		lblEscolhaOAnoSC.setFont(new Font("Poppins", Font.PLAIN, 23));
 		lblEscolhaOAnoSC.setBackground(Color.WHITE);
-		lblEscolhaOAnoSC.setBounds(135, 302, 158, 40);
+		lblEscolhaOAnoSC.setBounds(135, 302, 192, 40);
 		panelSC.add(lblEscolhaOAnoSC);
 
 		//"BOTAO CHOICE" DE ESCOLHA DO ANO NO SIMULADO COMPLETO
@@ -229,13 +229,13 @@ public class EscolhaSimulado extends JPanel {
 		lblSimuladoPersonalizado.setForeground(Color.BLACK);
 		lblSimuladoPersonalizado.setFont(new Font("Poppins", Font.PLAIN, 23));
 		lblSimuladoPersonalizado.setBackground(Color.WHITE);
-		lblSimuladoPersonalizado.setBounds(60, 10, 248, 40);
+		lblSimuladoPersonalizado.setBounds(60, 10, 281, 40);
 		panelSP.add(lblSimuladoPersonalizado);
 
 		//LABEL PARA O ICONE DE RELOGIO NO SIMULADO PERSONALIZADO
 		JLabel lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon("C:\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\clock.png"));
-		lblNewLabel_2.setBounds(60, 182, 50, 50);
+		lblNewLabel_2.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\clock.png"));
+		lblNewLabel_2.setBounds(60, 168, 50, 50);
 		panelSP.add(lblNewLabel_2);
 
 		//LABEL TEMPO NO SIMULADO PERSONALIZADO
@@ -259,11 +259,11 @@ public class EscolhaSimulado extends JPanel {
 		//LABEL PARA O ICONE DE PAPEL NO SIMULADO PERSONALIZADO
 		JLabel lblNewLabel_1_2 = new JLabel("");
 		lblNewLabel_1_2.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\paper.png"));
-		lblNewLabel_1_2.setBounds(60, 248, 50, 50);
+		lblNewLabel_1_2.setBounds(60, 229, 50, 50);
 		panelSP.add(lblNewLabel_1_2);
 
 		//LABEL NUMERO DE QUESTOES NO SIMULADO PERSONALIZADO
-		JLabel lblQuestoesSP = new JLabel("Questoes:");
+		JLabel lblQuestoesSP = new JLabel("Questões:");
 		lblQuestoesSP.setForeground(Color.BLACK);
 		lblQuestoesSP.setFont(new Font("Poppins", Font.PLAIN, 23));
 		lblQuestoesSP.setBackground(Color.WHITE);
@@ -273,7 +273,7 @@ public class EscolhaSimulado extends JPanel {
 		//LABEL PARA O ICONE DE CALENDARIO NO SIMULADO PERSONALIZADO
 		JLabel lblNewLabel_1_1_1 = new JLabel("");
 		lblNewLabel_1_1_1.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\escolha_simulado\\calendar.png"));
-		lblNewLabel_1_1_1.setBounds(60, 307, 50, 50);
+		lblNewLabel_1_1_1.setBounds(60, 290, 50, 50);
 		panelSP.add(lblNewLabel_1_1_1);
 
 		//LABEL ESCOLHA DE ANO NO SIMULADO PERSONALIZADO

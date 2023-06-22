@@ -61,12 +61,6 @@ public class Registrar extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 
-		//Label da tela de fundo
-		JLabel lblFundo = new JLabel("");
-		lblFundo.setIcon(new ImageIcon("C:\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\bg_login.png"));
-		lblFundo.setBounds(0, 0, 1235, 720);
-		add(lblFundo);
-
 		JLabel lblTituloConta = new JLabel("Crie sua Conta");
 		lblTituloConta.setForeground(SystemColor.inactiveCaptionBorder);
 		lblTituloConta.setFont(new Font("Poppins", Font.PLAIN, 30));
@@ -228,6 +222,12 @@ public class Registrar extends JPanel {
 		textFieldMudancaCor(sobrenomeField);
 		passwordFieldMudancaCor();
 		textFieldMudancaCor(usernameField);
+		
+				//Label da tela de fundo
+				JLabel lblFundo = new JLabel("");
+				lblFundo.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\bg_login.png"));
+				lblFundo.setBounds(0, 0, 1235, 720);
+				add(lblFundo);
 
 
 		birthMudancaCor();

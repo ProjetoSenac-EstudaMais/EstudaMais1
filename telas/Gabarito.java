@@ -35,8 +35,6 @@ public class Gabarito extends JPanel {
 	 * Create the panel.
 	 */
 
-
-
 	public Gabarito(int acertos, int erros, long segundos, long minutos, long horas, int simu,String id_user,String tempoSimu, int tipoSimu) {
 		this.acertos=acertos;
 		this.erros=erros;
@@ -95,26 +93,6 @@ public class Gabarito extends JPanel {
 		btnVoltar.setBounds(27, 18, 158, 36);
 		pnlBottom.add(btnVoltar);
 
-//		//Botão que atualiza os valores das questoes, gabaritos e resposta de acordo com o id do banco de dados
-//		JButton setaProximo = new JButton("");
-//		setaProximo.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-//		setaProximo.setFocusPainted(false);
-//		setaProximo.setContentAreaFilled(false);
-//		setaProximo.setBorderPainted(false);
-//		setaProximo.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\arrowb_rotated_resized.png"));
-//		setaProximo.setBounds(714, 25, 31, 29);
-//		pnlBottom.add(setaProximo);
-//
-//		//Mesma função da setaProximo, porem quando acionado retorna os valores da pagina anterior
-//		JButton setaAnterior = new JButton("");
-//		setaAnterior.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-//		setaAnterior.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\arrowb_resized.png"));
-//		setaAnterior.setFocusPainted(false);
-//		setaAnterior.setContentAreaFilled(false);
-//		setaAnterior.setBorderPainted(false);
-//		setaAnterior.setBounds(534, 25, 31, 29);
-//		pnlBottom.add(setaAnterior);
-
 		JLabel lblHeader = new JLabel("");
 		lblHeader.setIcon(new ImageIcon("C:\\Users\\giovana.lummertz\\eclipse-workspace\\EstudaMais\\img\\img_telas\\gabarito\\header.png"));
 		lblHeader.setBounds(0, 0, 1280, 72);
@@ -128,7 +106,7 @@ public class Gabarito extends JPanel {
 		pnlLinha.setLayout(null);
 
 		pnlQuestoes = new JPanel();
-		pnlQuestoes.setBackground(new Color(64, 74, 204));
+		pnlQuestoes.setBackground(new Color(240, 240, 240));
 		pnlQuestoes.setBounds(0, 0, 1280, 720);
 		pnlQuestoes.setLayout(null);
 		add(pnlQuestoes);
@@ -137,27 +115,11 @@ public class Gabarito extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				telaResultados();
-				
+
 				gabarito.setText("");
 
 			}
 		});
-
-//		setaProximo.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//
-//				setaProximo();
-//
-//			}
-//		});
-//
-//		setaAnterior.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//
-//				setaAnterior();
-//
-//			}
-//		});
 
 		//Imprime os componentes na tela quando inicia o painel com o valor do id 1
 		posicaoInicial(1,0);
@@ -198,23 +160,23 @@ public class Gabarito extends JPanel {
 
 			questoes = new JLabel("");
 			questoes.setHorizontalAlignment(SwingConstants.CENTER);
-			questoes.setForeground(Color.WHITE);
-			questoes.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
+			questoes.setForeground(Color.BLACK);
+			questoes.setFont(new Font("Poppins", Font.PLAIN, 20));
 			questoes.setBounds(83, pos, 126, 32);
 			pnlQuestoes.add(questoes);
 
 			gabarito = new JLabel("");
 			gabarito.setHorizontalAlignment(SwingConstants.CENTER);
-			gabarito.setForeground(Color.WHITE);
-			gabarito.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
+			gabarito.setForeground(Color.BLACK);
+			gabarito.setFont(new Font("Poppins", Font.PLAIN, 20));
 			gabarito.setBounds(412, pos, 126, 32);
 			pnlQuestoes.add(gabarito);
 
 			JLabel seta1 = new JLabel("");
 			seta1.setIcon(new ImageIcon("C:\\Users\\vitor\\Downloads\\arrow_rotated_resized.png"));
 			seta1.setHorizontalAlignment(SwingConstants.CENTER);
-			seta1.setForeground(Color.WHITE);
-			seta1.setFont(new Font("Poppins Light", Font.PLAIN, 24));
+			seta1.setForeground(Color.BLACK);
+			seta1.setFont(new Font("Poppins", Font.PLAIN, 24));
 			seta1.setBounds(643, pos, 28, 32);
 			pnlQuestoes.add(seta1);
 
@@ -223,7 +185,7 @@ public class Gabarito extends JPanel {
 			pnlQuestoes.add(painelResposta1);
 			painelResposta1.setLayout(null);
 
-			JLabel resposta = new JLabel("a");
+			JLabel resposta = new JLabel("");
 			resposta.setFont(new Font("Poppins Medium", Font.PLAIN, 20));
 			resposta.setForeground(new Color(64, 74, 204));
 			resposta.setHorizontalAlignment(SwingConstants.CENTER);

@@ -142,18 +142,18 @@ public class EsqueciSenha extends JPanel {
 
 							if ((senha.equals(senha2))) {
 								ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
-								String query = "update user_dados set senha =? where email =?;"; //SQL de substituição (registro);
-								try {System.out.println("Entrou no try");
-								PreparedStatement pstmt = conn1.conn.prepareStatement(query);
-								pstmt.setString(1,senha);
-								pstmt.setString(2,email);
-								pstmt.executeUpdate();
+								String query = "update user_dados set senha_user =? where email_user =?;"; //SQL de substituição (registro);
+								try {
+									PreparedStatement pstmt = conn1.conn.prepareStatement(query);
+									pstmt.setString(1,senha);
+									pstmt.setString(2,email);
+									pstmt.executeUpdate();
 								} catch (SQLException e1) {
 									// TODO Auto-generated catch block
 									e1.printStackTrace();
 								}
 								conn1.closeConnection();
-								
+
 								JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!");
 								telaLogin();
 							}
@@ -190,96 +190,92 @@ public class EsqueciSenha extends JPanel {
 
 			}});
 
-		}
-
-		/*
-		 * Métodos
-		 */
-
-		public static String[] DB(String email) {
-			String[] infouser = new String [1]; //Armazena os dados de login se um usuário em Array.
-
-			try {
-				ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
-
-				//Envia comandos para o DB.
-				String query = "select * from dados where email = ?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
-				ResultSet rs = conn1.executeQuery(query,email); //Retornar os resultados da SQL
-
-				/*
-				 *Comando para guardar os dados dentro de uma variável;/
-				 */
-				if(rs.next()) {
-					infouser[0] = rs.getString("email");} //Busca o vetor 0 das infos, equivalente ao E-mail
-
-				rs.close();
-				conn1.closeConnection();
-			}
-			catch (SQLException e){e.printStackTrace();}
-			return infouser;
-		}
-
-		public void telaLogin() {
-			Login a = new Login();
-			removeAll();
-			add(a);
-			revalidate();
-			repaint();
-		}
-
-		public void emailFieldMudancaCor() {
-			emailField.getDocument().addDocumentListener(new DocumentListener() {
-				@Override
-				public void insertUpdate(DocumentEvent e) {
-					updateBorder();
-				}
-
-				@Override
-				public void removeUpdate(DocumentEvent e) {
-					updateBorder();
-				}
-
-				@Override
-				public void changedUpdate(DocumentEvent e) {
-					updateBorder();
-				}
-
-				private void updateBorder() {
-					if (emailField.getText().isEmpty()) {
-						emailField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
-					} else {
-						emailField.setBorder(UIManager.getBorder("TextField.border"));
-					}
-				}
-			});}
-
-		public void newPasswordMudancaCor(JPasswordField newPassword) {
-			newPassword.getDocument().addDocumentListener(new DocumentListener() {
-				@Override
-				public void insertUpdate(DocumentEvent e) {
-					updateBorder();
-				}
-
-				@Override
-				public void removeUpdate(DocumentEvent e) {
-					updateBorder();
-				}
-
-				@Override
-				public void changedUpdate(DocumentEvent e) {
-					updateBorder();
-				}
-
-				private void updateBorder() {
-					if (newPassword.getPassword().length == 0) {
-						newPassword.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
-					} else {
-						newPassword.setBorder(UIManager.getBorder("TextField.border"));
-					}
-				}
-			});}
-
-
-
-
 	}
+
+	/*
+	 * Métodos
+	 */
+
+	public static String[] DB(String email) {
+		String[] infouser = new String [1]; //Armazena os dados de login se um usuário em Array.
+
+		try {
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+
+			//Envia comandos para o DB.
+			String query = "select * from user_dados where email_user = ?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			ResultSet rs = conn1.executeQuery(query,email); //Retornar os resultados da SQL
+
+			/*
+			 *Comando para guardar os dados dentro de uma variável;/
+			 */
+			if(rs.next()) {
+				infouser[0] = rs.getString("email_user");} //Busca o vetor 0 das infos, equivalente ao E-mail
+
+			rs.close();
+			conn1.closeConnection();
+		}
+		catch (SQLException e){e.printStackTrace();}
+		return infouser;
+	}
+
+	public void telaLogin() {
+		Login a = new Login();
+		removeAll();
+		add(a);
+		revalidate();
+		repaint();
+	}
+
+	public void emailFieldMudancaCor() {
+		emailField.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			private void updateBorder() {
+				if (emailField.getText().isEmpty()) {
+					emailField.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+				} else {
+					emailField.setBorder(UIManager.getBorder("TextField.border"));
+				}
+			}
+		});}
+
+	public void newPasswordMudancaCor(JPasswordField newPassword) {
+		newPassword.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				updateBorder();
+			}
+
+			private void updateBorder() {
+				if (newPassword.getPassword().length == 0) {
+					newPassword.setBorder(new MatteBorder(1, 1, 1, 1, Color.RED));
+				} else {
+					newPassword.setBorder(UIManager.getBorder("TextField.border"));
+				}
+			}
+		});}
+}

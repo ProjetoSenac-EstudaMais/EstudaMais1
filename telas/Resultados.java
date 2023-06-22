@@ -84,15 +84,15 @@ public class Resultados extends JPanel {
 		panel_3.setBackground(new Color(98, 106, 204));
 		panel_3.setBounds(0, 0, 320, 10);
 		painelIcone.add(panel_3);
-
-		icon_user = new JLabel(""+infoUser[2]);
-		icon_user.setBounds(22, 21, 68, 68);
-		painelIcone.add(icon_user);
 		
 		badge_id = new JLabel("");	
-		badge_id.setBounds(62, 61, 28, 28);
+		badge_id.setBounds(73, 59, 28, 28);
 		badge_id.setIcon(badge_3);
 		painelIcone.add(badge_id);
+		
+				icon_user = new JLabel(""+infoUser[2]);
+				icon_user.setBounds(22, 21, 68, 68);
+				painelIcone.add(icon_user);
 
 		nameUsuario = new JLabel("" + infoUser[0] + " " + infoUser[1]);
 		nameUsuario.setFont(new Font("Poppins Medium", Font.PLAIN, 14));
@@ -115,8 +115,9 @@ public class Resultados extends JPanel {
 		add(panel_2);
 
 		JPanel painelTitulo = new JPanel();
+		painelTitulo.setBorder(null);
 		painelTitulo.setBackground(new Color(33, 44, 136));
-		painelTitulo.setBounds(319, 11, 961, 115);
+		painelTitulo.setBounds(319, 0, 961, 126);
 		add(painelTitulo);
 		painelTitulo.setLayout(null);
 
@@ -128,7 +129,7 @@ public class Resultados extends JPanel {
 		painelTitulo.add(lblResultado);
 
 		JPanel panel_2_1 = new JPanel();
-		panel_2_1.setBounds(0, 104, 961, 10);
+		panel_2_1.setBounds(0, 115, 961, 10);
 		painelTitulo.add(panel_2_1);
 		panel_2_1.setBorder(null);
 		panel_2_1.setBackground(new Color(98, 106, 204));

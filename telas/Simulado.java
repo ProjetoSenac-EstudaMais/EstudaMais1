@@ -327,10 +327,6 @@ public class Simulado extends JPanel {
 		btnOk.setBounds(1002, 59, 57, 20);
 		add(btnOk);
 
-
-
-
-
 		btnPrx.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -382,16 +378,12 @@ public class Simulado extends JPanel {
 				linha[9] = rs.getString("id_quest");
 				linha[10] = rs.getString("id_area");
 
-
 			}
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-
-
 
 		// sempre fechar a conexão após o uso necessário
 		con.closeConnection();
@@ -430,11 +422,7 @@ public class Simulado extends JPanel {
 
 		try {
 			if (rs2.next()) {
-
-
 				simu = Integer.parseInt(rs2.getString("id_simu"));
-
-
 			}
 
 		} catch (SQLException e) {
@@ -447,12 +435,14 @@ public class Simulado extends JPanel {
 	public void inserirTempo() {
 		ConexãoMysql con = new ConexãoMysql("127.0.0.1", "3306", "estudamais", "root", "root");
 
-		String query = "UPDATE simu_resolvido SET tempo_resolv =? WHERE id_simu =?;";
+		String query = "UPDATE simu_resolvido SET tempo_resolv =?,quest_certas=?,quest_erradas=? WHERE id_simu =?;";
 
 		try {
 			PreparedStatement pstmt = con.conn.prepareStatement(query);
-			pstmt.setString(1,tempoFormatado);	
-			pstmt.setString(2,Integer.toString(simu));	
+			pstmt.setString(1,tempoFormatado);
+			pstmt.setString(2,Integer.toString(acertos));
+			pstmt.setString(3,Integer.toString(erros));
+			pstmt.setString(4,Integer.toString(simu));	
 
 			pstmt.executeUpdate();
 		} catch (SQLException e1) {
