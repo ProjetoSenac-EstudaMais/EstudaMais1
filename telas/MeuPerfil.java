@@ -259,6 +259,16 @@ public class MeuPerfil extends JPanel {
 			btnNewButton.setBounds(154, 15, 110, 23);
 			SimuladoTemplate.add(btnNewButton);
 
+			btnNewButton.addActionListener(new ActionListener({
+			public static void actionPerformed(ActionEvent e){
+			Gabarito gab = new Gabarito("", "", "", "", "", idSimu.get(i)[i][4],id_user, "", "" );
+				removeAll();
+				add(gab);
+				revalidate();
+				repaint();
+			}
+			}));
+
 			JLabel Questoes_Gabarito = new JLabel();
 			Questoes_Gabarito.setHorizontalAlignment(SwingConstants.CENTER);
 			Questoes_Gabarito.setForeground(Color.WHITE);
@@ -647,7 +657,7 @@ public class MeuPerfil extends JPanel {
 			}
 			
 			// Envia comandos para o DB.
-			String query2 = "select data_resolv, tempo_resolv,quest_certas,num_simu from simu_resolvido where id_user = ?  order by id_simu desc limit ?;"; // SQL
+			String query2 = "select data_resolv, tempo_resolv,quest_certas,num_simu, id_simu from simu_resolvido where id_user = ?  order by id_simu desc limit ?;"; // SQL
 
 			ResultSet rs = conn1.executeQuery(query2, id_user,Integer.parseInt(ii) ); // Retornar os resultados da SQL
 
@@ -657,7 +667,7 @@ public class MeuPerfil extends JPanel {
 
 			infousimu = new ArrayList();
 
-			String[][] dados = new String[Integer.parseInt(ii)][4]; // Armazena os dados de login se um usuário em Array.
+			String[][] dados = new String[Integer.parseInt(ii)][5]; // Armazena os dados de login se um usuário em Array.
 			int i=0;
 			
 			while (rs.next()) {
@@ -666,6 +676,7 @@ public class MeuPerfil extends JPanel {
 				dados[i][1] = rs.getString("tempo_resolv");
 				dados[i][2] = rs.getString("quest_certas");
 				dados[i][3] = rs.getString("num_simu");
+				dados[i][4] = rs.getString("id_simu");
 
 				infousimu.add(dados);
 				if(i < Integer.parseInt(ii)) {
