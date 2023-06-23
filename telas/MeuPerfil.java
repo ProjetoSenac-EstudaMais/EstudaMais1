@@ -259,16 +259,6 @@ public class MeuPerfil extends JPanel {
 			btnNewButton.setBounds(154, 15, 110, 23);
 			SimuladoTemplate.add(btnNewButton);
 
-			btnNewButton.addActionListener(new ActionListener({
-			public static void actionPerformed(ActionEvent e){
-			Gabarito gab = new Gabarito("", "", "", "", "", idSimu.get(i)[i][4],id_user, "", "" );
-				removeAll();
-				add(gab);
-				revalidate();
-				repaint();
-			}
-			}));
-
 			JLabel Questoes_Gabarito = new JLabel();
 			Questoes_Gabarito.setHorizontalAlignment(SwingConstants.CENTER);
 			Questoes_Gabarito.setForeground(Color.WHITE);
