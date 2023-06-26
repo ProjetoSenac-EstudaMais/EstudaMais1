@@ -310,11 +310,18 @@ public class TelaInicial extends JPanel {
 		JButton btnPerfil = new JButton("Meu Perfil");
 		btnPerfil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+						
+						String teste = DBteste(id_user);
+						
+						if(teste.isEmpty()) {
+							JOptionPane.showMessageDialog(null, "Realize um Simulado!");
+						}else{
+				
 						MeuPerfil mp = new MeuPerfil(id_user);
 						removeAll();
 						add(mp);
 						revalidate();
-						repaint();							
+						repaint();			}				
 			}
 		});
 		btnPerfil.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -459,11 +466,18 @@ public class TelaInicial extends JPanel {
 		
 		btnIniciarDesempenho.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
+				String teste = DBteste(id_user);
+				
+				if(teste.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Realize um Simulado!");
+				}else{
+		
 				MeuPerfil mp = new MeuPerfil(id_user);
 				removeAll();
 				add(mp);
 				revalidate();
-				repaint();
+				repaint();			}			
 			}
 		});
 		
@@ -702,5 +716,30 @@ public class TelaInicial extends JPanel {
 		catch (SQLException e){e.printStackTrace();}
 		return infouser;
 	}	
+	
+	public static String DBteste(String id_user) {
+		String infouser = new String(); //Armazena os dados de login se um usuário em Array.
+
+		try {
+			ConexãoMysql conn1 = new ConexãoMysql("127.0.0.1","3306","estudamais","root","root"); //Cria uma referência à Classe conexão
+
+			//Envia comandos para o DB.
+			String query = "select id_simu from simu_resolvido where id_user =?;"; //SQL que busca o usuário e senha, utilizando o usuário como ponto de busca;
+			ResultSet rs = conn1.executeQuery(query,id_user); //Retornar os resultados da SQL
+
+			/*
+			 *Comando para guardar os dados dentro de uma variável;/
+			 */
+			if(rs.next()) {
+				infouser = rs.getString("id_simu"); }
+			
+				
+
+			rs.close();
+			conn1.closeConnection();
+		}
+		catch (SQLException e){e.printStackTrace();}
+		return infouser;
+		}	
 
 }	
